@@ -51,10 +51,12 @@ export class InicioPage implements OnInit {
 
   handleFilter(event:any){
     this.catFiltrada=event.detail.value
-    const l=this.productos.filter((prod)=>{
-       1===this.catFiltrada
-    });
-    console.log(this.list)
-    console.log(l)
+    if(this.catFiltrada!=-1){
+      this.list=this.productos.filter((prod)=>{
+        return prod.idCat===Number(this.catFiltrada!)
+      });
+    }else{
+      return this.list=this.productos
+    }
   }
 }

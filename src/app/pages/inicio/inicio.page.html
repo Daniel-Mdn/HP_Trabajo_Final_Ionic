@@ -23,6 +23,7 @@
         <ion-col class="ion-align-self-center" size="3">
           <ion-item>
             <ion-select (ionChange)="handleFilter($event)" placeholder="Seleccione Categoria">
+              <ion-select-option [value]="-1">Ninguna</ion-select-option>
               <ion-content *ngFor="let cat of categorias">
                 <ion-select-option [value]="cat.id">{{cat.descCat}}</ion-select-option>
               </ion-content>
