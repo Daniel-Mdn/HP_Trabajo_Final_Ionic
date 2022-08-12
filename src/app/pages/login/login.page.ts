@@ -29,7 +29,6 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    console.log("asdas")
-    this.loading=true
+    this.router.navigate(['/inicio'])
   }
 }
