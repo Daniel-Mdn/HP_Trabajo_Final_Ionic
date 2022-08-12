@@ -1,0 +1,18 @@
+.mb-10{
+    margin-bottom: 10px;
+}
+.image{
+    border-radius:50%; 
+    width:100%; 
+    height: auto;
+    overflow: hidden;
+}
+
+.ion-color-spezia {
+    --ion-color-base: var(--ion-color-spezia);
+    --ion-color-base-rgb: var(--ion-color-spezia-rgb);
+    --ion-color-contrast: var(--ion-color-spezia-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-spezia-contrast-rgb);
+    --ion-color-shade: var(--ion-color-spezia-shade);
+    --ion-color-tint: var(--ion-color-spezia-tint);
+  }

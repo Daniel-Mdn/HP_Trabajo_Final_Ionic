@@ -1,0 +1,64 @@
+
+
+<ion-content color="light">
+  <ion-content>
+    <ion-progress-bar
+      type="indeterminate"
+      color="secondary"
+      *ngIf="loading"
+    ></ion-progress-bar>
+
+    <div *ngIf="loading; else offLoading">
+      <ion-row
+        style="height: 95vh"
+        class="ion-justify-content-center ion-align-items-center"
+      >
+        <ion-col>
+          <ion-img
+            src="https://miro.medium.com/max/1400/1*wEQw0zfZY4fLlMMMmlVFWQ.jpeg"
+          ></ion-img>
+        </ion-col>
+      </ion-row>
+    </div>
+  <ng-template #offLoading>
+    <ion-grid>
+      <ion-row
+        class="ion-justify-content-center ion-align-items-center"
+        style="height: 95vh"
+      >
+        <ion-col
+          size-xl="5"
+          size-lg="6"
+          size-md="9"
+          size-xs="12"
+          class="ion-align-self-center"
+        >
+          <ion-card >
+            <ion-item lines="none">
+              <ion-grid>
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size-xs="6" size-md="5" size="4">
+                    <ion-img class="image" src="assets/img/logo1.png" ></ion-img>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-card-content>
+              <form [formGroup]="form" (ngSubmit)="login()">
+                <ion-item class="mb-10">
+                  <ion-label position="floating">Ingrese mail</ion-label>
+                  <ion-input></ion-input>
+                </ion-item>
+                <ion-item class="mb-10">
+                  <ion-label position="floating">Ingrese contraseña</ion-label>
+                  <ion-input type="password"></ion-input>
+                </ion-item>
+                <ion-button expand="block" type="submit">Ingresar</ion-button>
+              </form>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+</ion-content>

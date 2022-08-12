@@ -1,0 +1,7 @@
+{
+  "name": "HP_Trabajo_Final_Ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
