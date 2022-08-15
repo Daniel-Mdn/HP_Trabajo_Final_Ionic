@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -15,6 +16,7 @@ export class LoginPage implements OnInit {
   errorControls: any;
   loading:boolean= false;
   constructor(
+    private angularFireAuth: AngularFireAuth,
     private formBuilder:FormBuilder,
     // private loginService: LoginService,
     private router:Router
@@ -30,14 +32,10 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    
-    let emailLogeadoGlobal = '';
-    let nombreUsuarioGlobal = '';
-    const auth = getAuth();
     let email = this.form.controls.email.value;
     let password = this.form.controls.password.value;
     console.log('email', email);
-    signInWithEmailAndPassword(auth, email, password)
+    this.angularFireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
         this.router.navigate(['/inicio'])
