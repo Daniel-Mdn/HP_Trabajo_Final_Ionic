@@ -9,9 +9,18 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+// FIREBASE
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+import { } from 'firebase/auth';
+import { } from 'firebase/firestore';
+import { AngularFireModule } from "@angular/fire/compat";
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot({
+  imports: [BrowserModule, AngularFireModule.initializeApp(environment.firebaseConfig), IonicModule.forRoot({
     // platform:{
     //   'desktop': (win) => {
     //     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(win.navigator.userAgent);
@@ -28,3 +37,6 @@ import { environment } from '../environments/environment';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+// Initialize Firebase
+// const app = initializeApp(environment.firebaseConfig);
