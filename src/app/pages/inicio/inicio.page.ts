@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Categorias, Tamaños } from 'src/app/constants/constants';
-import { Categoria, Productos } from 'src/app/constants/interfaces';
+import { Categoria, Productos, Usuario } from 'src/app/constants/interfaces';
+import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-inicio',
@@ -8,7 +10,7 @@ import { Categoria, Productos } from 'src/app/constants/interfaces';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  constructor() {}
+  constructor(private firestoreService:FirestoreBaseService) {}
   categorias: Categoria[] = [{id: 1, descCat:Categorias.Hambuerguesas },{id:2, descCat:Categorias.Pizzas}];
   catFiltrada?:number;
   productos: Productos[] = [
@@ -45,7 +47,40 @@ export class InicioPage implements OnInit {
   ];
   list:Productos[]=[];
   ngOnInit() {
+    
     this.list=this.productos
+    let user:Usuario={nombre:"prueba", apellido:"prueba"}
+
+    // const prueba= this.firestoreService.getAll("usuarios").subscribe((value)=>{
+    //   console.log(value)
+    // })
+
+    // this.firestoreService.getOne("usuarios", "danimedina012@gmail.com").subscribe((value)=>{
+    //   console.log(value)
+    // })
+
+    // this.firestoreService.deleteOne("usuarios", "7EIAafsvEmvPRZPoXg19").then((value)=>{
+    //   console.log(value)
+    // }).catch((error)=>{
+    //   console.log(error)
+    // })
+
+    // this.firestoreService.stateCollection("usuarios").subscribe((value)=>{
+    //   console.log(value)
+    // });
+
+    // this.firestoreService.createOne("usuarios", user).then((value)=>{
+    //   console.log(value)
+    // }).catch((error)=> console.log(error))
+    
+    // this.firestoreService.createOneByID("usuarios", "prueba@gmail.com",user).then((value)=>{
+    //   console.log(value)
+    // }).catch((error)=> console.log(error))
+    
+    // this.firestoreService.updateOne("usuarios", "danimedina012@gmail.com", user).subscribe((value)=>{
+    //   console.log(value)
+    // })
+    
     console.log(this.list)
   }
 
