@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Categorias, Tamaños } from 'src/app/constants/constants';
-import { Categoria, Productos, Usuario } from 'src/app/constants/interfaces';
+import { Categoria, Productos, IUsuario } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
 import { first } from 'rxjs/operators';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
   selector: 'app-inicio',
@@ -10,7 +11,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  constructor(private firestoreService:FirestoreBaseService) {}
+  constructor(private firestoreService:FirestoreBaseService, private usuarioService: UsuarioService) {}
   categorias: Categoria[] = [{id: 1, descCat:Categorias.Hambuerguesas },{id:2, descCat:Categorias.Pizzas}];
   catFiltrada?:number;
   productos: Productos[] = [
@@ -48,38 +49,13 @@ export class InicioPage implements OnInit {
   list:Productos[]=[];
   ngOnInit() {
     
+
     this.list=this.productos
-    let user:Usuario={nombre:"prueba", apellido:"prueba"}
-
-    // const prueba= this.firestoreService.getAll("usuarios").subscribe((value)=>{
-    //   console.log(value)
-    // })
-
-    // this.firestoreService.getOne("usuarios", "danimedina012@gmail.com").subscribe((value)=>{
-    //   console.log(value)
-    // })
-
-    // this.firestoreService.deleteOne("usuarios", "7EIAafsvEmvPRZPoXg19").then((value)=>{
-    //   console.log(value)
-    // }).catch((error)=>{
-    //   console.log(error)
-    // })
-
-    // this.firestoreService.stateCollection("usuarios").subscribe((value)=>{
-    //   console.log(value)
-    // });
-
-    // this.firestoreService.createOne("usuarios", user).then((value)=>{
-    //   console.log(value)
-    // }).catch((error)=> console.log(error))
+    let user:IUsuario={nombre:"prueba", apellido:"prueba"}
     
-    // this.firestoreService.createOneByID("usuarios", "prueba@gmail.com",user).then((value)=>{
-    //   console.log(value)
-    // }).catch((error)=> console.log(error))
-    
-    // this.firestoreService.updateOne("usuarios", "danimedina012@gmail.com", user).subscribe((value)=>{
-    //   console.log(value)
-    // })
+    this.usuarioService.getUsers().subscribe((value)=>{
+      console.log(value[0].nombre)
+    });
     
     console.log(this.list)
   }

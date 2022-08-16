@@ -15,7 +15,7 @@ export interface Categoria{
     descCat:string,
 }
 
-export interface Usuario{
+export interface IUsuario{
     nombre:string,
     apellido:string
 }

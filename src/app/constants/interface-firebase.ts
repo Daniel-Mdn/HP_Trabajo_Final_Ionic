@@ -1,6 +1,6 @@
 import { DocumentChangeType, DocumentReference, SnapshotMetadata, DocumentData } from "firebase/firestore";
 
-export interface DocumentChangeAction {
+export interface DocumentChangeAction<T> {
     //'added' | 'modified' | 'removed';
     type: DocumentChangeType;
     payload: DocumentSnapshot;

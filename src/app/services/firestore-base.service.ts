@@ -3,6 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -13,25 +14,25 @@ export class FirestoreBaseService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  public getAll(path: string) {
-    return this.firestore.collection(path).valueChanges({ idField: 'ID' });
+  public getAll<T>(path: string):Observable<T[]> {
+    return this.firestore.collection<T>(path).valueChanges();
   }
-  public getOne(path: string, id: string) {
-    return this.firestore.doc(path + '/' + id).valueChanges();
+  public getOne<T>(path: string, id: string):Observable<T> {
+    return this.firestore.doc<T>(path + '/' + id).valueChanges();
   }
-  public deleteOne(path: string, id: string) {
+  public deleteOne<T>(path: string, id: string):Promise<void> {
     return this.firestore.doc(path + '/' + id).delete();
   }
-  public updateOne(path: string, id: string, data: any) {
+  public updateOne<T>(path: string, id: string, data: T): Observable<T> {
     this.firestore.doc(path + '/' + id).update(data);
-    return this.firestore.doc(path + '/' + id).valueChanges();
+    return this.firestore.doc<T>(path + '/' + id).valueChanges();
   }
-  public createOne(path: string, data: any) {
+  public createOne<T>(path: string, data: any):Promise<void> {
     const id = this.firestore.createId();
     this.itemsCollection = this.firestore.collection(path);
     return this.itemsCollection.doc(id).set(data);
   }
-  public createOneByID(path: string, id: string, data: any) {
+  public createOneByID<T>(path: string, id: string, data: any):Promise<void>  {
     this.itemsCollection = this.firestore.collection(path);
     return this.itemsCollection.doc(id).set(data);
   }
@@ -45,35 +46,4 @@ export class FirestoreBaseService {
       }))
     );
   }
-  /*
-var db = firebase.firestore();
-var emailLogeadoGlobal = '';
-var nombreUsuarioGlobal = '';
-var colUsuarios = db.collection("usuarios");
-
-email = $$('#usuarioLogin').val();
-    password = $$('#passLogin').val();
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(function(){
-        usuarioLogueado = true;
-        emailLogeadoGlobal = email;
-        colUsuarios.doc(email).get()
-          .then((doc) => {
-            nombreUsuarioGlobal = doc.data().nombre;
-          })
-          .catch((error) => {
-            console.log("Error getting document:", error);
-          })
-        app.views.main.router.navigate("/domicilios/");
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        fnErrorDialog(errorCode, email, password)
-        console.log('Código error: ' + errorCode + ' / Mensaje: ' + errorMessage);
-      }); 
-  }
-*/
 }
