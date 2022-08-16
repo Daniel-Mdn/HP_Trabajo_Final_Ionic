@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Categorias, Tamaños } from 'src/app/constants/constants';
-import { Categoria, Productos, IUsuario } from 'src/app/constants/interfaces';
+import { ICategoria, IProducto, IUsuario } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
 import { first } from 'rxjs/operators';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -11,10 +12,10 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  constructor(private firestoreService:FirestoreBaseService, private usuarioService: UsuarioService) {}
-  categorias: Categoria[] = [{id: 1, descCat:Categorias.Hambuerguesas },{id:2, descCat:Categorias.Pizzas}];
+  constructor( private usuarioService: UsuarioService, private router:Router) {}
+  categorias: ICategoria[] = [{id: 1, descCat:Categorias.Hambuerguesas },{id:2, descCat:Categorias.Pizzas}];
   catFiltrada?:number;
-  productos: Productos[] = [
+  productos: IProducto[] = [
     {
       id: 1,
       nombre: '3 Max',
@@ -46,7 +47,7 @@ export class InicioPage implements OnInit {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     },
   ];
-  list:Productos[]=[];
+  list:IProducto[]=[];
   ngOnInit() {
     
 
@@ -69,5 +70,10 @@ export class InicioPage implements OnInit {
     }else{
       return this.list=this.productos
     }
+  }
+
+  selectProduct(id:number){
+    this.router.navigate(['/producto/{id}', id])
+    console.log("prueba")
   }
 }
