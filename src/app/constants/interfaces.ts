@@ -1,6 +1,6 @@
 import { Tamaños } from "./constants";
 
-export interface Productos{
+export interface IProducto{
     id:number,
     nombre:string,
     descProd:string,
@@ -10,7 +10,7 @@ export interface Productos{
     tamanio:Tamaños,
     idCat:number,
 }
-export interface Categoria{
+export interface ICategoria{
     id:number,
     descCat:string,
 }
