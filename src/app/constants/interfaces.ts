@@ -1,4 +1,4 @@
-import { Tamaños } from "./constants";
+import { Tamanios } from "./constants";
 
 export interface IProducto{
     id:number,
@@ -7,7 +7,7 @@ export interface IProducto{
     disponibilidad:boolean,
     baja:boolean,
     imagen?:File,
-    tamanio:Tamaños,
+    tamanio:Tamanios,
     idCat:number,
 }
 export interface ICategoria{

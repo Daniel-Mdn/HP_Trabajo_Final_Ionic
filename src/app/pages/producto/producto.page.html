@@ -1,9 +1,73 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>producto</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header> </app-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-grid>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col [size]="'auto'">
+            <ion-img
+              class="img-producto"
+              src="assets/img/no-image.png"
+            ></ion-img>
+          </ion-col>
+          <ion-row style="flex-direction: column;">
+            <ion-col [size]="'auto'">
+              <ion-card-subtitle>{{producto.tamanio}}</ion-card-subtitle>
+            </ion-col>
+            <ion-col [size]="'auto'">
+              <ion-card-title>{{producto.nombre}}</ion-card-title>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
 
+    <ion-card-content>
+      {{producto.descProd}}
+      <ion-item>
+        <ion-icon name="restaurant-outline" class="mr-10"></ion-icon>
+        <ion-select (ionChange)="handleFilter($event)" placeholder="Seleccione Tamaño">
+          <ion-select-option [value]="-1">Ninguna</ion-select-option>
+          <ion-content *ngFor="let tam of tamaniosHamburguesa">
+            <ion-select-option [value]="tam">{{tam|titlecase}}</ion-select-option>
+          </ion-content>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-checkbox color="primary" class="mr-10" slot="start"></ion-checkbox>
+        <ion-label>Con papas</ion-label>
+      </ion-item>
+
+      <ion-item id="open-modal" expand="block">
+        <ion-icon name="add-circle-outline" slot="start" class="mr-10"></ion-icon>
+        <ion-label>Adicionales</ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Adicionales</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Enter your name</ion-label>
+          <ion-input type="text" placeholder="Your name" [(ngModel)]="name"></ion-input>
+        </ion-item>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
 </ion-content>
