@@ -48,8 +48,6 @@ export class InicioPage implements OnInit {
   ];
   list:Productos[]=[];
   ngOnInit() {
-    
-
     this.list=this.productos
     let user:IUsuario={nombre:"prueba", apellido:"prueba"}
     

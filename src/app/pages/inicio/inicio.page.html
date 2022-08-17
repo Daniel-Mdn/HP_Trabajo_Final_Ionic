@@ -6,7 +6,7 @@
           <ion-icon name="arrow-back"></ion-icon>
         </ion-col>
         <ion-col class="ion-text-center">
-          <ion-title>Inicio</ion-title>
+          <ion-title>Menu</ion-title>
         </ion-col>
         <ion-col class="ion-align-self-end ion-text-end">
           <ion-icon name="menu" class="ion-align-self-end"></ion-icon>
@@ -17,6 +17,33 @@
 </ion-header>
 
 <ion-content class="container">
+
+  <ion-list>
+    <ion-radio-group allowEmptySelection="true">
+      <ion-list-header>
+        <ion-label>
+          Filtros
+        </ion-label>
+      </ion-list-header>
+  
+      <ion-item>
+        <ion-label>Hamburguesas</ion-label>
+        <ion-radio value="rbHamb"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Pizzas</ion-label>
+        <ion-radio value="rbPizzas"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Papas</ion-label>
+        <ion-radio value="rbPapas"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+  </ion-list>
+ <!--
   <ion-list>
     <ion-grid>
       <ion-row class="ion-align-self-center ion-justify-content-center">
@@ -33,33 +60,39 @@
       </ion-row>
     </ion-grid>
   </ion-list>
+-->
   <!-- List of Text Items -->
   <ion-list>
     <ion-item *ngFor="let prod of list">
       <ion-grid>
         <ion-row>
-          <ion-col size="auto">
-            <ion-img class="avatar" src="assets/img/no-image.png"></ion-img>
-          </ion-col>
-          <ion-col>
-            <ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <ion-row class="ion-justify-content-center">
+                  <ion-img class="avatar" src="assets/img/no-image.png"></ion-img>
+              </ion-row>  
+            </ion-col>
+            <ion-col>
               <ion-row>
-                <ion-col>
-                  <ion-label>{{prod.nombre}}</ion-label>
-                </ion-col>
-                <ion-col>
-                  <ion-label>{{prod.tamanio}}</ion-label>
-                </ion-col>
+                <ion-label>{{prod.nombre}}</ion-label>
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <ion-label class="ion-text-wrap">
-                    {{prod.descProd}}
-                  </ion-label>
+                  <ion-label>Precio simple-media</ion-label>
                 </ion-col>
+                <ion-col>
+                  <ion-label>Precio doble-entera</ion-label>
+                </ion-col> 
               </ion-row>
-            </ion-row>
-          </ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="ion-text-wrap ion-text-center">
+                {{prod.descProd}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
         </ion-row>
       </ion-grid>
     </ion-item>
