@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { CheckboxCustomEvent, IonModal } from '@ionic/angular';
 import { OverlayEventDetail, RangeCustomEvent, RangeValue } from '@ionic/core';
 import {
   Extras,
@@ -11,6 +11,8 @@ import {
 import { IProducto } from 'src/app/constants/interfaces';
 import { ProductoService } from 'src/app/services/producto/producto.service';
 
+export interface modalExtra{
+}
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.page.html',
@@ -22,6 +24,9 @@ export class ProductoPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+
+  @Input() total: number = 0;
+
   producto: IProducto = {
     id: 2,
     nombre: 'Normalita',
@@ -65,10 +70,12 @@ export class ProductoPage implements OnInit {
       idLineaDePed: 1,
     },
   ];
+
+  extrasSelected: Extras[] = [];
+  extrasProduct: Extras[]=[]
   rangeValue: RangeValue;
   name: string;
-  subtotal: number=0;
-  total: number=0;
+  subtotal: number = 0;
   ngOnInit() {
     this.productService
       .getProduct(this.route.snapshot['id'])
@@ -84,17 +91,46 @@ export class ProductoPage implements OnInit {
   }
 
   confirm() {
-    this.modal.dismiss(this.name, 'confirm');
+    this.modal.dismiss(this.extrasSelected, 'confirm');
   }
 
   onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    const ev = event as CustomEvent<OverlayEventDetail<Extras[]>>;
     if (ev.detail.role === 'confirm') {
-      this.name = `Hello, ${ev.detail.data}!`;
+      console.log(ev.detail.data)
+      this.extrasProduct=ev.detail.data
+      console.log(this.extrasProduct)
+
     }
   }
   onIonChange(ev: Event) {
     this.rangeValue = (ev as RangeCustomEvent).detail.value;
+  }
+
+  setExtra(event: any) {
+    const ev = event as CheckboxCustomEvent;
+    if (ev.detail.checked) {
+      const extra = this.extras.find(extra => extra.id == ev.target.id);
+      this.extrasSelected.push(extra);
+      this.subtotal = this.subtotal + extra.precio;
+    } else {
+      const extra = this.extras.find((extra) => {
+        extra.id == ev.target.id;
+      });
+      this.extrasSelected = this.extrasSelected.filter((extra) => {
+        extra != extra;
+      });
+      this.subtotal = this.subtotal - extra.precio;
+    }
+  }
+
+  removeExtra(event:any){
+    console.log(event.target.id)
+  }
+
+  isChecked(id:string):boolean{
+    const extra= this.extras.find(ext=>ext.id==id)
+    return this.extrasProduct.includes(extra)
   }
   handleFilter(event: any) {}
   handleFilterHamburguesas(event: any) {}
