@@ -1,6 +1,9 @@
 .mb-10{
     margin-bottom: 10px;
 }
+.mt-8{
+    margin-top: 8vh;
+}
 .image{
     border-radius:50%; 
     width:100%; 
@@ -16,3 +19,18 @@
     --ion-color-shade: var(--ion-color-spezia-shade);
     --ion-color-tint: var(--ion-color-spezia-tint);
   }
+
+.btnGde{
+    width: 63vw;
+    margin-top: 3vh;
+    height: 8vh;
+    font-size: 2vh;
+    color: black;
+}
+
+.contCenter{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
