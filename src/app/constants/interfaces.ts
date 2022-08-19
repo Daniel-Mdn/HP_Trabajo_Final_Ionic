@@ -12,7 +12,7 @@ export interface IProducto{
 }
 export interface ICategoria{
     id:number,
-    descCat:string,
+    descCategoria:string,
 }
 
 export interface IUsuario{

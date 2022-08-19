@@ -5,6 +5,9 @@ import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
 import { first } from 'rxjs/operators';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { Router } from '@angular/router';
+import { ProductoService } from 'src/app/services/producto/producto.service';
+import { concat } from 'rxjs';
+import { CategoriesService } from 'src/app/services/categories/categories.service';
 
 @Component({
   selector: 'app-inicio',
@@ -12,49 +15,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
-  categorias: ICategoria[] = [
-    { id: 1, descCat: Categorias.Hambuerguesas },
-    { id: 2, descCat: Categorias.Pizzas },
-  ];
+  constructor(private usuarioService: UsuarioService, private productoService: ProductoService, private router: Router,  private categoriesService:CategoriesService) {
+  }
+  categorias: ICategoria[] = [];
   catFiltrada?: number;
-  productos: IProducto[] = [
-    {
-      id: 1,
-      nombre: '3 Max',
-      baja: false,
-      disponibilidad: true,
-      idCat: 1,
-      tamanio: Tamanios.Doble,
-      descProd:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    },
-    {
-      id: 2,
-      nombre: 'Normalita',
-      baja: false,
-      disponibilidad: true,
-      idCat: 1,
-      tamanio: Tamanios.Simple,
-      descProd:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    },
-    {
-      id: 3,
-      nombre: 'Pizza',
-      baja: false,
-      disponibilidad: true,
-      idCat: 2,
-      tamanio: Tamanios.Grande,
-      descProd:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    },
-  ];
+  productos: IProducto[] = [];
   list: IProducto[] = [];
   ngOnInit() {
-    this.list = this.productos;
-
-    console.log(this.list);
+    this.categoriesService.getCategories().subscribe((resp)=>{
+      this.categorias=resp;
+    })
+    this.productoService.getProducts().subscribe((resp)=>{
+      this.productos=resp
+      this.list = this.productos;
+    })
   }
 
   handleFilter(event: any) {
