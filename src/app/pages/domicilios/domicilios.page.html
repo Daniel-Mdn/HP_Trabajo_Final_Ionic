@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>domicilios</ion-title>
+    <ion-title>Mis Domicilios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <h5 class="descPagina">Seleccione el domicilio desde el cual se realizará el pedido</h5>
+  <ion-list>
+    <ion-item> <!-- línea copiada de pagina inicio, revisar -->
+      <ion-row class="cadaDomic contFlex">
+        <ion-col size="6">
+          <ion-buttons class="btnDomi">domic.direcciónCompleta</ion-buttons> <!-- en el TS: crear una sola variable con toda la dirección appendeada, o sea, en un solo string -->
+        </ion-col>
+        <ion-col>
+          <ion-buttons class="btnDomiPredet">Predeterminado</ion-buttons>
+          <ion-buttons class="btnDomiEdit">
+            <ion-img class="avatar" src="assets/img/no-image.png"></ion-img>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
 </ion-content>
