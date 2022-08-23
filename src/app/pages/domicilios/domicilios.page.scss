@@ -1,4 +1,4 @@
-.descPagina{
+.txtCenter{
     text-align: center;
     padding: 2vw;
 }
@@ -8,4 +8,54 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.padleft3{
+    padding-left: 3vw;
+}
+
+.padleft4{
+    padding-left: 4vw;
+}
+
+.padbot4{
+    padding-bottom: 4vh;
+}
+
+.padbot2{
+    padding-bottom: 2vh;
+}
+
+.padbot1{
+    padding-bottom: 1vh;
+}
+
+.ion-color-spezia {
+    --ion-color-base: var(--ion-color-spezia);
+    --ion-color-base-rgb: var(--ion-color-spezia-rgb);
+    --ion-color-contrast: var(--ion-color-spezia-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-spezia-contrast-rgb);
+    --ion-color-shade: var(--ion-color-spezia-shade);
+    --ion-color-tint: var(--ion-color-spezia-tint);
+  }
+
+.btnDomiPredet{
+    height: 7vh;
+    width: 32vw;
+    font-size: 11px;
+}
+
+.imgEdit{
+    size: 10px;
+}
+
+.btnDomiEdit{
+    height: 7vh;
+    width: 7vh;
+}
+
+.domic{
+    border: 4px solid;
+    border-radius: 10%;
+    border-color: var(--ion-color-spezia);
 }
