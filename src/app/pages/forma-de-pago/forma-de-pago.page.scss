@@ -1,0 +1,26 @@
+.mt-5{
+    margin-top: 5vh;
+}
+
+.btnGde{
+    width: 63vw;
+    margin-top: 3vh;
+    height: 8vh;
+    font-size: 2vh;
+    color: black;
+}
+
+.ion-color-spezia {
+    --ion-color-base: var(--ion-color-spezia);
+    --ion-color-base-rgb: var(--ion-color-spezia-rgb);
+    --ion-color-contrast: var(--ion-color-spezia-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-spezia-contrast-rgb);
+    --ion-color-shade: var(--ion-color-spezia-shade);
+    --ion-color-tint: var(--ion-color-spezia-tint);
+}
+.contFlex{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
