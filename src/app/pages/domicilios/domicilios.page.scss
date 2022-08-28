@@ -59,3 +59,22 @@
     border-radius: 10%;
     border-color: var(--ion-color-spezia);
 }
+
+.mt-5{
+    margin-top: 5vh;
+}
+
+.contCenter{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnGde{
+    width: 63vw;
+    margin-top: 3vh;
+    height: 8vh;
+    font-size: 2vh;
+    color: black;
+}
