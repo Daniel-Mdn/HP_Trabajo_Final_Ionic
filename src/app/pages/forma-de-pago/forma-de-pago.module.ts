@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DomiciliosPageRoutingModule } from './domicilios-routing.module';
+import { FormaDePagoPageRoutingModule } from './forma-de-pago-routing.module';
 
-import { DomiciliosPage } from './domicilios.page';
+import { FormaDePagoPage } from './forma-de-pago.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -15,8 +15,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    DomiciliosPageRoutingModule
+    FormaDePagoPageRoutingModule
   ],
-  declarations: [DomiciliosPage]
+  declarations: [FormaDePagoPage]
 })
-export class DomiciliosPageModule {}
+export class FormaDePagoPageModule {}

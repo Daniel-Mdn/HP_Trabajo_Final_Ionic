@@ -1,9 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>carrito</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header> </app-header>
 
 <ion-content>
-
+  <h3 class="txtCenter padbot4">SU PEDIDO</h3>
+  <ion-list>
+    <ion-item>
+      <ion-col size="2" class="contFlex">
+        <ion-button fill="clear" class="btnDeleteItem">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="8" class="itemDesc">
+        <ion-row class="txtCenter contFlex">
+          <h5>Burdain Cheese</h5>
+        </ion-row>
+        <ion-row class="txtCenter">Descripción resumida, ver de poner una cantidad específicas de palabras</ion-row>
+        <ion-row class="txtCenter contFlex">
+          <h5>$1000</h5>
+          <!--Precio con adicionales y demás-->
+        </ion-row>
+      </ion-col>
+      <ion-col size="2" class="contFlex">
+        <ion-row>
+          <ion-button fill="clear" class="contFlex btnDeleteItem">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-row>
+        <ion-row class="cantItem">1</ion-row>
+        <ion-row>
+          <ion-button fill="clear" class="contFlex btnDeleteItem">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-item>
+  </ion-list>
+  <div class="mt-5 contFlex">
+    <h3>Total: $2500</h3>
+  </div>
+  <div class="mt-5 contFlex">
+    <ion-button expand="block" class="btnGde" color="spezia" type="submit">Confirmar pedido</ion-button>
+  </div>
 </ion-content>
