@@ -6,8 +6,11 @@ import { first } from 'rxjs/operators';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { Router } from '@angular/router';
 import { ProductoService } from 'src/app/services/producto/producto.service';
-import { concat } from 'rxjs';
+import { concat, Observable } from 'rxjs';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
+import { RadioGroupChangeEventDetail } from '@ionic/angular';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { DocumentSnapshot } from 'firebase/firestore';
 
 @Component({
   selector: 'app-inicio',
@@ -15,7 +18,7 @@ import { CategoriesService } from 'src/app/services/categories/categories.servic
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  constructor(private usuarioService: UsuarioService, private productoService: ProductoService, private router: Router,  private categoriesService:CategoriesService) {
+  constructor(private usuarioService: UsuarioService, private firestore: AngularFirestore , private productoService: ProductoService, private router: Router,  private categoriesService:CategoriesService) {
   }
   categorias: ICategoria[] = [];
   catFiltrada?: number;
@@ -25,23 +28,25 @@ export class InicioPage implements OnInit {
     this.categoriesService.getCategories().subscribe((resp)=>{
       this.categorias=resp;
     })
-    this.productoService.getProducts().subscribe((resp)=>{
-      this.productos=resp
+    this.productoService.getProductsId().subscribe((resp)=>{
+      this.productos=resp;
       this.list = this.productos;
     })
   }
 
   handleFilter(event: any) {
-    this.catFiltrada = event.detail.value;
-    if (this.catFiltrada != -1) {
-      this.list = this.productos.filter((prod) => {
-        return prod.idCat === Number(this.catFiltrada!);
-      });
-    } else {
-      return (this.list = this.productos);
-    }
+    this.catFiltrada = event;
+    // if (this.catFiltrada != -1) {
+    //   this.list = this.productos.filter((prod) => {
+    //     return prod.idCat === this.catFiltrada!;
+    //   });
+    // } else {
+    //   return (this.list = this.productos);
+    // }
+    debugger;
   }
 
-  selectProduct(id: number) {
+  selectProduct(id: string) {
+    console.log(id)
     this.router.navigate(['/producto/', id]);  }
 }

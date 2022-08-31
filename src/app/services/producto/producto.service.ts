@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { concat } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
 import { ICategoria, IProducto } from 'src/app/constants/interfaces';
 import { CategoriesService } from '../categories/categories.service';
 import { FirestoreBaseService } from '../firestore-base.service';
@@ -23,6 +24,16 @@ export class ProductoService extends FirestoreBaseService {
   
   public getProducts():Observable<IProducto[]> {
     return super.getAll(this.path);
+  }
+  public getProductsId():Observable<IProducto[]> {
+    return super.getAllId(this.path).stateChanges(['added']).pipe(
+      map(actions=>actions.map(a=>
+        {
+          const data = a.payload.doc.data() as IProducto;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+    );
   }
   public getProduct(id: string):Observable<IProducto> {
     return super.getOne(this.path, id);

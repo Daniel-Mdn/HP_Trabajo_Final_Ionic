@@ -1,14 +1,16 @@
+import { DocumentReference } from "firebase/firestore";
 import { Tamanios } from "./constants";
 
 export interface IProducto{
-    id:number,
+    id:string,
     nombre:string,
     descProd:string,
     disponibilidad:boolean,
     baja:boolean,
     imagen?:File,
     tamanio:Tamanios,
-    idCat:number,
+    idCategoria:DocumentReference,
+    categoria?:ICategoria
 }
 export interface ICategoria{
     id:number,

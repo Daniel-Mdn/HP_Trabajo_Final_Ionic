@@ -18,6 +18,9 @@ export class FirestoreBaseService {
   public getAll<T>(path: string):Observable<T[]> {
     return this.firestore.collection<T>(path).valueChanges();
   }
+  public getAllId<T>(path: string):AngularFirestoreCollection<T> {
+    return this.firestore.collection<T>(path);
+  }
   public getOne<T>(path: string, id: string):Observable<T> {
     return this.firestore.doc<T>(path + '/' + id).valueChanges();
   }
