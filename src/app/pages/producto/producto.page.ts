@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckboxCustomEvent, IonModal } from '@ionic/angular';
 import { OverlayEventDetail, RangeCustomEvent, RangeValue } from '@ionic/core';
@@ -19,7 +20,9 @@ export interface modalExtra{
   styleUrls: ['./producto.page.scss'],
 })
 export class ProductoPage implements OnInit {
+  producto: IProducto;
   constructor(
+    public firestore: AngularFirestore,
     private productService: ProductoService,
     private router: Router,
     private route: ActivatedRoute
@@ -27,16 +30,6 @@ export class ProductoPage implements OnInit {
 
   @Input() total: number = 0;
 
-  producto: IProducto = {
-    id: 2,
-    nombre: 'Normalita',
-    baja: false,
-    disponibilidad: true,
-    idCat: 1,
-    tamanio: Tamanios.Simple,
-    descProd:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  };
   @ViewChild(IonModal) modal: IonModal;
   tamaniosHamburguesa: TamaniosHamburguesa[] = [
     TamaniosHamburguesa.Doble,
@@ -77,13 +70,17 @@ export class ProductoPage implements OnInit {
   name: string;
   subtotal: number = 0;
   ngOnInit() {
-    this.productService
-      .getProduct(this.route.snapshot['id'])
-      .subscribe((prod) => {
-        if (prod) {
-          this.producto = prod;
-        }
-      });
+    this.route.params.subscribe(params => {
+      const id=params.id;
+      this.productService
+        .getProduct(String(id))
+        .subscribe((prod) => {
+          console.log(prod)
+          if (prod) {
+            this.producto = prod;
+          }
+        });
+    });
   }
 
   cancel() {

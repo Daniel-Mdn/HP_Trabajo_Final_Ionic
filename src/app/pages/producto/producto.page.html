@@ -13,10 +13,10 @@
           </ion-col>
           <ion-row style="flex-direction: column">
             <ion-col [size]="'auto'">
-              <ion-card-subtitle>{{producto.tamanio}}</ion-card-subtitle>
+              <ion-card-subtitle>{{producto?.tamanio}}</ion-card-subtitle>
             </ion-col>
             <ion-col [size]="'auto'">
-              <ion-card-title>{{producto.nombre}}</ion-card-title>
+              <ion-card-title>{{producto?.nombre}}</ion-card-title>
             </ion-col>
           </ion-row>
         </ion-row>
@@ -24,7 +24,7 @@
     </ion-card-header>
 
     <ion-card-content>
-      {{producto.descProd}}
+      {{producto?.descProd}}
       <ion-item>
         <ion-icon name="restaurant-outline" class="mr-10"></ion-icon>
         <ion-select

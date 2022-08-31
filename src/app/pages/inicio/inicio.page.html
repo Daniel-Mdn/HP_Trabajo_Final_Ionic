@@ -10,7 +10,7 @@
       (ionChange)="handleFilter($event)"
     >
       <ion-item lines="none" color="#ffca59" *ngFor="let cat of categorias">
-        <ion-label class="colorShade">{{cat.descCat}}</ion-label>
+        <ion-label class="colorShade">{{cat.descCategoria}}</ion-label>
         <ion-radio [value]="cat.id" class="colorShade"></ion-radio>
       </ion-item>
     </ion-radio-group>
