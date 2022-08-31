@@ -21,27 +21,32 @@
     <ion-item *ngFor="let prod of list" (click)="selectProduct(prod.id)" lines="none" >
       <ion-buttons class="cadaProd">
         <ion-row>
-          <ion-row>
+          <ion-row class="width100">
             <ion-col size="4">
-              <ion-row class="ion-justify-content-center">
-                <ion-img class="avatar" src="assets/img/no-image.png"></ion-img>
+              <ion-row class="">
+                <ion-img class="avatar imgSize" src="assets/img/no-image.png"></ion-img>
               </ion-row>
             </ion-col>
-            <ion-col>
+            <ion-col size="8" class="padLeft">
               <ion-row>
-                <ion-label>{{prod.nombre}}</ion-label>
+                <ion-label class="txtCateg">CATEGORIA</ion-label>
               </ion-row>
               <ion-row>
-                <ion-col size="6">
+                <ion-label class="txtNombre">{{prod.nombre}}</ion-label>
+              </ion-row>
+              <!--
+              <ion-row>
+                <ion-col>
                   <ion-label>{{prod.tamanio}}</ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col>
                   <ion-label>{{prod.tamanio}}</ion-label>
                 </ion-col>
               </ion-row>
+              -->
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row class="width100">
             <ion-col>
               <ion-label class="ion-text-wrap ion-text-center">
                 {{prod.descProd}}
