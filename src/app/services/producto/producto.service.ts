@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { concat } from 'rxjs';
+import { BehaviorSubject, concat } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { ICategoria, IProducto } from 'src/app/constants/interfaces';
+import { ICategoria, IParams, IProducto } from 'src/app/constants/interfaces';
 import { CategoriesService } from '../categories/categories.service';
 import { FirestoreBaseService } from '../firestore-base.service';
 
@@ -21,12 +21,20 @@ export class ProductoService extends FirestoreBaseService {
   }
   path="productos"
   categories:ICategoria[]=[];
+
+  listProducts$:BehaviorSubject<IProducto[]>= new BehaviorSubject<IProducto[]>([] as IProducto[])
   
+  public get getProducts$(){
+    return this.listProducts$.asObservable();
+  }
+  public setProducts$(list:IProducto[]):void{
+    this.listProducts$.next(list);
+  }
   public getProducts():Observable<IProducto[]> {
     return super.getAll(this.path);
   }
-  public getProductsId():Observable<IProducto[]> {
-    return super.getAllId(this.path).stateChanges(['added']).pipe(
+  public getProductsId(params?:IParams):Observable<IProducto[]> {
+    return super.getAllId(this.path, params).stateChanges(['added']).pipe(
       map(actions=>actions.map(a=>
         {
           const data = a.payload.doc.data() as IProducto;

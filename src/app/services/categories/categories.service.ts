@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { ICategoria } from 'src/app/constants/interfaces';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ICategoria, IParams } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from '../firestore-base.service';
 
 @Injectable({
@@ -13,9 +14,28 @@ export class CategoriesService extends FirestoreBaseService {
     super(firestore)
   }
   path="categoria"
+
+  listCategories$:BehaviorSubject<ICategoria[]>= new BehaviorSubject<ICategoria[]>([] as ICategoria[])
+
+  public get getCategories$(){
+    return this.listCategories$.asObservable();
+  }
+  public setProducts$(list:ICategoria[]):void{
+    this.listCategories$.next(list);
+  }
   
   public getCategories():Observable<ICategoria[]> {
     return super.getAll(this.path);
+  }
+  public getCategoriesId(params?:IParams):Observable<ICategoria[]> {
+    return super.getAllId(this.path, params).stateChanges(['added']).pipe(
+      map(actions=>actions.map(a=>
+        {
+          const data = a.payload.doc.data() as ICategoria;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+    );
   }
   public getCategory(id: string):Observable<ICategoria> {
     return super.getOne(this.path, id);
