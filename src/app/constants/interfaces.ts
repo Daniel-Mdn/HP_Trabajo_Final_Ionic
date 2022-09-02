@@ -9,15 +9,24 @@ export interface IProducto{
     baja:boolean,
     imagen?:File,
     tamanio:Tamanios,
-    idCategoria:DocumentReference,
+    idCategoria:string,
     categoria?:ICategoria
 }
 export interface ICategoria{
-    id:number,
+    id:string,
     descCategoria:string,
 }
 
 export interface IUsuario{
     nombre:string,
     apellido:string
+}
+
+export interface IParams{
+    order?:string,
+    where?:IWhere[]
+}
+export interface IWhere{
+    name:string,
+    value:string
 }

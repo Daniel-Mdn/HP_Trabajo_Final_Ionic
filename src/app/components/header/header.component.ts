@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private menu: MenuController, private router: Router) { }
 
   ngOnInit() {}
 
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
+  }
+  redirectPedidos(){
+    
+  }
+  redirectUsuario(){
+
+  }
+  redirectDomicilios(){
+    this.router.navigate(['/domicilios']);
+  }
+  logout(){
+
+  }
+
+  prevPage(){
+    // console.log(this.router.)
+    this.router.navigate(['/inicio']);
+  }
 }

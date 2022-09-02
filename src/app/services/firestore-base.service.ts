@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
+  DocumentData,
+  Query,
 } from '@angular/fire/compat/firestore';
+import { orderBy, query, QueryConstraint, where } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IParams } from '../constants/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +16,39 @@ import { map } from 'rxjs/operators';
 
 export class FirestoreBaseService {
   private itemsCollection: AngularFirestoreCollection<any>;
+  queryData: Query<DocumentData>;
+  wheresData:QueryConstraint[];
+  orderData:QueryConstraint;
 
   constructor(private firestore: AngularFirestore) {}
 
   public getAll<T>(path: string):Observable<T[]> {
     return this.firestore.collection<T>(path).valueChanges();
   }
-  public getAllId<T>(path: string):AngularFirestoreCollection<T> {
-    return this.firestore.collection<T>(path);
+  public getAllId<T>(path: string, params?:IParams):AngularFirestoreCollection<T> {
+    // if (params.where && params.where?.length){
+    //   params.where.forEach((w)=>{
+    //     this.wheresData.push(where(w.name, '==', w.value))
+    //   })
+    // }
+    // if (params.order){
+    //   this.orderData=orderBy(params.order)
+    // }
+    // const q= query(this.queryData, ...this.wheresData, this.orderData);
+    let list= this.firestore.collection<T>(path, ref=>{
+      this.queryData=ref;
+      
+      if (params){
+        if(params.where){ 
+          params.where.forEach((w)=>{
+            this.queryData=this.queryData.where(w.name,'==', w.value);
+          });
+        }
+        if(params.order){ this.queryData=this.queryData.orderBy(params.order, 'asc')}
+      }
+      return  this.queryData;
+    });
+    return list;
   }
   public getOne<T>(path: string, id: string):Observable<T> {
     return this.firestore.doc<T>(path + '/' + id).valueChanges();

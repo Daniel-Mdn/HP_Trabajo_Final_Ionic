@@ -25,10 +25,16 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.avatar{
+.avatar-producto{
     border-radius:25%; 
     width:4rem; 
     height: 4rem;
+    overflow: hidden;
+}
+.avatar-cliente{
+    border-radius:50%; 
+    width:8rem; 
+    height: 8rem;
     overflow: hidden;
 }
 .img-producto{
@@ -49,3 +55,16 @@
 .mt-10{
     margin-top: 10px;
 }
+
+.ion-color-spezia {
+    --ion-color-base: var(--ion-color-spezia);
+    --ion-color-base-rgb: var(--ion-color-spezia-rgb);
+    --ion-color-contrast: var(--ion-color-spezia-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-spezia-contrast-rgb);
+    --ion-color-shade: var(--ion-color-spezia-shade);
+    --ion-color-tint: var(--ion-color-spezia-tint);
+  }
+.vertical-list {
+    display: flex;
+    flex-direction: column;
+  }

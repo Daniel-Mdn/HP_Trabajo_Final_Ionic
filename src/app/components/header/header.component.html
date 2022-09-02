@@ -3,15 +3,37 @@
     <ion-grid>
       <ion-row class="navbar">
         <ion-col class="ion-align-self-start">
-          <ion-icon name="arrow-back"></ion-icon>
+          <ion-icon (click)="prevPage()" name="arrow-back"></ion-icon>
         </ion-col>
         <ion-col class="ion-text-center">
           <ion-title>La Spezia</ion-title>
         </ion-col>
         <ion-col class="ion-align-self-end ion-text-end">
-          <ion-icon name="menu" class="ion-align-self-end"></ion-icon>
+          <ion-icon name="menu" (click)="openCustom()" class="ion-align-self-end"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 </ion-header>
+<ion-menu side="end" menuId="custom" contentId="sideBar" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="spezia">
+      <ion-title>La Spezia</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list class="vertical-list ion-justify-content-center ion-align-items-center">
+      <img src="assets/img/no-image.png" class="avatar-cliente">
+
+      <!-- te dejo esto asi para que decidas si queres todo en mayusculas o solo la primera letra, borra el comment despues-->
+      <ion-item lines="none" (click)="redirectPedidos()">{{'mis pedidos'|titlecase}}</ion-item>
+      <ion-item lines="none" (click)="redirectUsuario()">{{'mis datos'|uppercase}}</ion-item>
+      <ion-item lines="none" (click)="redirectDomicilios()">{{'domicilios'|uppercase}}</ion-item>
+      <ion-item lines="none" (click)="logout()">{{'cerrar sesion'|uppercase}}</ion-item>
+      <!-- te dejo esto asi para que decidas si queres todo en mayusculas o solo la primera letra, borra el comment despues-->
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="sideBar"></ion-router-outlet>
