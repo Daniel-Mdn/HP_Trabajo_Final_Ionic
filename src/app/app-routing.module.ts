@@ -45,14 +45,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/carrito/carrito.module').then( m => m.CarritoPageModule)
   },
   {
-    path: '**',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
     path: 'forma-de-pago',
     loadChildren: () => import('./pages/forma-de-pago/forma-de-pago.module').then( m => m.FormaDePagoPageModule)
   },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  }
 ];
 @NgModule({
   imports: [
