@@ -52,6 +52,14 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'confirmar-pedido',
+    loadChildren: () => import('./confirmar-pedido/confirmar-pedido.module').then( m => m.ConfirmarPedidoPageModule)
+  },
+  {
+    path: 'confirmar-pedido',
+    loadChildren: () => import('./pages/confirmar-pedido/confirmar-pedido.module').then( m => m.ConfirmarPedidoPageModule)
   }
 ];
 @NgModule({
