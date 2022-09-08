@@ -37,7 +37,7 @@ export class InicioPage implements OnInit {
   productos$: Observable<IProducto[]> = from([]);
 
   ngOnInit() {
-    //this.productos$ = this.productoService.getProducts$;
+    this.productos$ = this.productoService.getProducts$;
     this.categoriesService.getCategoriesId().subscribe((resp) => {
       this.categorias = resp;
     });
@@ -45,18 +45,18 @@ export class InicioPage implements OnInit {
       .getProductsId()
       .subscribe((resp) => {
         this.productos = resp;
-        //this.productoService.setProducts$(resp);
+        this.productoService.setProducts$(resp);
       });
   }
 
   handleFilter(ev: Event) {
     let event= ev as RadioGroupCustomEvent;
     this.catFiltrada = event.detail.value;
-    //this.productoService.getProductsId({
-    //  where: [{ name: 'idCategoria', value: this.catFiltrada }],
-    //}).subscribe((res)=>{
-    //  this.productoService.setProducts$(res)
-    //});
+    this.productoService.getProductsId({
+      where: [{ name: 'idCategoria', value: this.catFiltrada }],
+    }).subscribe((res)=>{
+      this.productoService.setProducts$(res)
+    });
   }
 
   selectProduct(id: string) {
