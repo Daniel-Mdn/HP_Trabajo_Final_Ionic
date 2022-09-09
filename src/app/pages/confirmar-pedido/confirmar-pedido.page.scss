@@ -1,0 +1,85 @@
+.mt-5{
+    margin-top: 5vh;
+}
+
+.btnGde{
+    width: 73vw;
+    margin-top: 3vh;
+    height: 8vh;
+    font-size: 2vh;
+    color: black;
+}
+
+.ion-color-spezia {
+    --ion-color-base: var(--ion-color-spezia);
+    --ion-color-base-rgb: var(--ion-color-spezia-rgb);
+    --ion-color-contrast: var(--ion-color-spezia-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-spezia-contrast-rgb);
+    --ion-color-shade: var(--ion-color-spezia-shade);
+    --ion-color-tint: var(--ion-color-spezia-tint);
+}
+.contFlex{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alignPrecio{
+    display:flex;
+    flex-direction: column;
+    align-items: last baseline;
+}
+
+.padbot4{
+    padding-bottom: 4vh;
+}
+
+.padbot2{
+    padding-bottom: 2vh;
+}
+
+.padtop3{
+    padding-top: 3vh;
+}
+
+.padright0{
+    padding-right: 0vw;
+}
+
+.txtCenter{
+    text-align: center;
+}
+
+.txtLeft{
+    text-align: left;
+}
+
+.recResumen{
+    margin-bottom: 5vh;
+    border: 4px solid;
+    border-radius: 2%;
+    padding: 2vh; 
+    border-color: var(--ion-color-spezia);
+    margin-left: 3vw;
+    margin-right: 3vw;
+}
+
+.txtTitulo{
+    font-weight: 600;
+}
+
+.item-inner{
+    padding-right: 0%;
+}
+
+ion-item {
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+    --padding-start: 0px;
+    --inner-padding-start:0px;
+  }
+
+.inputNotas{
+    margin-left: 8vw;
+}
