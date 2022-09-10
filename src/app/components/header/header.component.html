@@ -1,15 +1,27 @@
 <ion-header>
   <ion-toolbar>
     <ion-grid>
-      <ion-row class="navbar">
-        <ion-col class="ion-align-self-start">
-          <ion-icon (click)="prevPage()" name="arrow-back"></ion-icon>
+      <ion-row>
+        <ion-col class="ion-align-self-center ion-justify-content-center">
+          <ion-row>
+            <ion-icon (click)="prevPage()" name="arrow-back" size="large" class="btnBack"></ion-icon>
+          </ion-row>
         </ion-col>
-        <ion-col class="ion-text-center">
-          <ion-title>La Spezia</ion-title>
+        <ion-col  size="6">
+          <ion-row>
+            <ion-col class="ion-text-center">
+              <ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-text-center">
+              <ion-icon name="location" class="iconLoc"></ion-icon>
+              <ion-text class="txtDomi">Pellegrini 1240, 4 B</ion-text>
+            </ion-col>
+          </ion-row>
         </ion-col>
         <ion-col class="ion-align-self-end ion-text-end">
-          <ion-icon name="menu" (click)="openCustom()" class="ion-align-self-end"></ion-icon>
+          <ion-icon name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
