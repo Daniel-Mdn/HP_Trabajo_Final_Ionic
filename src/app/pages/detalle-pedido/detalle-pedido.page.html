@@ -2,8 +2,8 @@
 
 <ion-content>
   <div class="contFlex padtop3">
-    <h3 class="txtCenter">CONFIRMAR PEDIDO</h3>
-    <h4 class="txtCenter padbot4">Revise los datos ingresados<br>y confirme el pedido</h4>
+    <h3 class="txtCenter">DETALLE PEDIDO</h3>
+    <h4 class="txtCenter padbot4">Código pedido:<br>XXXX-CLAVE-DEL-PEDIDO-0000</h4>
   </div>
   <div class="recResumen">
     <ion-col size="10">
@@ -39,7 +39,7 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row class="padbot4">
         <ion-col size="6">
           <ion-label class="txtTitulo">TOTAL</ion-label>
         </ion-col>
@@ -49,16 +49,26 @@
           </div>
         </ion-col>
       </ion-row>
+      <ion-row class="padbot4">
+        <ion-col size="6">
+          <ion-label class="txtTitulo">FORMA DE PAGO</ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end">
+            <ion-label>Efectivo en la entrega</ion-label><!--No es necesario poner variable por el momento-->
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="padbot4">
+        <ion-col size="6">
+          <ion-label class="txtTitulo">ESTADO</ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end">
+            <ion-label>En preparación</ion-label><!--Va variable de estado-->
+          </div>
+        </ion-col>
+      </ion-row>
     </ion-col>
-  </div>
-  <div class="inputNotas">
-    <ion-item>
-      <ion-label position="floating">Notas dobre el pedido</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-
-  </div>
-  <div class="contFlex">
-    <ion-button expand="block" class="btnGde" color="spezia" type="submit">Pagar Pedido</ion-button>
   </div>
 </ion-content>
