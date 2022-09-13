@@ -3,7 +3,7 @@
   <h3 class="ion-text-center">MIS PEDIDOS</h3>
   <h4 class="ml-6">Pedidos en curso</h4>
 
-  <ion-item (click)="redirectDetallePedido()" lines="none">
+  <ion-item (click)="redirectDetallePedido()" lines="none" class="pedEnCurso">
     <ion-col size="8">
         <ion-label>Pedido {{nroPedido}}</ion-label>
         <ion-list>
@@ -19,7 +19,7 @@
 
   <h4 class="ml-6">Pedidos anteriores</h4>
   <ion-list>
-    <ion-item (click)="redirectDetallePedido()" lines="none" class="cadaPed">
+    <ion-item (click)="redirectDetallePedido()" lines="none" class="cadaPed" lines="none">
       <ion-col size="8">
         <ion-label>Pedido {{nroPedido}}</ion-label>
         <ion-list>
