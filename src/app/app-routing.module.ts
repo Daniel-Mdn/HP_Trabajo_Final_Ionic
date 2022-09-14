@@ -56,6 +56,11 @@ const routes: Routes = [
     path: 'detalle-pedido',
     loadChildren: () => import('./pages/detalle-pedido/detalle-pedido.module').then( m => m.DetallePedidoPageModule)
   },
+
+  {
+    path: 'usuario-cli-registro',
+    loadChildren: () => import('./pages/usuario-cli-registro/usuario-cli-registro.module').then( m => m.UsuarioCliRegistroPageModule)
+  },
   {
     path: 'pedidos-historico',
     loadChildren: () => import('./pages/pedidos-historico/pedidos-historico.module').then( m => m.PedidosHistoricoPageModule)

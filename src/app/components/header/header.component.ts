@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     this.menu.open('custom');
   }
   redirectPedidos(){
-    
+    this.router.navigate(['/pedidos-historico']);
   }
   redirectUsuario(){
 
