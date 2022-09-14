@@ -1,9 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>usuario-cli-registro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header> </app-header>
 
 <ion-content>
-
+  <div class="contFlex padtop5">
+    <h3 class="txtCenter">REGISTRO</h3>
+    <h4 class="txtCenter padbot4">¡Ingresá tus datos!</h4>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="login()">
+    <ion-item class="mb-10">
+      <ion-label position="floating">Ingrese mail</ion-label>
+      <ion-input formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item class="mb-10">
+      <ion-label position="floating">Ingrese contraseña</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div class="mt-8 contCenter">
+      <ion-button expand="block" class="btnGde" color="spezia" type="submit">Ingresar</ion-button>
+    </div>
+  </form>
 </ion-content>
