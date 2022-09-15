@@ -1,35 +1,52 @@
 <app-header> </app-header>
 
 <ion-content class="container">
-  <ion-list class="filtrosCont">
-    <ion-list-header>
-      <ion-label> Filtros </ion-label>
-    </ion-list-header>
-    <ion-radio-group
-      allowEmptySelection="true"
-      (ionChange)="handleFilter($event)"
-    >
-      <ion-item lines="none" color="#ffca59" *ngFor="let cat of categorias">
-        <ion-label class="colorShade">{{cat.descCategoria}}</ion-label>
-        <ion-radio [value]="cat.id" class="colorShade"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  <ion-grid class="colorShade">
+    <ion-row class="ion-justify-content-center colorShade">
+      <ion-col class="colorShade" size="6">
+        <ion-list class="colorShade">
+          <ion-item class="colorShade" lines="none">
+            <ion-select
+
+              interface="popover"
+              placeholder="Filtros"
+              (ionChange)="handleFilter($event)"
+            >
+              <ion-content *ngFor="let cat of categorias">
+                <ion-select-option  [value]="cat.id"
+                  >{{cat.descCategoria}}</ion-select-option
+                >
+              </ion-content>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <!-- List of Text Items -->
   <ion-list>
-    <ion-item *ngFor="let prod of productos$|async" (click)="selectProduct(prod.id)" lines="none" >
+    <ion-item
+      *ngFor="let prod of productos$|async"
+      (click)="selectProduct(prod.id)"
+      lines="none"
+    >
       <ion-buttons class="cadaProd">
         <ion-row>
           <ion-row class="width100">
             <ion-col size="4">
               <ion-row class="">
-                <ion-img class="avatar-producto imgSize" src="assets/img/no-image.png"></ion-img>
+                <ion-img
+                  class="avatar-producto imgSize"
+                  src="assets/img/no-image.png"
+                ></ion-img>
               </ion-row>
             </ion-col>
             <ion-col size="8" class="padLeft">
               <ion-row>
-                <ion-label class="txtCateg">{{getCategoriaProducto(prod.idCategoria)}}</ion-label>
+                <ion-label class="txtCateg"
+                  >{{getCategoriaProducto(prod.idCategoria)}}</ion-label
+                >
               </ion-row>
               <ion-row>
                 <ion-label class="txtNombre">{{prod.nombre}}</ion-label>
