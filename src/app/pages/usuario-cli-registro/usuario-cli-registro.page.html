@@ -52,6 +52,19 @@
       <ion-label position="floating">Obseraciones</ion-label>
       <ion-input formControlName="domiObs"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label>Provincia</ion-label>
+      <ion-select name="domiProv" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+        <ion-select-option value="santaFe">Santa Fe</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Localidad</ion-label>
+      <ion-select name="domiLoc" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+        <ion-select-option value="rosario">Rosario</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!--
     <ion-item class="mb-10">
       <ion-label position="floating">Provincia</ion-label>
       <ion-input formControlName="domiProv"></ion-input>
@@ -60,8 +73,9 @@
       <ion-label position="floating">Localidad</ion-label>
       <ion-input formControlName="domiLoc"></ion-input>
     </ion-item>
-    <div class="mt-8 contCenter">
-      <ion-button expand="block" class="btnGde" color="spezia" type="submit">Ingresar</ion-button>
+    -->
+    <div class="contFlex">
+      <ion-button expand="block" class="btnGde" color="spezia" type="submit">¡Listo!</ion-button>
     </div>
   </form>
 
@@ -84,9 +98,8 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <h4>Ingresá el email que utilizarás en LA SPEZIA, seguido de la contraseña que prefieras
-        </h4>
-        <form [formGroup]="formAuth" (ngSubmit)="registroUsuCli()">
+        <h4 class="ion-text-center">Ingresá el email que utilizarás en LA SPEZIA,<br>seguido de la contraseña que prefieras</h4>
+        <form [formGroup]="formAuth" (ngSubmit)="function()">
           <ion-list>
             <ion-item class="mb-10">
               <ion-label position="floating">e-mail</ion-label>
