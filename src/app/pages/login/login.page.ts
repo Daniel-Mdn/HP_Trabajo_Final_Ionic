@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
+import { Storage } from "@ionic/storage-angular";
+import { StorageService } from 'src/app/services/storage/storage.service';
+
 
 @Component({
   selector: 'app-login',
@@ -19,17 +22,20 @@ export class LoginPage implements OnInit {
     private angularFireAuth: AngularFireAuth,
     private formBuilder:FormBuilder,
     // private loginService: LoginService,
-    private router:Router
+    private router:Router,
+    private storage: StorageService
   ) {
     this.form = this.formBuilder.group({
       email:['', Validators.required],
       password:['', Validators.required]
     })
     this.errorControls = this.form.controls;
+    
    }
+    ngOnInit() {
 
-  ngOnInit() {
   }
+
 
   login(){
     let email = this.form.controls.email.value;
@@ -38,6 +44,7 @@ export class LoginPage implements OnInit {
     this.angularFireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
+        this.storage.set('usuario', email)
         this.router.navigate(['/inicio'])
       })
       .catch((error) => {

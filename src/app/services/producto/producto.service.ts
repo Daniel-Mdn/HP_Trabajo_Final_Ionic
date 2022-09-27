@@ -37,9 +37,10 @@ export class ProductoService extends FirestoreBaseService {
     return super.getAllId(this.path, params).stateChanges(['added']).pipe(
       map(actions=>actions.map(a=>
         {
+          const histPath = a.payload.doc.ref.path;
           const data = a.payload.doc.data() as IProducto;
           const id = a.payload.doc.id;
-          return { id, ...data };
+          return { id, ...data, histPath };
         }))
     );
   }
@@ -52,7 +53,7 @@ export class ProductoService extends FirestoreBaseService {
   public updateProduct(id: string, data: IProducto) {
     return super.updateOne(this.path, id, data)
   }
-  public createProduct( data: IProducto):Promise<void> {
+  public createProduct( data: IProducto):Promise<string|undefined> {
     return super.createOne(this.path, data)
   }
 

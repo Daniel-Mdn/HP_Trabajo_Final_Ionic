@@ -48,3 +48,17 @@
     padding-left: 2vw;
 }
 
+ion-toolbar {
+    --min-height: 50px;
+  }
+
+  .button-pedido{
+    --border-radius: 10%;
+    width: 50vw;
+    height: 10vh;
+  }
+
+  .fab-horizontal-center{
+    left: 31vw;
+    margin-left: -28px;
+  }

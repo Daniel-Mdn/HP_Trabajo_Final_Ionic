@@ -46,7 +46,7 @@ export class CategoriesService extends FirestoreBaseService {
   public updateCategory(id: string, data: ICategoria) {
     return super.updateOne(this.path, id, data)
   }
-  public createCategory( data: ICategoria):Promise<void> {
+  public createCategory( data: ICategoria):Promise<string|undefined> {
     return super.createOne(this.path, data)
   }
 

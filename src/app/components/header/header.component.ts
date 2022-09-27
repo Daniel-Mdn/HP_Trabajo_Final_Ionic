@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit {
   }
 
   prevPage(){
-    // console.log(this.router.)
     this.router.navigate(['/inicio']);
   }
 }

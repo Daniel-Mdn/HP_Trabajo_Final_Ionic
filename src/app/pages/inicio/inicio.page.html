@@ -7,13 +7,12 @@
         <ion-list class="colorShade">
           <ion-item class="colorShade" lines="none">
             <ion-select
-
               interface="popover"
               placeholder="Filtros"
               (ionChange)="handleFilter($event)"
             >
               <ion-content *ngFor="let cat of categorias">
-                <ion-select-option  [value]="cat.id"
+                <ion-select-option [value]="cat.id"
                   >{{cat.descCategoria}}</ion-select-option
                 >
               </ion-content>
@@ -25,6 +24,7 @@
   </ion-grid>
 
   <!-- List of Text Items -->
+
   <ion-list>
     <ion-item
       *ngFor="let prod of productos$|async"
@@ -64,5 +64,31 @@
       </ion-buttons>
     </ion-item>
   </ion-list>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button class="button-pedido">
+      <ion-row
+        class="ion-justify-content-between ion-align-items-center"
+        style="width: -webkit-fill-available"
+      >
+        <ion-col size="3">
+          <ion-icon
+            name="bag-outline"
+            style="width: 6vw; height: 5vh"
+          ></ion-icon>
+          <ion-badge
+            color="danger"
+            style="position: absolute; right: 8px; top: 4px"
+            >{{lineasCurrentPedido.length}}</ion-badge
+          >
+        </ion-col>
+        <ion-col size="auto">
+          <div>Ver pedido</div>
+        </ion-col>
+        <ion-col size="3">
+          <div>${{currentPedido.total??0}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 <!-- mis cambios -->

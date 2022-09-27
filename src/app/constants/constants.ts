@@ -1,12 +1,18 @@
 export enum Categorias{
-    Hambuerguesas="Hamburguesas",
-    Pizzas="Pizzas"
+    Hamburguesas="hamburguesas",
+    DescHamburguesas="Medallón de Carne",
+    PizzasMolde="pizzaAlMolde",
+    PizzasParrilla="pizzaAlaParrilla"
 }
 export enum Tamanios{
     Grande="grande",
     Mediana="mediana",
     Simple="simple",
     Doble="doble"
+}
+export interface ITamanios{
+    id:string,
+    tamanio:string
 }
 export enum TamaniosHamburguesa{
     Simple="simple",
@@ -17,10 +23,10 @@ export enum extrasHamburguesas{
     dos="2",
     tres="3",
 }
-export interface Extras{
-    id:string,
-    cantidad:number,
-    precio:number,
-    descExtra:string,
-    idLineaDePed:number
+export enum estadosPedido{
+    Pendiente="pendiente",
+    Preparacion="en preparacion",
+    Entregado="entregado",
+    EnCamino="en camino",
+    Cancelado="cancelado"
 }
