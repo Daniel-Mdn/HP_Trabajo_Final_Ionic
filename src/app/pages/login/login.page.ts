@@ -52,6 +52,10 @@ export class LoginPage implements OnInit {
         const errorMessage = error.message;
       });
   }
+
+  redirectUsuCliRegistro(){
+    this.router.navigate(['/usuario-cli-registro'])
+  }
 }
 
 /*
