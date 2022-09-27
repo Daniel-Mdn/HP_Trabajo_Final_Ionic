@@ -38,7 +38,8 @@
               <ion-row class="">
                 <ion-img
                   class="avatar-producto imgSize"
-                  src="assets/img/no-image.png"
+                  [src]="prod?.imagen||'assets/img/no-image.png'"
+                  onerror="assets/img/no-image.png"
                 ></ion-img>
               </ion-row>
             </ion-col>

@@ -9,7 +9,7 @@ export interface IProducto{
     disponibilidad:boolean,
     baja:boolean,
     precio?:number,
-    imagen?:File,
+    imagen?:string,
     tamanio:Tamanios,
     idCategoria:string,
     categoria?:ICategoria

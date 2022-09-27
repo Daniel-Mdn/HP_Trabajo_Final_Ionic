@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  AlertController,
   CheckboxCustomEvent,
   IonModal,
   SelectCustomEvent,
@@ -57,7 +58,6 @@ export class ProductoPage implements OnInit {
   ) {}
 
   @Input() pedido: IPedido | undefined;
-  @Input() total: number = 0;
 
   @ViewChild(IonModal) modal: IonModal;
 
@@ -81,9 +81,11 @@ export class ProductoPage implements OnInit {
   rangeValue: RangeValue;
   name: string;
   subtotal: number = 0;
+  totalProducto: number = 0;
   linea: ILineaPedido = {} as ILineaPedido;
   lineasPedido$: Observable<ILineaPedido[]> = from([]);
   lineasPedido: ILineaPedido[] = [];
+  isSubmitted:boolean=false;
 
   form: FormGroup = new FormGroup({
     idProducto: new FormControl(null, Validators.required),
@@ -92,6 +94,9 @@ export class ProductoPage implements OnInit {
     notasDeProducto: new FormControl(),
     tamanio: new FormControl(null, Validators.required),
   });
+  get controls() {
+    return this.form.controls;
+  }
 
   ngOnInit() {
     this.lineasPedido$ = this.lineaPedidoService.getLineasPedido$;
@@ -100,7 +105,7 @@ export class ProductoPage implements OnInit {
       this.form.reset();
       this.form.controls['idProducto'].setValue(id);
       this.form.controls['cantidad'].setValue(this.cantidad);
-      this.form.controls['subtotal'].setValue(this.total);
+      this.form.controls['subtotal'].setValue(this.totalProducto);
       this.tamanios = [];
       this.extras$ = this.extraService.getExtras$;
       this.productService
@@ -142,7 +147,7 @@ export class ProductoPage implements OnInit {
                 .subscribe((x) => {
                   this.producto.historial_precio = [x[0]];
                   this.producto.precio = x[0]?.precioProd ?? 0;
-                  this.total = this.producto.precio;
+                  this.totalProducto = this.producto.precio;
                 });
               prods.forEach((item) => {
                 this.tamanios.push({ id: item.id, tamanio: item.tamanio });
@@ -187,7 +192,7 @@ export class ProductoPage implements OnInit {
   }
 
   confirm() {
-    this.form.controls['subtotal'].setValue(this.total);
+    this.form.controls['subtotal'].setValue(this.totalProducto);
     this.modal.dismiss(this.extrasSelected, 'confirm');
   }
 
@@ -208,13 +213,13 @@ export class ProductoPage implements OnInit {
     if (ev.detail.checked) {
       this.extrasSelected.push(ev.detail.value);
       this.subtotal = this.subtotal + ev.detail.value.precio;
-      this.total = this.total + ev.detail.value.precio;
+      this.totalProducto = this.totalProducto + ev.detail.value.precio;
     } else {
       this.extrasSelected = this.extrasSelected.filter((extra) => {
         extra != ev.detail.value;
       });
       this.subtotal = this.subtotal - ev.detail.value.precio;
-      this.total = this.total - ev.detail.value.precio;
+      this.totalProducto = this.totalProducto - ev.detail.value.precio;
     }
   }
 
@@ -238,16 +243,17 @@ export class ProductoPage implements OnInit {
     if (this.cantidad > 1) {
       this.cantidad = this.cantidad - 1;
       this.form.controls['tamanio'].setValue(this.cantidad);
-      this.total = this.total - this.producto.precio;
+      this.totalProducto = this.totalProducto - this.producto.precio;
     }
   }
   sumar() {
     this.cantidad = this.cantidad + 1;
     this.form.controls['tamanio'].setValue(this.cantidad);
-    this.total = this.total + this.producto.precio;
+    this.totalProducto = this.totalProducto + this.producto.precio;
   }
 
   addProduct() {
+    this.isSubmitted=true
     if (this.form.valid) {
       let lineaPedido: ILineaPedido = {
         cantidad: this.form.controls['cantidad'].value,
@@ -264,7 +270,7 @@ export class ProductoPage implements OnInit {
       });
       let totalPedido=0;
       this.lineasPedido.forEach((linea)=>{
-        totalPedido=totalPedido+this.total
+        totalPedido=totalPedido+this.totalProducto
       })
       let ped: IPedido = {
         fechaPedido: new Date(),
@@ -305,4 +311,5 @@ export class ProductoPage implements OnInit {
       this.router.navigate(['/inicio']);
     }
   }
+
 }
