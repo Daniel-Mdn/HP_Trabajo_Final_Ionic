@@ -78,7 +78,7 @@ export class UsuarioCliRegistroPage implements OnInit {
       nombre: this.form.controls.nombre.value,
       fechaNac: this.form.controls.fechaNac.value,
       nroTelefono: this.form.controls.nroTel.value,
-      rolPers: "usuario-cliente"
+      rol: "usuario-cliente"
     }
     var dataDomi = {
       idUsuario: this.email,
@@ -92,6 +92,7 @@ export class UsuarioCliRegistroPage implements OnInit {
     this.firestore.collection('usuarios').doc(this.email).set(dataUsu);
     this.firestore.collection('domicilios').doc().set(dataDomi);
     console.log("Cliente registrado con éxito")
+    this.router.navigate(['/login']);
   }
 
   /*
