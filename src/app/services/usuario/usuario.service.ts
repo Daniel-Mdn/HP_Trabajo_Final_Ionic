@@ -26,7 +26,7 @@ export class UsuarioService extends FirestoreBaseService {
   public updateUser(id: string, data: IUsuario) {
     return super.updateOne(this.path, id, data)
   }
-  public createUser( data: IUsuario):Promise<void> {
+  public createUser( data: IUsuario):Promise<string|undefined> {
     return super.createOne(this.path, data)
   }
 

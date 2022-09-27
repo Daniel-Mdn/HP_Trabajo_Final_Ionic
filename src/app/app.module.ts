@@ -18,7 +18,8 @@ import {} from 'firebase/auth';
 import {} from 'firebase/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { AngularFireAuthModule } from "@angular/fire/compat/auth";
       //   }
       // }
     }),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     AngularFirestoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
