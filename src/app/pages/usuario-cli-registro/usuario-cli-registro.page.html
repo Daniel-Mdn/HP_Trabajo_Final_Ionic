@@ -3,7 +3,7 @@
 <ion-content>
   <div class="contFlex padtop5">
     <h3 class="txtCenter">REGISTRO</h3>
-    <h4 class="txtCenter padbot4">¡Ingresá tus datos!</h4>
+    <h4 class="txtCenter padbot4">¡Perfecto!<br>Ahora ingresá tus datos</h4>
   </div>
   <form [formGroup]="form" (ngSubmit)="registroUsuCli()">
     <ion-item class="mb-10">
@@ -15,8 +15,16 @@
       <ion-input formControlName="nombre"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Fecha de nacimiento</ion-label>
-      <ion-input formControlName="fechaNac"></ion-input>
+      <ion-grid [fixed]="true">
+        <ion-row>
+          <ion-col size="12"><ion-label>Fecha de nacimiento</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-align-self-center" size="12">
+            <ion-datetime [preferWheel]="true" size="cover" formControlName="fechaNac" presentation="date"></ion-datetime>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Número de teléfono</ion-label>
@@ -39,32 +47,22 @@
       <ion-input formControlName="domiDpto"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Obseraciones</ion-label>
+      <ion-label position="floating">Observaciones (opcional)</ion-label>
       <ion-input formControlName="domiObs"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item class="mb-10">
       <ion-label>Provincia</ion-label>
       <ion-select name="domiProv" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
         <ion-select-option value="santaFe">Santa Fe</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item>
+    <ion-item class="mb-10">
       <ion-label>Localidad</ion-label>
       <ion-select formControlName="domiLoc" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
         <ion-select-option value="rosario">Rosario</ion-select-option>
       </ion-select>
     </ion-item>
-    <!--
-    <ion-item class="mb-10">
-      <ion-label position="floating">Provincia</ion-label>
-      <ion-input formControlName="domiProv"></ion-input>
-    </ion-item>
-    <ion-item class="mb-10">
-      <ion-label position="floating">Localidad</ion-label>
-      <ion-input formControlName="domiLoc"></ion-input>
-    </ion-item>
-    -->
-    <div class="contFlex">
+    <div class="contFlex mb-10">
       <ion-button expand="block" class="btnGde" color="spezia" type="submit">¡Listo!</ion-button>
     </div>
   </form>
@@ -83,7 +81,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <h4 class="ion-text-center">Ingresá el email que utilizarás en LA SPEZIA,<br>seguido de la contraseña que prefieras</h4>
+        <h4 class="ion-text-center">Ingresá el email que utilizarás en<br>LA SPEZIA,<br>seguido de la contraseña que prefieras</h4>
         <form [formGroup]="formAuth" (ngSubmit)="function()">
           <ion-list>
             <ion-item class="mb-10">
@@ -96,7 +94,7 @@
             </ion-item>
             <ion-item class="mb-10">
               <ion-label position="floating">Repetir contraseña</ion-label>
-              <ion-input></ion-input>
+              <ion-input type="password"></ion-input>
             </ion-item>
           </ion-list>
         </form>
