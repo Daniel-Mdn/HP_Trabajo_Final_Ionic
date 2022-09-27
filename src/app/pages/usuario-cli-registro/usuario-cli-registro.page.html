@@ -6,31 +6,21 @@
     <h4 class="txtCenter padbot4">¡Ingresá tus datos!</h4>
   </div>
   <form [formGroup]="form" (ngSubmit)="registroUsuCli()">
-    <!--
-    <ion-item class="mb-10">
-      <ion-label position="floating">Ingrese mail</ion-label>
-      <ion-input formControlName="email"></ion-input>
-    </ion-item>
-    <ion-item class="mb-10">
-      <ion-label position="floating">Ingrese contraseña</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
-    <ion-item class="mb-10">
-      <ion-label position="floating">Ingrese nuevamente la contraseña</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
-    -->
     <ion-item class="mb-10">
       <ion-label position="floating">Apellido</ion-label>
       <ion-input formControlName="apellido"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Nombres</ion-label>
-      <ion-input formControlName="nombres"></ion-input>
+      <ion-input formControlName="nombre"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Fecha de nacimiento</ion-label>
       <ion-input formControlName="fechaNac"></ion-input>
+    </ion-item>
+    <ion-item class="mb-10">
+      <ion-label position="floating">Número de teléfono</ion-label>
+      <ion-input formControlName="nroTel"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Calle</ion-label>
@@ -60,7 +50,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Localidad</ion-label>
-      <ion-select name="domiLoc" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+      <ion-select formControlName="domiLoc" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
         <ion-select-option value="rosario">Rosario</ion-select-option>
       </ion-select>
     </ion-item>
@@ -81,12 +71,8 @@
 
   <ion-modal #modal isOpen="true">
     <ng-template>
-
       <ion-header>
-
-
         <ion-toolbar>
-
           <ion-buttons slot="start">
             <ion-button (click)="redirectLogin()">Cancelar</ion-button>
           </ion-buttons>
@@ -94,7 +80,6 @@
           <ion-buttons slot="end">
             <ion-button (click)="registrarEmail()" [strong]="true">Confirmar</ion-button>
           </ion-buttons>
-
         </ion-toolbar>
       </ion-header>
       <ion-content>

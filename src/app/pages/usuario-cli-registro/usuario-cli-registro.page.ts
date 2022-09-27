@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
@@ -20,12 +21,14 @@ export class UsuarioCliRegistroPage implements OnInit {
     private angularFireAuth: AngularFireAuth,
     private formBuilder:FormBuilder,
     // private loginService: LoginService,
-    private router:Router
+    private router:Router,
+    private firestore: AngularFirestore,
   ) {
     this.form = this.formBuilder.group({
       apellido: ['', Validators.required],
-      nombres:['', Validators.required] ,
+      nombre:['', Validators.required] ,
       fechaNac: ['', Validators.required],
+      nroTel: ['', Validators.required],
       domiCalle: ['', Validators.required],
       domiNro: ['', Validators.required],
       domiPiso: ['',],
@@ -41,6 +44,8 @@ export class UsuarioCliRegistroPage implements OnInit {
     this.errorControls = this.form.controls;
    }
 
+  email: string;
+  password: string;
   ngOnInit() {
   }
 
@@ -50,10 +55,10 @@ export class UsuarioCliRegistroPage implements OnInit {
   }
 
   registrarEmail(){
-    let email = this.formAuth.controls.email.value;
-    let password = this.formAuth.controls.password.value;
-    console.log("email: ", email, ", password: ", password);
-    this.angularFireAuth.createUserWithEmailAndPassword(email, password)
+    this.email = this.formAuth.controls.email.value;
+    this.password = this.formAuth.controls.password.value;
+    console.log("email: ", this.email, ", password: ", this.password);
+    this.angularFireAuth.createUserWithEmailAndPassword(this.email, this.password)
     .then((userCredential) => {
       // Signed in
       console.log("Usuario creado")
@@ -65,6 +70,28 @@ export class UsuarioCliRegistroPage implements OnInit {
       //fnErrorDialog(errorCode, email, password)
       console.log('Código error: ' + errorCode + ' / Mensaje: ' + errorMessage);
     });
+  }
+
+  registroUsuCli(){
+    var dataUsu = {
+      apellido: this.form.controls.apellido.value,
+      nombre: this.form.controls.nombre.value,
+      fechaNac: this.form.controls.fechaNac.value,
+      nroTelefono: this.form.controls.nroTel.value,
+      rolPers: "usuario-cliente"
+    }
+    var dataDomi = {
+      idUsuario: this.email,
+      calle: this.form.controls.domiCalle.value,
+      nroCasa: this.form.controls.domiNro.value,
+      piso: this.form.controls.domiPiso.value,
+      dpto: this.form.controls.domiDpto.value,
+      domiObs: this.form.controls.domiObs.value,
+      idLocalidad: this.form.controls.domiLoc.value,
+    }
+    this.firestore.collection('usuarios').doc(this.email).set(dataUsu);
+    this.firestore.collection('domicilios').doc().set(dataDomi);
+    console.log("Cliente registrado con éxito")
   }
 
   /*
