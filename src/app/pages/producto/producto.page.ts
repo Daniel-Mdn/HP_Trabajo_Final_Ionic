@@ -45,7 +45,6 @@ export class ProductoPage implements OnInit {
   producto: IProducto;
   productos: IProducto[];
   cantidad: number = 1;
-
   constructor(
     public firestore: AngularFirestore,
     private storage: StorageService,

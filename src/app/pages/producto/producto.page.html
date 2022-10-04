@@ -84,30 +84,30 @@
         </ion-item>
         <ion-grid>
           <ion-row class="ion-justify-content-center mt-6">
-            <ion-col size="2">
-              <ion-button size="small" (click)="restar()">
+            <ion-col size="3" class="contFlex">
+              <ion-button color="spezia" size="default" (click)="restar()" class="removeBtn">
                 <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
               </ion-button>
             </ion-col>
-            <ion-col size="2" class="ion-align-self-center">
-              <div class="ion-text-center">{{this.cantidad}}</div>
+            <ion-col size="2" class="ion-align-self-center ion-justify-content-center">
+              <div class="ion-text-center"><h2>{{this.cantidad}}</h2></div>
             </ion-col>
-            <ion-col size="2">
-              <ion-button size="small" (click)="sumar()">
+            <ion-col size="3" class="contFlex">
+              <ion-button color="spezia" size="default" (click)="sumar()">
                 <ion-icon slot="icon-only" name="add-outline"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
           <ion-row class="ion-justify-content-center">
             <ion-col class="ion-align-self-center">
-              <ion-text class="ion-text-center" color="primary">
-                <h2><strong>Total:</strong> ${{this.totalProducto}}</h2>
+              <ion-text class="ion-text-center">
+                <h1><strong>Total:</strong> ${{this.totalProducto}}</h1>
               </ion-text>
             </ion-col>
           </ion-row>
           <ion-row class="ion-justify-content-center">
             <ion-col size="auto" class="ion-align-self-center">
-              <ion-button color="primary" [disabled]="" (click)="addProduct()">
+              <ion-button size="large" color="spezia" [disabled]="" (click)="addProduct()">
                 Agregar al pedido
                 <ion-icon slot="end" name="checkmark-outline"></ion-icon>
               </ion-button>
@@ -123,7 +123,7 @@
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Adicionales</ion-title>
+          <ion-title class="ion-align-self-center ion-justify-content-center">Adicionales</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -144,14 +144,16 @@
             </ion-select>
           </ion-item>
         </div>
+        <!--
         <ng-template #pizza>
           <ion-item> Irian los extras de pizza </ion-item>
         </ng-template>
-        <ion-item *ngFor="let extra of extras$|async">
+        -->
+        <ion-item *ngFor="let extra of extras$|async" lines="none">
           <ion-label>{{extra.descExtra}}</ion-label>
           <ion-checkbox
             (ionChange)="setExtra($event)"
-            color="primary"
+            color="spezia"
             slot="start"
             [id]="extra.id"
             [checked]="isChecked(extra.id)"
@@ -160,10 +162,10 @@
         </ion-item>
 
         <ion-item class="ion-text-center" lines="none">
-          <ion-label> Subtotal: {{subtotal}}</ion-label>
+          <ion-label><h2>Subtotal: ${{subtotal}}</h2></ion-label>
         </ion-item>
         <ion-item class="ion-text-center" lines="none">
-          <ion-label>Total: {{totalProducto}}</ion-label>
+          <ion-label><h1><strong>Total:</strong> ${{totalProducto}}</h1></ion-label>
         </ion-item>
       </ion-content>
       <ion-footer>
@@ -176,7 +178,7 @@
               fill="solid"
               (click)="confirm()"
               [strong]="true"
-              color="primary"
+              color="spezia"
               >Confirmar</ion-button
             >
           </ion-buttons>
