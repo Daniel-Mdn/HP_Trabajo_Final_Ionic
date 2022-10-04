@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   redirectDomicilios(){
     this.router.navigate(['/domicilios']);
   }
+  
   logout(){
 
   }

@@ -7,3 +7,39 @@
 .error{
     color: red;
 }
+.contFlex{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mt-2{
+    margin-top: 2vh;
+}
+.mt-6{
+    margin-top: 6vh;
+}
+.subtotal{
+    font-size: large;
+}
+
+ion-icon{
+    color: black;
+}
+ion-checkbox{
+    --border-color: #6c6c6c;
+}
+ion-card-title{
+    --color: black;
+    font-size: xx-large;
+}
+ion-card-content{
+    color: black;
+    text-align: justify;
+    padding-left: 7vw;
+    padding-right: 7vw;
+}
+ion-textarea{
+    --padding-bottom: 0vh;
+    --padding-top: 0vh;
+}
