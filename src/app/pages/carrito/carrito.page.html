@@ -2,32 +2,33 @@
 
 <ion-content>
   <h3 class="txtCenter padbot4">SU PEDIDO</h3>
-  <ion-list>
-    <ion-item>
-      <ion-col size="2" class="contFlex">
-        <ion-button fill="clear" class="btnDeleteItem">
+  <ion-list lines="none" *ngIf="pedido$|async">
+    <ion-item  *ngFor="let linea of lineas$|async; index as i" class="ion-margin-bottom">
+      <ion-col size="2" class="contFlex" >
+        <ion-button fill="clear" class="btnDeleteItem" (click)="deleteLineaPed(i)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col size="8" class="itemDesc">
         <ion-row class="txtCenter contFlex">
-          <h5>Burdain Cheese</h5>
+          <h5>{{linea.producto.nombre}}</h5>
         </ion-row>
-        <ion-row class="txtCenter">Descripción resumida, ver de poner una cantidad específicas de palabras</ion-row>
+        <ion-row class="txtCenter">{{linea.producto.descProd}}</ion-row>
         <ion-row class="txtCenter contFlex">
-          <h5>$1000</h5>
+          <h6 style="margin-top:2vh" class="ion-no-margin">Adicionales:{{linea.subtotal|currency}}</h6>
+          <h6 style="margin-top:1vh;" class="ion-no-margin">Total:{{linea.totalProducto|currency}}</h6>
           <!--Precio con adicionales y demás-->
         </ion-row>
       </ion-col>
       <ion-col size="2" class="contFlex">
         <ion-row>
-          <ion-button fill="clear" class="contFlex btnDeleteItem">
+          <ion-button fill="clear" class="contFlex btnDeleteItem" (click)="addCantidadLineaPed(i)">
             <ion-icon name="add-circle-outline"></ion-icon>
           </ion-button>
         </ion-row>
-        <ion-row class="cantItem">1</ion-row>
+        <ion-row class="cantItem">{{linea.cantidad}}</ion-row>
         <ion-row>
-          <ion-button fill="clear" class="contFlex btnDeleteItem">
+          <ion-button fill="clear" class="contFlex btnDeleteItem" (click)="restCantidadLineaPed(i)">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </ion-button>
         </ion-row>
@@ -35,9 +36,9 @@
     </ion-item>
   </ion-list>
   <div class="mt-5 contFlex">
-    <h3>Total: $2500</h3>
+    <h3>Total: {{(pedido$|async).total}}</h3>
   </div>
   <div class="mt-5 contFlex">
-    <ion-button expand="block" class="btnGde" color="spezia" type="submit">Confirmar pedido</ion-button>
+    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="navigateToConfirmPedido()">Confirmar pedido</ion-button>
   </div>
 </ion-content>

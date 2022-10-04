@@ -1,4 +1,4 @@
-<app-header> </app-header>
+<app-header prevPage="carrito"> </app-header>
 
 <ion-content>
   <div class="contFlex padtop3">
@@ -17,25 +17,25 @@
         <ion-label class="txtTitulo">DETALLE PEDIDO</ion-label>
       </ion-row>
       <ion-list>
-        <ion-item>
+        <ion-item *ngFor="let linea of lineasPedido">
           <ion-col size="6">
-            <ion-label>Burdain Cheese</ion-label>
+            <ion-label>{{linea.producto.nombre|titlecase}}</ion-label>
           </ion-col>
           <ion-col size="2">
-            <ion-label>2 un.</ion-label>
+            <ion-label>{{linea.cantidad}} Unid.</ion-label>
           </ion-col>
           <ion-col size="3">
-            <ion-label class="ion-text-end">$2000</ion-label>
+            <ion-label class="ion-text-end">{{linea.totalProducto|currency}}</ion-label>
           </ion-col>
         </ion-item>
       </ion-list>
       <ion-row class="padbot4">
         <ion-col size="6">
-          <ion-label>Cadete</ion-label>
+          <ion-label>{{envio.service}}</ion-label>
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>$ 300</ion-label>
+            <ion-label>{{envio.price|currency}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -45,7 +45,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end txtTitulo">
-            <ion-label>$ 2500</ion-label>
+            <ion-label>{{pedido.total|currency}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -53,12 +53,12 @@
   </div>
   <div class="inputNotas">
     <ion-item>
-      <ion-label position="floating">Notas dobre el pedido</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-label position="floating">Notas sobre el pedido</ion-label>
+      <ion-input type="text" [formControl]="notasPedido"></ion-input>
     </ion-item>
 
   </div>
   <div class="contFlex">
-    <ion-button expand="block" class="btnGde" color="spezia" type="submit">Pagar Pedido</ion-button>
+    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="navigateToConfirmPedido()">Confirmar Pedido</ion-button>
   </div>
 </ion-content>

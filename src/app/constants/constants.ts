@@ -10,6 +10,14 @@ export enum Tamanios{
     Simple="simple",
     Doble="doble"
 }
+export enum TypeEnvioEnum{
+    Cadete="cadete",
+    Retiro="retiro"
+}
+export enum PrecioEnvioEnum{
+    Cadete=300,
+    Retiro=0
+}
 export interface ITamanios{
     id:string,
     tamanio:string

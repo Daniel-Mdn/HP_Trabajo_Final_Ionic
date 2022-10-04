@@ -21,7 +21,7 @@ export class ProductoService extends FirestoreBaseService {
   }
   path="productos"
   categories:ICategoria[]=[];
-
+  
   listProducts$:BehaviorSubject<IProducto[]>= new BehaviorSubject<IProducto[]>([] as IProducto[])
   
   public get getProducts$(){

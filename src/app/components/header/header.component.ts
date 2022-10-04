@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
@@ -10,6 +10,7 @@ import { MenuController } from '@ionic/angular';
 export class HeaderComponent implements OnInit {
 
   constructor(private menu: MenuController, private router: Router) { }
+  @Input() prevPage:string="inicio";
 
   ngOnInit() {}
 
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  prevPage(){
-    this.router.navigate(['/inicio']);
+  goPrevPage(){
+    this.router.navigate(['/'+this.prevPage]);
   }
 }

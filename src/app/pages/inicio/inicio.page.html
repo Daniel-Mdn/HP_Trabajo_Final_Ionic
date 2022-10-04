@@ -65,8 +65,8 @@
       </ion-buttons>
     </ion-item>
   </ion-list>
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button class="button-pedido">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="lineasCurrentPedido.length">
+    <ion-fab-button class="button-pedido" (click)="navigateToCarrito()">
       <ion-row
         class="ion-justify-content-between ion-align-items-center"
         style="width: -webkit-fill-available"

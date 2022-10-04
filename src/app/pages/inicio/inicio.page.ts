@@ -95,4 +95,7 @@ export class InicioPage implements OnInit {
     const desc = this.categorias.find((c) => c.id === id)?.descCategoria;
     return desc ? desc : 'Sin categoria';
   }
+  navigateToCarrito(){
+    this.router.navigate(['/carrito']);
+  }
 }

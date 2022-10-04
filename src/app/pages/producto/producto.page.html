@@ -44,7 +44,7 @@
         <span class="error ion-padding" *ngIf="isSubmitted && controls.tamanio.errors?.required">
           El tamaño es requerido.
         </span>
-        <ion-item>
+        <ion-item *ngIf="isBurger">
           <ion-checkbox
             color="primary"
             class="mr-10"
@@ -99,7 +99,7 @@
           <ion-row class="ion-justify-content-center">
             <ion-col class="ion-align-self-center">
               <ion-text class="ion-text-center" color="primary">
-                <h2><strong>Total:</strong> ${{this.totalProducto}}</h2>
+                <h2><strong>Total:</strong> ${{this.totalProducto||0}}</h2>
               </ion-text>
             </ion-col>
           </ion-row>

@@ -42,10 +42,6 @@ export interface modalExtra {}
   styleUrls: ['./producto.page.scss'],
 })
 export class ProductoPage implements OnInit {
-  producto: IProducto;
-  productos: IProducto[];
-  cantidad: number = 1;
-
   constructor(
     public firestore: AngularFirestore,
     private storage: StorageService,
@@ -60,6 +56,11 @@ export class ProductoPage implements OnInit {
   @Input() pedido: IPedido | undefined;
 
   @ViewChild(IonModal) modal: IonModal;
+
+  producto: IProducto;
+  productoSelected: IProducto={} as IProducto;
+  productos: IProducto[];
+  cantidad: number = 1;
 
   tamaniosHamburguesa: TamaniosHamburguesa[] = [
     TamaniosHamburguesa.Doble,
@@ -85,7 +86,7 @@ export class ProductoPage implements OnInit {
   linea: ILineaPedido = {} as ILineaPedido;
   lineasPedido$: Observable<ILineaPedido[]> = from([]);
   lineasPedido: ILineaPedido[] = [];
-  isSubmitted:boolean=false;
+  isSubmitted: boolean = false;
 
   form: FormGroup = new FormGroup({
     idProducto: new FormControl(null, Validators.required),
@@ -136,21 +137,26 @@ export class ProductoPage implements OnInit {
             })
             .pipe(first())
             .subscribe((prods) => {
+              prods.map((prod) => {
+                prod.histPath = 'productos/' + prod.id;
+              });
+              console.log(prods);
               this.productos = prods;
-              const hist = this.firestore.doc(this.producto.histPath);
-              hist
-                .collection<IHistorialPrecio>('historial_precio', (ref) =>
-                  ref.orderBy('fechaDesde', 'desc')
-                )
-                .valueChanges()
-                .pipe(first())
-                .subscribe((x) => {
-                  this.producto.historial_precio = [x[0]];
-                  this.producto.precio = x[0]?.precioProd ?? 0;
-                  this.totalProducto = this.producto.precio;
-                });
-              prods.forEach((item) => {
-                this.tamanios.push({ id: item.id, tamanio: item.tamanio });
+              this.productos.map((p) => {
+                console.log(p)
+                this.tamanios.push({ id: p.id, tamanio: p.tamanio });
+                const hist = this.firestore.doc(p.histPath);
+                hist
+                  .collection<IHistorialPrecio>('historial_precio', (ref) =>
+                    ref.orderBy('fechaDesde', 'desc')
+                  )
+                  .valueChanges()
+                  .pipe(first())
+                  .subscribe((x) => {
+                    p.historial_precio = [x[0]];
+                    p.precio = x[0]?.precioProd ?? 0;
+                    // this.totalProducto = this.producto.precio;
+                  });
               });
             });
         });
@@ -182,9 +188,9 @@ export class ProductoPage implements OnInit {
         });
     });
 
-    this.lineasPedido$.pipe(first()).subscribe((lineas)=>
-      this.lineasPedido=lineas)
-
+    this.lineasPedido$
+      .pipe(first())
+      .subscribe((lineas) => (this.lineasPedido = lineas));
   }
 
   cancel() {
@@ -199,9 +205,7 @@ export class ProductoPage implements OnInit {
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<IExtras[]>>;
     if (ev.detail.role === 'confirm') {
-      console.log(ev.detail.data);
       this.extrasProduct = ev.detail.data;
-      console.log(this.extrasProduct);
     }
   }
   onIonChange(ev: Event) {
@@ -216,7 +220,7 @@ export class ProductoPage implements OnInit {
       this.totalProducto = this.totalProducto + ev.detail.value.precio;
     } else {
       this.extrasSelected = this.extrasSelected.filter((extra) => {
-        extra != ev.detail.value;
+        return extra !== ev.detail.value;
       });
       this.subtotal = this.subtotal - ev.detail.value.precio;
       this.totalProducto = this.totalProducto - ev.detail.value.precio;
@@ -224,7 +228,16 @@ export class ProductoPage implements OnInit {
   }
 
   removeExtra(event: any) {
-    console.log(event.target.id);
+    this.extrasSelected = this.extrasSelected.filter((extra) => {
+      return extra.id !== event.target.id;
+    });
+    this.extrasProduct = this.extrasProduct.filter((extra) => {
+      return extra.id !== event.target.id;
+    });
+    let precio=[];
+    this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
+    const totalExtras= precio.reduce((a,b)=>a+b,0)
+    this.totalProducto=this.productoSelected.precio + totalExtras??0;    
   }
 
   isChecked(id: string): boolean {
@@ -233,8 +246,12 @@ export class ProductoPage implements OnInit {
   }
   handleFilter(event: Event) {
     let ev = event as SelectCustomEvent;
-    // let precio= this.productos.find((prod)=>prod.id=ev.detail.value).
-    // this.total=
+    this.productoSelected= this.productos.find((prod)=>prod.id==ev.detail.value);
+    let precio=[];
+    this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
+    const totalExtras= precio.reduce((a,b)=>a+b,0)
+    this.totalProducto=this.productoSelected.precio + totalExtras??0;    
+    this.cantidad =1;
     this.tamanioSelected = true;
   }
   handleFilterHamburguesas(event: any) {}
@@ -242,24 +259,26 @@ export class ProductoPage implements OnInit {
   restar() {
     if (this.cantidad > 1) {
       this.cantidad = this.cantidad - 1;
-      this.form.controls['tamanio'].setValue(this.cantidad);
+      this.form.controls['cantidad'].setValue(this.cantidad);
       this.totalProducto = this.totalProducto - this.producto.precio;
     }
   }
   sumar() {
     this.cantidad = this.cantidad + 1;
-    this.form.controls['tamanio'].setValue(this.cantidad);
+    this.form.controls['cantidad'].setValue(this.cantidad);
     this.totalProducto = this.totalProducto + this.producto.precio;
   }
 
   addProduct() {
-    this.isSubmitted=true
+    this.isSubmitted = true;
     if (this.form.valid) {
       let lineaPedido: ILineaPedido = {
         cantidad: this.form.controls['cantidad'].value,
         subtotal: this.form.controls['subtotal'].value,
+        totalProducto: this.totalProducto,
         notasDeProducto: this.form.controls['notasDeProducto'].value,
         idProducto: this.form.controls['idProducto'].value,
+        producto: this.producto,
       };
       this.lineasPedido.push(lineaPedido);
       this.lineaPedidoService.setLineasPedido$(this.lineasPedido);
@@ -267,11 +286,12 @@ export class ProductoPage implements OnInit {
       let usuario = '';
       this.storage.get('usuario').then((val) => {
         console.log(val);
+        usuario=val;
       });
-      let totalPedido=0;
-      this.lineasPedido.forEach((linea)=>{
-        totalPedido=totalPedido+this.totalProducto
-      })
+      let totalPedido = 0;
+      this.lineasPedido.forEach((linea) => {
+        totalPedido = totalPedido + linea.totalProducto;
+      });
       let ped: IPedido = {
         fechaPedido: new Date(),
         entregaRealPed: null,
@@ -281,7 +301,7 @@ export class ProductoPage implements OnInit {
         notasPedido: null,
         retiroLocalPed: null,
         idUsuario: usuario,
-        total:totalPedido,
+        total: totalPedido,
       };
       this.pedidoService.setCurrentPedido$(ped);
       // if (!this.pedido){
@@ -311,5 +331,4 @@ export class ProductoPage implements OnInit {
       this.router.navigate(['/inicio']);
     }
   }
-
 }
