@@ -65,6 +65,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pedidos-historico/pedidos-historico.module').then( m => m.PedidosHistoricoPageModule)
   },
   {
+    path: 'usuario-cli-edita',
+    loadChildren: () => import('./pages/usuario-cli-edita/usuario-cli-edita.module').then( m => m.UsuarioCliEditaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'

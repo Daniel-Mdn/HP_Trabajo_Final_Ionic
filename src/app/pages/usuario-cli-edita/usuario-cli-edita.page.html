@@ -1,0 +1,28 @@
+<app-header> </app-header>
+
+<ion-content>
+  <div class="contFlex padtop5">
+    <h3 class="txtCenter">DATOS PERSONALES</h3>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Apellido <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="apellido" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Nombre <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="nombre" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Fecha de nacimiento <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="fechaNac" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Número de teléfono <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="nroTel" type="text"></ion-input>
+    </ion-item>
+    <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
+      Login
+    </ion-button>
+  </form>
+</ion-content>
