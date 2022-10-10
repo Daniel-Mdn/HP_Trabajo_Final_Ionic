@@ -12,31 +12,37 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class UsuarioCliEditaPage implements OnInit {
   form: FormGroup;
+  usuario: IUsuario;
   
   constructor(
     private firestore: AngularFirestore,
     private formBuilder:FormBuilder,
-    private usuarios:UsuarioService,
+    private usuarioService:UsuarioService,
     private storage: StorageService
   ) { 
+    
     this.form = this.formBuilder.group({
       apellido: ['', Validators.required],
       nombre:['', Validators.required] ,
       fechaNac: ['', Validators.required],
       nroTel: ['', Validators.required]
     })
+    
   }
 
 
   ngOnInit() {
-    /*
-    let usuario = '';
-    this.storage.get('usuario').then((val) => {
-      console.log(val);
+    let usuId = '';
+    this.storage.get('usuario').then((val)=>{ 
+      usuId = val;
+      console.log('usuario: '+usuId);
+      this.usuarioService.getUser(usuId).subscribe((usu)=>{
+        console.log(usu);
+      })
+      
     });
-    this.usuarios.getUser(usuario)
-    console.log("usuario:"+usuario)
-    */
   }
+
+  editaUsuario(){}
 
 }

@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/pedidos-historico']);
   }
   redirectUsuario(){
-
+    this.router.navigate(['/usuario-cli-edita']);
   }
   redirectDomicilios(){
     this.router.navigate(['/domicilios']);

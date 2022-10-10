@@ -4,24 +4,24 @@
   <div class="contFlex padtop5">
     <h3 class="txtCenter">DATOS PERSONALES</h3>
   </div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="editaUsuario()">
     <ion-item>
-      <ion-label position="floating">Apellido <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="apellido" type="text"></ion-input>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input formControlName="apellido"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Nombre <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="nombre" type="text"></ion-input>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="nombre"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Fecha de nacimiento <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="fechaNac" type="text"></ion-input>
+      <ion-label position="floating">Fecha de nacimiento</ion-label>
+      <ion-input formControlName="fechaNac"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Número de teléfono <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="nroTel" type="text"></ion-input>
+      <ion-label position="floating">Número de teléfono</ion-label>
+      <ion-input formControlName="nroTel"></ion-input>
     </ion-item>
-    <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
+    <ion-button type="submit">
       Login
     </ion-button>
   </form>
