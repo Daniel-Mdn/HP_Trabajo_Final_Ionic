@@ -6,23 +6,22 @@
   </div>
   <form [formGroup]="form" (ngSubmit)="editaUsuario()">
     <ion-item>
-      <ion-label position="floating">Apellido</ion-label>
-      <ion-input formControlName="apellido"></ion-input>
+      <ion-label position="stacked">Apellido</ion-label>
+      <ion-input 	clear-on-edit="true" clear-input="true" formControlName="apellido">{{apellido}}</ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
+      <ion-label position="stacked">Nombre</ion-label>
       <ion-input formControlName="nombre"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Fecha de nacimiento</ion-label>
+      <ion-label position="stacked">Fecha de nacimiento</ion-label>
       <ion-input formControlName="fechaNac"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Número de teléfono</ion-label>
-      <ion-input formControlName="nroTel"></ion-input>
+      <ion-label position="stacked">Número de teléfono</ion-label>
+      <ion-input formControlName="nroTelefono"></ion-input>
     </ion-item>
-    <ion-button type="submit">
-      Login
-    </ion-button>
+    <ion-button color="spezia" type="submit">Actualizar</ion-button>
+    <ion-button color="spezia" (click)="redirectInicio()">Cancelar</ion-button>
   </form>
 </ion-content>

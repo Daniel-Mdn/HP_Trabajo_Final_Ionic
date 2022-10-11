@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUsuario } from 'src/app/constants/interfaces';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-usuario-cli-edita',
@@ -13,36 +15,56 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class UsuarioCliEditaPage implements OnInit {
   form: FormGroup;
   usuario: IUsuario;
+  usuId: ''
   
   constructor(
     private firestore: AngularFirestore,
     private formBuilder:FormBuilder,
     private usuarioService:UsuarioService,
-    private storage: StorageService
+    private storage: StorageService,
+    private router:Router,
   ) { 
-    
     this.form = this.formBuilder.group({
-      apellido: ['', Validators.required],
-      nombre:['', Validators.required] ,
-      fechaNac: ['', Validators.required],
-      nroTel: ['', Validators.required]
+      apellido: [''],
+      nombre:[''],
+      fechaNac: [''],
+      nroTelefono: ['']
     })
-    
   }
-
 
   ngOnInit() {
-    let usuId = '';
+    //let usuId = '';
     this.storage.get('usuario').then((val)=>{ 
-      usuId = val;
-      console.log('usuario: '+usuId);
-      this.usuarioService.getUser(usuId).subscribe((usu)=>{
-        console.log(usu);
+      this.usuId = val;
+      //console.log('usuario: '+this.usuId);
+      this.usuarioService.getUser(this.usuId).subscribe((usu)=>{
+        //console.log(usu);
+        this.usuario = usu;
+        this.form.controls.apellido.setValue(this.usuario.apellido);
+        this.form.controls.nombre.setValue(this.usuario.nombre);
+        this.form.controls.fechaNac.setValue(this.usuario.fechaNac);
+        this.form.controls.nroTelefono.setValue(this.usuario.nroTelefono);
       })
-      
     });
+  
+    
+   
+    
   }
 
-  editaUsuario(){}
+  editaUsuario(){
+    console.log(this.usuario)
+    var usuCliUpdated = {
+      apellido: this.form.controls.apellido.value,
+      nombre: this.form.controls.nombre.value,
+      fechaNac: this.form.controls.fechaNac.value,
+      nroTelefono: this.form.controls.nroTelefono.value,
+    }
+    this.usuarioService.updateUser(this.usuId, usuCliUpdated);
+  }
+
+  redirectInicio(){
+    this.router.navigate(['/inicio']);
+  }
 
 }

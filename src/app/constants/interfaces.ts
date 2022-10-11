@@ -56,7 +56,7 @@ export interface IUsuario{
     nombre:string,
     apellido:string,
     fechaNac:Date,
-    telefono:string
+    nroTelefono:string
 }
 
 export interface IParams{
