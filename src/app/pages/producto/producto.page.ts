@@ -42,9 +42,6 @@ export interface modalExtra {}
   styleUrls: ['./producto.page.scss'],
 })
 export class ProductoPage implements OnInit {
-  producto: IProducto;
-  productos: IProducto[];
-  cantidad: number = 1;
   constructor(
     public firestore: AngularFirestore,
     private storage: StorageService,
@@ -263,13 +260,13 @@ export class ProductoPage implements OnInit {
     if (this.cantidad > 1) {
       this.cantidad = this.cantidad - 1;
       this.form.controls['cantidad'].setValue(this.cantidad);
-      this.totalProducto = this.totalProducto - this.producto.precio;
+      this.totalProducto = this.totalProducto - this.productoSelected.precio;
     }
   }
   sumar() {
     this.cantidad = this.cantidad + 1;
     this.form.controls['cantidad'].setValue(this.cantidad);
-    this.totalProducto = this.totalProducto + this.producto.precio;
+    this.totalProducto = this.totalProducto + this.productoSelected.precio;
   }
 
   addProduct() {
@@ -303,6 +300,7 @@ export class ProductoPage implements OnInit {
         idSucursal: 'españa1901',
         notasPedido: null,
         retiroLocalPed: null,
+        envio:null,
         idUsuario: usuario,
         total: totalPedido,
       };

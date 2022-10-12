@@ -55,7 +55,7 @@
           <ion-label>Con papas</ion-label>
         </ion-item>
 
-        <ion-item id="open-modal" expand="block" [disabled]="!tamanioSelected" lines="none">
+        <ion-item id="open-modal" expand="block" [disabled]="!tamanioSelected" lines="none" *ngIf="isBurger">
           <ion-icon
             name="add-circle-outline"
             slot="start"
@@ -85,7 +85,7 @@
         <ion-grid>
           <ion-row class="ion-justify-content-center mt-6">
             <ion-col size="3" class="contFlex">
-              <ion-button color="spezia" size="default" (click)="restar()" class="removeBtn">
+              <ion-button color="spezia" size="default" (click)="restar()" class="removeBtn" [disabled]="!tamanioSelected">
                 <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
               </ion-button>
             </ion-col>
@@ -93,7 +93,7 @@
               <div class="ion-text-center"><h2>{{this.cantidad}}</h2></div>
             </ion-col>
             <ion-col size="3" class="contFlex">
-              <ion-button color="spezia" size="default" (click)="sumar()">
+              <ion-button color="spezia" size="default" (click)="sumar()" [disabled]="!tamanioSelected">
                 <ion-icon slot="icon-only" name="add-outline"></ion-icon>
               </ion-button>
             </ion-col>
@@ -119,7 +119,7 @@
   </ion-card>
 
   <!--                            Modal Adicionales                   -->
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)"  *ngIf="isBurger">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -127,7 +127,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <div *ngIf="isBurger; else pizza">
+        <div>
           <ion-item>
             <ion-select
               (ionChange)="handleFilterHamburguesas($event)"
@@ -144,11 +144,6 @@
             </ion-select>
           </ion-item>
         </div>
-        <!--
-        <ng-template #pizza>
-          <ion-item> Irian los extras de pizza </ion-item>
-        </ng-template>
-        -->
         <ion-item *ngFor="let extra of extras$|async" lines="none">
           <ion-label>{{extra.descExtra}}</ion-label>
           <ion-checkbox

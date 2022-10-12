@@ -33,4 +33,11 @@ export class DetallePedidoPage implements OnInit {
       this.lineasPedido = lineas;
     });
   }
+
+  cleanPedido(event:boolean){
+    if (event){
+      this.pedidoService.setCurrentPedido$({} as IPedido);
+      this.lineasPedidoService.setLineasPedido$([]);
+    }
+  }
 }

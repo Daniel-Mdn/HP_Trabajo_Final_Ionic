@@ -31,6 +31,7 @@ export interface IPedido{
     retiroLocalPed:Date,
     total?:number,
     formaDePago:string,
+    envio?:IEnvio,
     idSucursal:string,
     idUsuario?:string
 }

@@ -45,7 +45,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end txtTitulo">
-            <ion-label>{{pedido.total|currency}}</ion-label>
+            <ion-label>{{pedido.total+envio.price|currency}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -59,6 +59,6 @@
 
   </div>
   <div class="contFlex">
-    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="navigateToConfirmPedido()">Confirmar Pedido</ion-button>
+    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="navigateTodetailPedido()">Confirmar Pedido</ion-button>
   </div>
 </ion-content>

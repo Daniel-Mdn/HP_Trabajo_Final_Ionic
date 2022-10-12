@@ -13,14 +13,13 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
   styleUrls: ['./confirmar-pedido.page.scss'],
 })
 export class ConfirmarPedidoPage implements OnInit {
-
   constructor(
     private pedidoService: PedidoService,
     private lineasPedidoService: LineaPedidoService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
-  notasPedido:FormControl=new FormControl(null)
+  notasPedido: FormControl = new FormControl(null);
   envio: IEnvio = {
     service: TypeEnvioEnum.Cadete,
     price: PrecioEnvioEnum.Cadete,
@@ -33,14 +32,25 @@ export class ConfirmarPedidoPage implements OnInit {
   async ngOnInit() {
     await this.pedidoService.currentPedidos$.subscribe((ped) => {
       this.pedido = ped;
-      this.pedido.total = this.pedido.total + this.envio.price;
     });
     await this.lineasPedidoService.getLineasPedido$.subscribe((lineas) => {
       this.lineasPedido = lineas;
     });
   }
 
-  navigateToConfirmPedido(){
+  async navigateTodetailPedido() {
+    this.pedido.envio = this.envio;
+    this.pedidoService.setCurrentPedido$(this.pedido);
+    let pedidoId;
+    await this.pedidoService.createPedido(this.pedido).then((id)=>pedidoId=id);
+    let lineasIds = [];
+    this.lineasPedido.forEach((linea) => {
+      linea.idPedido=pedidoId;
+      this.lineasPedidoService
+        .createLineaPedido(linea)
+        .then((value) => lineasIds.push(value));
+    });
+    console.log(lineasIds)
     this.router.navigate(['/detalle-pedido']);
   }
 }
