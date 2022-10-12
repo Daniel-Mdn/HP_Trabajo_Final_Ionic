@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
@@ -10,6 +10,8 @@ import { MenuController } from '@ionic/angular';
 export class HeaderComponent implements OnInit {
 
   constructor(private menu: MenuController, private router: Router) { }
+  @Input() prevPage:string="inicio";
+  @Output() back:EventEmitter<boolean>= new EventEmitter<boolean>()
 
   ngOnInit() {}
 
@@ -31,7 +33,8 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  prevPage(){
-    this.router.navigate(['/inicio']);
+  goPrevPage(){
+    this.back.emit(true);
+    this.router.navigate(['/'+this.prevPage]);
   }
 }
