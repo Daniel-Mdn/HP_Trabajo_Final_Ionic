@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUsuario } from 'src/app/constants/interfaces';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Router } from '@angular/router';
+import { getAuth, updatePassword } from 'firebase/auth';
+import { IonModal } from '@ionic/angular';
 
 
 @Component({
@@ -13,9 +16,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./usuario-cli-edita.page.scss'],
 })
 export class UsuarioCliEditaPage implements OnInit {
+  @ViewChild(IonModal) modal: IonModal;
   form: FormGroup;
+  formPass: FormGroup;
   usuario: IUsuario;
-  usuId: ''
+  usuId: '';
+  myDate: Date;
   
   constructor(
     private firestore: AngularFirestore,
@@ -28,7 +34,10 @@ export class UsuarioCliEditaPage implements OnInit {
       apellido: [''],
       nombre:[''],
       fechaNac: [''],
-      nroTelefono: ['']
+      nroTelefono: [''],
+    })
+    this.formPass = this.formBuilder.group({
+      newPass: ['']
     })
   }
 
@@ -42,25 +51,39 @@ export class UsuarioCliEditaPage implements OnInit {
         this.usuario = usu;
         this.form.controls.apellido.setValue(this.usuario.apellido);
         this.form.controls.nombre.setValue(this.usuario.nombre);
+        //this.myDate = this.usuario.fechaNac;
         this.form.controls.fechaNac.setValue(this.usuario.fechaNac);
         this.form.controls.nroTelefono.setValue(this.usuario.nroTelefono);
       })
     });
-  
-    
-   
-    
   }
 
   editaUsuario(){
-    console.log(this.usuario)
     var usuCliUpdated = {
       apellido: this.form.controls.apellido.value,
       nombre: this.form.controls.nombre.value,
       fechaNac: this.form.controls.fechaNac.value,
       nroTelefono: this.form.controls.nroTelefono.value,
-    }
+    };
     this.usuarioService.updateUser(this.usuId, usuCliUpdated);
+    console.log('Usuario actualizado')
+    console.log(this.usuario)
+  }
+
+  editaPass(){
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const newPassword = this.formPass.controls.newPass.value;
+    updatePassword(user, newPassword).then(() => {
+      console.log('Contraseña actualizada')
+      this.modal.dismiss(null, 'cancel');
+    }).catch((error) => {
+      console.log('Error'+error)
+    });
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
   }
 
   redirectInicio(){
