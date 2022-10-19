@@ -61,7 +61,9 @@ export interface IExtras{
 
 export interface IUsuario{
     nombre:string,
-    apellido:string
+    apellido:string,
+    fechaNac:Date,
+    nroTelefono:string
 }
 
 export interface IParams{
