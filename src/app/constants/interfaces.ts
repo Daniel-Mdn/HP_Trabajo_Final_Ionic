@@ -83,3 +83,13 @@ export interface IHistorialPrecio{
     fechaDesde:Date,
     precioProd: number
 }
+export interface IDomicilio{
+    id:string,
+    calle:string,
+    dpto?:string,
+    idUsuario:string,
+    idLocalidad:string,
+    nroCasa:string,
+    piso?:string,
+    estaActivo:boolean
+}
