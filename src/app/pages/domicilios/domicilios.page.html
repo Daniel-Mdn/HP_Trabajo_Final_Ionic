@@ -4,13 +4,16 @@
   <h3 class="txtCenter">MIS DOMICILIOS</h3>
   <h5 class="txtCenter padbot4">Seleccione el domicilio desde el cual se realizará el pedido</h5>
   <ion-list class="padleft4">
-    <ion-item> <!-- línea copiada de pagina inicio, revisar. La idea es que cada item se repita con cada domicilio de la BD-->
+    <ion-item
+    lines="none"
+    *ngFor="let domicilio of listaDomicilios$|async"
+    > <!-- línea copiada de pagina inicio, revisar. La idea es que cada item se repita con cada domicilio de la BD-->
       <ion-row class="cadaDomic padbot2" size="12">
         <ion-col size="6" class="contFlex domic">
-          <ion-row class="btnDomi txtCenter">Pellegrini 2626 Piso 4 Dpto A</ion-row> <!-- en el TS: crear una sola variable con toda la dirección appendeada, o sea, en un solo string -->
+          <ion-row class="btnDomi txtCenter">{{formatDomicilio(domicilio)|titlecase}}</ion-row> <!-- en el TS: crear una sola variable con toda la dirección appendeada, o sea, en un solo string -->
         </ion-col>
         <ion-col size="6" class="contFlex padleft3">
-          <ion-button size="default" expand="block" fill="solid" class="btnDomiPredet padbot1" color="spezia" type="reset">Predeterminado</ion-button> <!-- Este botón debería ser de los activado-desactivado. Pero me parece que eso se hace desde el código -->
+          <ion-button (click)="selectPredeterminado(domicilio)" size="default" expand="block" fill="solid" class="btnDomiPredet padbot1" [color]="domicilio.estaActivo?'spezia':'light'" type="reset">Predeterminado</ion-button> <!-- Este botón debería ser de los activado-desactivado. Pero me parece que eso se hace desde el código -->
           <ion-button fill="clear" class="btnDomiEdit" color="spezia">
             <ion-img class="imgEdit" src="assets/img/edit.png"></ion-img>
           </ion-button>
