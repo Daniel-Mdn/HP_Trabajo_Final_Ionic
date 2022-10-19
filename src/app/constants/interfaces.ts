@@ -1,6 +1,6 @@
 import { DocumentReference, WhereFilterOp } from "firebase/firestore";
 import { Observable } from "rxjs";
-import { Tamanios } from "./constants";
+import { PrecioEnvioEnum, Tamanios, TypeEnvioEnum } from "./constants";
 
 export interface IProducto{
     id:string,
@@ -18,6 +18,10 @@ export interface IProducto{
 
 }
 
+export interface IEnvio{
+    service:TypeEnvioEnum,
+    price:PrecioEnvioEnum
+}
 export interface IPedido{
     id?:string,
     fechaPedido: Date,
@@ -27,16 +31,19 @@ export interface IPedido{
     retiroLocalPed:Date,
     total?:number,
     formaDePago:string,
+    envio?:IEnvio,
     idSucursal:string,
     idUsuario?:string
 }
 export interface ILineaPedido{
     id?:string,
     subtotal:number,
+    totalProducto:number,
     cantidad:number,
     notasDeProducto:string,
     idPedido?:string,
     idProducto:string,
+    producto?:IProducto
 }
 export interface ICategoria{
     id:string,
@@ -77,4 +84,14 @@ export interface IHistorialExtras{
 export interface IHistorialPrecio{
     fechaDesde:Date,
     precioProd: number
+}
+export interface IDomicilio{
+    id:string,
+    calle:string,
+    dpto?:string,
+    idUsuario:string,
+    idLocalidad:string,
+    nroCasa:string,
+    piso?:string,
+    estaActivo:boolean
 }

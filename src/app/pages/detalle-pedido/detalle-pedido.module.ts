@@ -11,11 +11,11 @@ import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
-    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
-    DetallePedidoPageRoutingModule
+    DetallePedidoPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [DetallePedidoPage]
 })

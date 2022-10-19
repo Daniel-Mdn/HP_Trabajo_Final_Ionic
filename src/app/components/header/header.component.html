@@ -4,7 +4,7 @@
       <ion-row>
         <ion-col class="ion-align-self-center ion-justify-content-center">
           <ion-row>
-            <ion-icon (click)="prevPage()" name="arrow-back" size="large" class="btnBack"></ion-icon>
+            <ion-icon *ngIf="currentDomicilio!==undefined" (click)="goPrevPage()" name="arrow-back" size="large" class="btnBack"></ion-icon>
           </ion-row>
         </ion-col>
         <ion-col  size="6">
@@ -16,12 +16,12 @@
           <ion-row>
             <ion-col class="ion-text-center">
               <ion-icon name="location" class="iconLoc"></ion-icon>
-              <ion-text class="txtDomi">Pellegrini 1240, 4 B</ion-text>
+              <ion-text *ngIf="currentDomicilio!==undefined" class="txtDomi">{{formatDomicilio()|titlecase}}</ion-text>
             </ion-col>
           </ion-row>
         </ion-col>
         <ion-col class="ion-align-self-end ion-text-end">
-          <ion-icon name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
+          <ion-icon *ngIf="currentDomicilio!==undefined" name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
