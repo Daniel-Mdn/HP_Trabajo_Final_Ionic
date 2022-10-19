@@ -4,7 +4,7 @@
   <div class="contFlex padtop5">
     <h3 class="ion-text-center mgTop6">DATOS PERSONALES</h3>
   </div>
-  <form [formGroup]="form" (ngSubmit)="editaUsuario()">
+  <form [formGroup]="form" (ngSubmit)="presentAlert()">
     <ion-item>
       <ion-label position="stacked">Apellido</ion-label>
       <ion-input formControlName="apellido">{{apellido}}</ion-input>

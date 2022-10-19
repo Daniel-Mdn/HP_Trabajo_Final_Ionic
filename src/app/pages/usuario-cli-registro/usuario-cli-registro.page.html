@@ -1,23 +1,23 @@
 <app-header> </app-header>
 
 <ion-content>
-  <div class="contFlex padtop5">
+  <div class="contFlex">
     <h3 class="txtCenter">REGISTRO</h3>
-    <h4 class="txtCenter padbot4">¡Perfecto!<br>Ahora ingresá tus datos</h4>
+    <h4 class="txtCenter padbot4">¡Perfecto!<br>Ahora ingresá tus datos<br>Los campos con * son obligatorios</h4>
   </div>
   <form [formGroup]="form" (ngSubmit)="registroUsuCli()">
     <ion-item class="mb-10">
-      <ion-label position="floating">Apellido</ion-label>
+      <ion-label position="floating">Apellido*</ion-label>
       <ion-input formControlName="apellido"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Nombres</ion-label>
+      <ion-label position="floating">Nombres*</ion-label>
       <ion-input formControlName="nombre"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-grid [fixed]="true">
         <ion-row>
-          <ion-col size="12"><ion-label>Fecha de nacimiento</ion-label></ion-col>
+          <ion-col size="12"><ion-label>Fecha de nacimiento*</ion-label></ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="ion-align-self-center" size="12">
@@ -27,43 +27,43 @@
       </ion-grid>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Número de teléfono</ion-label>
+      <ion-label position="floating">Número de teléfono*</ion-label>
       <ion-input formControlName="nroTel"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Calle</ion-label>
+      <ion-label position="floating">Calle*</ion-label>
       <ion-input formControlName="domiCalle"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Número</ion-label>
+      <ion-label position="floating">Número*</ion-label>
       <ion-input formControlName="domiNro"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Piso (opcional)</ion-label>
+      <ion-label position="floating">Piso</ion-label>
       <ion-input formControlName="domiPiso"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Departamento (opcional)</ion-label>
+      <ion-label position="floating">Departamento</ion-label>
       <ion-input formControlName="domiDpto"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="floating">Observaciones (opcional)</ion-label>
+      <ion-label position="floating">Observaciones</ion-label>
       <ion-input formControlName="domiObs"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label>Provincia</ion-label>
+      <ion-label>Provincia*</ion-label>
       <ion-select name="domiProv" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
         <ion-select-option value="santaFe">Santa Fe</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label>Localidad</ion-label>
+      <ion-label>Localidad*</ion-label>
       <ion-select formControlName="domiLoc" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
         <ion-select-option value="rosario">Rosario</ion-select-option>
       </ion-select>
     </ion-item>
     <div class="contFlex mb-10">
-      <ion-button expand="block" class="btnGde" color="spezia" type="submit">¡Listo!</ion-button>
+      <ion-button expand="block" class="btnGde" color="spezia" type="submit">¡REGISTRARME!</ion-button>
     </div>
   </form>
 
@@ -81,19 +81,19 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <h4 class="ion-text-center">Ingresá el email que utilizarás en<br>LA SPEZIA,<br>seguido de la contraseña que prefieras</h4>
+        <h4 class="ion-text-center">Ingresá el email que utilizarás en<br>LA SPEZIA,<br>seguido de la contraseña que prefieras<br>(Los campos con * son obligatorios)</h4>
         <form [formGroup]="formAuth" (ngSubmit)="function()">
           <ion-list>
             <ion-item class="mb-10">
-              <ion-label position="floating">e-mail</ion-label>
+              <ion-label position="floating">e-mail*</ion-label>
               <ion-input formControlName="email"></ion-input>
             </ion-item>
             <ion-item class="mb-10">
-              <ion-label position="floating">Contraseña</ion-label>
+              <ion-label position="floating">Contraseña*</ion-label>
               <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
             <ion-item class="mb-10">
-              <ion-label position="floating">Repetir contraseña</ion-label>
+              <ion-label position="floating">Repetir contraseña*</ion-label>
               <ion-input type="password"></ion-input>
             </ion-item>
           </ion-list>

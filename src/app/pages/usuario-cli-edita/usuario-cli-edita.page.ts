@@ -7,7 +7,7 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Router } from '@angular/router';
 import { getAuth, updatePassword } from 'firebase/auth';
-import { IonModal } from '@ionic/angular';
+import { AlertController, IonModal } from '@ionic/angular';
 
 
 @Component({
@@ -29,6 +29,7 @@ export class UsuarioCliEditaPage implements OnInit {
     private usuarioService:UsuarioService,
     private storage: StorageService,
     private router:Router,
+    private alertController: AlertController
   ) { 
     this.form = this.formBuilder.group({
       apellido: [''],
@@ -58,16 +59,44 @@ export class UsuarioCliEditaPage implements OnInit {
     });
   }
 
-  editaUsuario(){
-    var usuCliUpdated = {
-      apellido: this.form.controls.apellido.value,
-      nombre: this.form.controls.nombre.value,
-      fechaNac: this.form.controls.fechaNac.value,
-      nroTelefono: this.form.controls.nroTelefono.value,
-    };
-    this.usuarioService.updateUser(this.usuId, usuCliUpdated);
-    console.log('Usuario actualizado')
-    console.log(this.usuario)
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: '¿Confirma que desea actualizar sus datos?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            //this.handlerMessage = 'Alert canceled';
+            console.log('alerta cancelada')
+          },
+        },
+        {
+          text: 'Sí',
+          role: 'confirm',
+          handler: () => {
+            //this.handlerMessage = 'Alert confirmed';
+            console.log('alerta confirmada')
+            var usuCliUpdated = {
+              apellido: this.form.controls.apellido.value,
+              nombre: this.form.controls.nombre.value,
+              fechaNac: this.form.controls.fechaNac.value,
+              nroTelefono: this.form.controls.nroTelefono.value,
+              rol: 'usuario-cliente'
+            };
+            this.usuarioService.updateUser(this.usuId, usuCliUpdated);
+            console.log('Usuario actualizado')
+            console.log(this.usuario)
+            this.router.navigate(['/inicio']);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
   editaPass(){
