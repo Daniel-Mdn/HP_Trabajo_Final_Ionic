@@ -6,6 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { Storage } from "@ionic/storage-angular";
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
     private formBuilder:FormBuilder,
     // private loginService: LoginService,
     private router:Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private domicilioService: DomicilioService
   ) {
     this.form = this.formBuilder.group({
       email:['', Validators.required],
@@ -45,12 +47,29 @@ export class LoginPage implements OnInit {
       .then((userCredential) => {
         // Signed in
         this.storage.set('usuario', email)
+      this.domicilioService
+        .getDomiciliosId({
+          where: [{ name: 'idUsuario', validation: '==', value: email}],
+        })
+        .subscribe((res) => {
+          console.log(res);
+          if (res.length){
+            res.forEach((dom)=>{
+              if(dom.estaActivo){
+                this.domicilioService.setCurrentDomicilio$(dom);
+              }
+            })
+          }else{
+            this.router.navigate(['/domicilios'])
+          }
+        });
         this.router.navigate(['/inicio'])
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
+
   }
 
   redirectUsuCliRegistro(){

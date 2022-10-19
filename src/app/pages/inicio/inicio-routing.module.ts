@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DomicilioGuard } from 'src/app/guards/domicilio/domicilio.guard';
 
 import { InicioPage } from './inicio.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: InicioPage
+    component: InicioPage,
+    canActivate:[DomicilioGuard]
   }
 ];
 
