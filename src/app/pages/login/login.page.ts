@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
       .then((userCredential) => {
         // Signed in
         this.storage.set('usuario', email)
-      this.domicilioService
+        this.domicilioService
         .getDomiciliosId({
           where: [{ name: 'idUsuario', validation: '==', value: email}],
         })
