@@ -69,6 +69,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/usuario-cli-edita/usuario-cli-edita.module').then( m => m.UsuarioCliEditaPageModule)
   },
   {
+    path: 'bk-menu-empleado',
+    loadChildren: () => import('./pages/bk-menu-empleado/bk-menu-empleado.module').then( m => m.BkMenuEmpleadoPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
