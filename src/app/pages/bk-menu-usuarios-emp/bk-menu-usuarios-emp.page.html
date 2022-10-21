@@ -7,7 +7,7 @@
         </ion-col>
         <ion-col size="8" class="ion-align-self-center">
           <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
-          <ion-title class="ion-text-center">MENU</ion-title>
+          <ion-title class="ion-text-center">MENU USUARIOS</ion-title>
         </ion-col>
         <ion-col size="2" class="contFlex"> 
           <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
@@ -21,36 +21,15 @@
   <ion-grid fixed>
     <ion-row class="contFlex pt-4">
       <ion-col size="10">
-        <ion-button (click)="redirectPedidosTurno()" expand="block" class="h6">
-          PEDIDOS DEL TURNO
+        <ion-button (click)="redirectUsuRegistro()" expand="block" class="h6">
+          CARGAR USUARIO
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row class="contFlex pt-4">
       <ion-col size="10">
-        <ion-button (click)="redirectReporteVentas()" expand="block" class="h6">
-          REPORTE DE VENTAS
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="contFlex pt-4">
-      <ion-col size="10">
-        <ion-button (click)="redirectMenuUsuarios()" expand="block" class="h6">
-          USUARIOS
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="contFlex pt-4">
-      <ion-col size="10">
-        <ion-button (click)="redirectMenuProductos()" expand="block" class="h6">
-          PRODUCTOS
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="contFlex pt-4">
-      <ion-col size="10">
-        <ion-button (click)="logout()" expand="block" class="h6">
-          CERRAR SESIÓN
+        <ion-button (click)="redirectUsuEdita()" expand="block" class="h6">
+          EDITAR USUARIO
         </ion-button>
       </ion-col>
     </ion-row>

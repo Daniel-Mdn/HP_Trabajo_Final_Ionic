@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bk-menu-empleado',
@@ -6,10 +7,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bk-menu-empleado.page.scss'],
 })
 export class BkMenuEmpleadoPage implements OnInit {
+  
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
+
+  redirectHome(){
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
+  redirectPedidosTurno(){}
+
+  redirectReporteVentas(){}
+
+  redirectMenuUsuarios(){
+    this.router.navigate(['/bk-menu-usuarios-emp']);
+  }
+
+  redirectMenuProductos(){}
+
+  logout(){}
 
 }

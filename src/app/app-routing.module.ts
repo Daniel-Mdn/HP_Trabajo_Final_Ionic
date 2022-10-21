@@ -73,6 +73,26 @@ const routes: Routes = [
     loadChildren: () => import('./pages/bk-menu-empleado/bk-menu-empleado.module').then( m => m.BkMenuEmpleadoPageModule)
   },
   {
+    path: 'bk-menu-productos',
+    loadChildren: () => import('./pages/bk-menu-productos/bk-menu-productos.module').then( m => m.BkMenuProductosPageModule)
+  },
+  {
+    path: 'bk-menu-usuarios-emp',
+    loadChildren: () => import('./pages/bk-menu-usuarios-emp/bk-menu-usuarios-emp.module').then( m => m.BkMenuUsuariosEmpPageModule)
+  },
+  {
+    path: 'bk-listado-pedidos-turno',
+    loadChildren: () => import('./pages/bk-listado-pedidos-turno/bk-listado-pedidos-turno.module').then( m => m.BkListadoPedidosTurnoPageModule)
+  },
+  {
+    path: 'bk-usuario-emp-registro',
+    loadChildren: () => import('./pages/bk-usuario-emp-registro/bk-usuario-emp-registro.module').then( m => m.BkUsuarioEmpRegistroPageModule)
+  },
+  {
+    path: 'bk-usuario-emp-edita',
+    loadChildren: () => import('./pages/bk-usuario-emp-edita/bk-usuario-emp-edita.module').then( m => m.BkUsuarioEmpEditaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
