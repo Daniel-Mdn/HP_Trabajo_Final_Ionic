@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bk-menu-productos',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BkMenuProductosPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+  redirectHome(){
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
+  redirectProdRegistro(){
+    this.router.navigate(['/bk-producto-registra']);
+  }
+
+  redirectProdEdita(){
+    this.router.navigate(['/bk-producto-lista']);
   }
 
 }

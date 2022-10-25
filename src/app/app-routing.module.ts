@@ -93,6 +93,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/bk-usuario-emp-edita/bk-usuario-emp-edita.module').then( m => m.BkUsuarioEmpEditaPageModule)
   },
   {
+    path: 'bk-producto-registra',
+    loadChildren: () => import('./pages/bk-producto-registra/bk-producto-registra.module').then( m => m.BkProductoRegistraPageModule)
+  },
+  {
+    path: 'bk-producto-lista',
+    loadChildren: () => import('./pages/bk-producto-lista/bk-producto-lista.module').then( m => m.BkProductoListaPageModule)
+  },
+  {
+    path: 'bk-producto-edita',
+    loadChildren: () => import('./pages/bk-producto-edita/bk-producto-edita.module').then( m => m.BkProductoEditaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'

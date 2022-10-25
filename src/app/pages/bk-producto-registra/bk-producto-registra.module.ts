@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BkUsuarioEmpEditaPageRoutingModule } from './bk-usuario-emp-edita-routing.module';
+import { BkProductoRegistraPageRoutingModule } from './bk-producto-registra-routing.module';
 
-import { BkUsuarioEmpEditaPage } from './bk-usuario-emp-edita.page';
+import { BkProductoRegistraPage } from './bk-producto-registra.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -15,9 +15,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    BkUsuarioEmpEditaPageRoutingModule,
+    BkProductoRegistraPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [BkUsuarioEmpEditaPage]
+  declarations: [BkProductoRegistraPage]
 })
-export class BkUsuarioEmpEditaPageModule {}
+export class BkProductoRegistraPageModule {}

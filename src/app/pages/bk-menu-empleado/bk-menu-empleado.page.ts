@@ -28,7 +28,9 @@ export class BkMenuEmpleadoPage implements OnInit {
     this.router.navigate(['/bk-menu-usuarios-emp']);
   }
 
-  redirectMenuProductos(){}
+  redirectMenuProductos(){
+    this.router.navigate(['/bk-menu-productos']);
+  }
 
   logout(){}
 
