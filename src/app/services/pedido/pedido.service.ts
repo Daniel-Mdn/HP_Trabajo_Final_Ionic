@@ -3,13 +3,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, concat } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { ICategoria, IParams, IPedido, IProducto } from 'src/app/constants/interfaces';
+import { IParams, IPedido, IProducto } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from '../firestore-base.service';
 
-export interface ProductosCategorias{
-  productos:IProducto[],
-  categorias:ICategoria[]
-}
 @Injectable({
   providedIn: 'root'
 })
