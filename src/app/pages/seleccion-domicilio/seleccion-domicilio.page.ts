@@ -8,10 +8,10 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-domicilios',
-  templateUrl: './domicilios.page.html',
-  styleUrls: ['./domicilios.page.scss'],
+  templateUrl: './seleccion-domicilio.page.html',
+  styleUrls: ['./seleccion-domicilio.page.scss'],
 })
-export class DomiciliosPage implements OnInit {
+export class SeleccionDomicilioPage implements OnInit {
   usuario: string;
   listaDomicilios$: Observable<IDomicilio[]> = from([]);
   listaDomicilios: IDomicilio[] =[];
