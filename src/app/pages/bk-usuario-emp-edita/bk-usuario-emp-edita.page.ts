@@ -9,13 +9,12 @@ import { Router } from '@angular/router';
 import { getAuth, updatePassword } from 'firebase/auth';
 import { AlertController, IonModal } from '@ionic/angular';
 
-
 @Component({
-  selector: 'app-usuario-cli-edita',
-  templateUrl: './usuario-cli-edita.page.html',
-  styleUrls: ['./usuario-cli-edita.page.scss'],
+  selector: 'app-bk-usuario-emp-edita',
+  templateUrl: './bk-usuario-emp-edita.page.html',
+  styleUrls: ['./bk-usuario-emp-edita.page.scss'],
 })
-export class UsuarioCliEditaPage implements OnInit {
+export class BkUsuarioEmpEditaPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   form: FormGroup;
   formPass: FormGroup;
@@ -44,10 +43,10 @@ export class UsuarioCliEditaPage implements OnInit {
 
   ngOnInit() {
     //let usuId = '';
-    console.log(this.storage.get('usuario'))
+    console.log(this.storage.get('usuario'));
     this.storage.get('usuario').then((val)=>{ 
       this.usuId = val;
-      console.log('usuario: '+this.usuId);
+      //console.log('usuario: '+this.usuId);
       this.usuarioService.getUser(this.usuId).subscribe((usu)=>{
         //console.log(usu);
         this.usuario = usu;
@@ -119,5 +118,4 @@ export class UsuarioCliEditaPage implements OnInit {
   redirectInicio(){
     this.router.navigate(['/inicio']);
   }
-
 }

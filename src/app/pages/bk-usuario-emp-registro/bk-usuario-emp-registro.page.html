@@ -1,11 +1,34 @@
-<app-header> </app-header>
+<ion-header>
+  <ion-toolbar class="contFlex" color="primary">
+    <ion-grid fixed>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="2" class="contFlex">
+          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-col>
+        <ion-col size="8" class="ion-align-self-center">
+          <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
+          <ion-title class="ion-text-center">CREAR USUARIO</ion-title>
+        </ion-col>
+        <ion-col size="2" class="contFlex"> 
+          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <div class="contFlex">
-    <h3 class="txtCenter">REGISTRO</h3>
-    <h4 class="txtCenter padbot4">¡Perfecto!<br>Ahora ingresá tus datos<br>Los campos con * son obligatorios</h4>
+    <h4 class="txtCenter padbot4">Ingrese los datos del/de la empleado/a<br>Los campos con * son obligatorios</h4>
   </div>
-  <form [formGroup]="form" (ngSubmit)="registroUsuCli()">
+  <form [formGroup]="form" (ngSubmit)="registroUsuEmp()">
+    <ion-item class="mb-10">
+      <ion-label>Rol*</ion-label>
+      <ion-select formControlName="rol" name="rol" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+        <ion-select-option value="usuario-empleado">Usuario Empleado</ion-select-option>
+        <ion-select-option value="usuario-cadete">Usuario Cadete</ion-select-option>
+      </ion-select>
+    </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Apellido*</ion-label>
       <ion-input formControlName="apellido"></ion-input>
@@ -65,25 +88,25 @@
       </ion-select>
     </ion-item>
     <div class="contFlex mb-10">
-      <ion-button expand="block" class="btnGde" color="spezia" type="submit">¡REGISTRARME!</ion-button>
+      <ion-button expand="block" class="btnGde" color="primary" type="submit">REGISTRAR</ion-button>
     </div>
   </form>
 
   <ion-modal #modal isOpen="true">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-button (click)="redirectLogin()">Cancelar</ion-button>
+            <ion-button (click)="redirectMenu()">Cancelar</ion-button>
           </ion-buttons>
-          <ion-title>¡Bienvenido/a!</ion-title>
+          <ion-title>REGISTRO</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="registrarEmail()" [strong]="true">Confirmar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <h4 class="ion-text-center">Ingresá el email que utilizarás en<br>LA SPEZIA,<br>seguido de la contraseña que prefieras<br>(Los campos con * son obligatorios)</h4>
+        <h4 class="ion-text-center">Ingrese el email y contraseña<br>(Los campos con * son obligatorios)</h4>
         <form [formGroup]="formAuth" (ngSubmit)="function()">
           <ion-list>
             <ion-item class="mb-10">
