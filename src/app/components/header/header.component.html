@@ -21,13 +21,13 @@
           </ion-row>
         </ion-col>
         <ion-col class="ion-align-self-end ion-text-end">
-          <ion-icon *ngIf="currentDomicilio!==undefined" name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
+          <ion-icon *ngIf="currentDomicilio!==undefined || currentUrl=='/inicio'" name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 </ion-header>
-<ion-menu side="end" menuId="custom" contentId="sideBar" class="my-custom-menu">
+<ion-menu side="end" menuId="custom" contentId="sideBar" class="my-custom-menu" style="z-index:9999;">
   <ion-header>
     <ion-toolbar color="spezia">
       <ion-title class="ion-text-center">NOMBRE_USUARIO</ion-title>
