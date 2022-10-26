@@ -2,13 +2,13 @@
 <ion-content>
   <h3 class="ion-text-center">MIS PEDIDOS</h3>
   <h4 class="ml-6">Pedidos en curso</h4>
-
-  <ion-item (click)="redirectDetallePedido()" lines="none" class="pedEnCurso">
+<ion-list>
+  <ion-item *ngFor="let pedEnPreparacion of pedidosEnPreparacion" (click)="redirectDetallePedido()" lines="none" class="pedEnCurso">
     <ion-col size="8">
-        <ion-label>Pedido {{nroPedido}}</ion-label>
+        <ion-label>nroPedido</ion-label>
         <ion-list>
-          <ion-item>
-            <ion-label>Burdain Cheese</ion-label> <!--Trae cada item del pedido en curso, sólo el nombre de cada producto-->
+          <ion-item *ngFor="let linea of pedEnPreparacion.lineasPedido">
+            <ion-label>{{linea.idProducto}}</ion-label> <!--Trae cada item del pedido en curso, sólo el nombre de cada producto-->
           </ion-item>
         </ion-list>
     </ion-col>
@@ -16,15 +16,16 @@
       <ion-label>Estado:<br>En preparación</ion-label>
     </ion-col>
   </ion-item>
+</ion-list>
 
   <h4 class="ml-6">Pedidos anteriores</h4>
-  <ion-list>
+  <ion-list *ngFor="let pedEntregado of pedidosEntregado">
     <ion-item (click)="redirectDetallePedido()" class="cadaPed" lines="none">
       <ion-col size="8">
-        <ion-label>Pedido {{nroPedido}}</ion-label>
+        <ion-label>nroPedido</ion-label>
         <ion-list>
-          <ion-item>
-            <ion-label>Burdain Cheese</ion-label> <!--Trae cada item del pedido en curso, sólo el nombre de cada producto-->
+          <ion-item *ngFor="let linea of pedEntregado.lineasPedido">
+            <ion-label>{{linea.idProducto}}</ion-label> <!--Trae cada item del pedido en curso, sólo el nombre de cada producto-->
           </ion-item>
         </ion-list>
       </ion-col>

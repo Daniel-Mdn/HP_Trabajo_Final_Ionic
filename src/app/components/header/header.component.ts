@@ -23,8 +23,9 @@ export class HeaderComponent implements OnInit {
   currentDomicilio$: Observable<IDomicilio> = of();
   currentDomicilio: IDomicilio;
   userDomicilios: Observable<IDomicilio[]> = from([]);
-
+  currentUrl:string;
   async ngOnInit() {
+    this.currentUrl=this.router.url;
     this.currentDomicilio$ = this.domicilioService.getCurrentDomicilio$;
     this.currentDomicilio$.subscribe((dom) => {
       if (Object.entries(dom).length !== 0) {
@@ -42,15 +43,18 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/pedidos-historico']);
   }
 
-  redirectUsuario(){
+  redirectUsuario() {
     this.router.navigate(['/usuario-cli-edita']);
   }
-  
+
   redirectDomicilios() {
     this.router.navigate(['/domicilios']);
   }
 
-  logout() {}
+  logout() {
+    this.storage.remove('usuario').then((res) => console.log);
+    this.router.navigate(['/login']);
+  }
 
   goPrevPage() {
     this.back.emit(true);
