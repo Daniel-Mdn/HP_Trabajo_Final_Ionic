@@ -33,7 +33,8 @@ export interface IPedido{
     formaDePago:string,
     envio?:IEnvio,
     idSucursal:string,
-    idUsuario?:string
+    idUsuario?:string,
+    lineasPedido?:ILineaPedido[]
 }
 export interface ILineaPedido{
     id?:string,

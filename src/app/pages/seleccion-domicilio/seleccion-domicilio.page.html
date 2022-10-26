@@ -1,8 +1,11 @@
-<app-header></app-header>
 
 <ion-content>
   <h3 class="txtCenter">MIS DOMICILIOS</h3>
-  <h5 class="txtCenter padbot4">Seleccione el domicilio desde el cual se realizará el pedido</h5>
+  <h5 *ngIf="(listaDomicilios$|async)?.length; else notDomicilios;" class="txtCenter padbot4">Seleccione el domicilio desde el cual se realizará el pedido</h5>
+  <ng-template #notDomicilios>
+    <h5 class="txtCenter padbot4">Agregue su primer domicilio desde el cual se realizará el pedido</h5>
+  </ng-template>
+  
   <ion-grid class="padleft4">
     <ion-row
     lines="none"

@@ -29,6 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/domicilios/domicilios.module').then( m => m.DomiciliosPageModule)
   },
   {
+    path: 'seleccion-domicilio',
+    loadChildren: () => import('./pages/seleccion-domicilio/seleccion-domicilio.module').then( m => m.SeleccionDomicilioPageModule)
+  },
+  {
     path: 'domicilios-editar',
     loadChildren: () => import('./pages/domicilios-editar/domicilios-editar.module').then( m => m.DomiciliosEditarPageModule)
   },
