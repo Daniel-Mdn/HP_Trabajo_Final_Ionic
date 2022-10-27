@@ -21,9 +21,9 @@ export class BkProductoRegistraPage implements OnInit {
       nombre:['', Validators.required] ,
       descProd: ['', Validators.required],
       tamanio: ['', Validators.required],
-      costoProd: ['', Validators.required],
-      precioProd: ['', Validators.required],
-      margen: ['',Validators.required]
+      costoProd: [null, Validators.required],
+      precioProd: [null, Validators.required],
+      margen: [null,Validators.required]
     })
   }
 
@@ -38,27 +38,29 @@ export class BkProductoRegistraPage implements OnInit {
     const today = new Date();
     var prodId = '';
     var dataProducto = {
-      categoria: this.form.controls.categoria.value,
+      idCategoria: this.form.controls.categoria.value,
       nombre: this.form.controls.nombre.value,
       descProd: this.form.controls.descProd.value,
       tamanio: this.form.controls.tamanio.value,
+      disponibilidad: true,
+      baja: false
     }
     var precioProducto = {
       fechaDesde: today,
-      costoProd: this.form.controls.costoProd.value,
-      precioProd: this.form.controls.precioProd.value,
-      margen: this.form.controls.margen.value
+      costoProd: parseInt(this.form.controls.costoProd.value),
+      precioProd: parseInt(this.form.controls.precioProd.value),
+      margen: parseInt(this.form.controls.margen.value)
     }
 
-    this.firestore.collection('productos').add(dataProducto)
+    await this.firestore.collection('productos').add(dataProducto)
       .then(function(prod){
         console.log(prod.id);
         prodId = prod.id;
         console.log('prodId: '+prodId);
     });
 
-    console.log('prodId fuera funcion: '+prodId);
-    this.firestore.collection('productos').doc(prodId).collection('historial_precio').add(precioProducto);
+    await console.log('prodId fuera funcion: '+prodId);
+    await this.firestore.collection('productos').doc(prodId).collection('historial_precio').add(precioProducto);
       
   }
   
