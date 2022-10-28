@@ -53,16 +53,16 @@
       <ion-input formControlName="nroTelefono"></ion-input>
     </ion-item>
     <div class="btnForm">
-      <ion-button color="spezia" type="submit" class="mgTop6 ion-align-self-center">Actualizar datos</ion-button>
-      <ion-button color="spezia" (click)="redirectInicio()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
+      <ion-button color="primary" type="submit" class="mgTop6 ion-align-self-center">Actualizar datos</ion-button>
+      <ion-button color="primary" (click)="redirectInicio()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
     </div>
   </form>
 <!--  MODAL  -->
-  <ion-button id="open-modal" color="#f4f4f4" expand="block" class="btnModalPass">Actualizar contraseña</ion-button>
+  <ion-button id="open-modal" color="primary" expand="block" class="btnModalPass">Actualizar contraseña</ion-button>
   <ion-modal trigger="open-modal">
     <ng-template>
-      <ion-header>
-        <ion-toolbar>
+      <ion-header color="primary">
+        <ion-toolbar color="primary">
           <ion-buttons slot="start">
             <ion-button (click)="cancel()">Cancelar</ion-button>
           </ion-buttons>

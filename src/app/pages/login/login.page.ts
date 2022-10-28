@@ -7,6 +7,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { Storage } from '@ionic/storage-angular';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
     // private loginService: LoginService,
     private router: Router,
     private storage: StorageService,
-    private domicilioService: DomicilioService
+    private domicilioService: DomicilioService,
+    private usuarioService: UsuarioService
   ) {
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
@@ -41,14 +43,31 @@ export class LoginPage implements OnInit {
       .then((userCredential) => {
         // Signed in
         this.storage.set('usuario', email);
-        this.domicilioService
-          .getDomiciliosId({
-            where: [{ name: 'idUsuario', validation: '==', value: email }],
-          })
-          .subscribe((res) => {
-            console.log(res);
-            this.router.navigate(['/seleccion-domicilio']);
-          });
+        this.usuarioService.getUser(email).subscribe((u) => {
+          let usuario = u;
+          this.storage.set('rol', usuario.rol);
+          console.log(usuario.rol);
+          switch (usuario.rol) {
+            case 'usuario-cliente':
+              this.domicilioService
+                .getDomiciliosId({
+                  where: [{ name: 'idUsuario', validation: '==', value: email }],
+                })
+                .subscribe((res) => {
+                  console.log(res);
+                  this.router.navigate(['/seleccion-domicilio']);
+                });
+              break
+            case 'usuario-empleado':
+              console.log('case usu-emp');
+              this.router.navigate(['/bk-menu-empleado']);
+              break
+            case 'usuario-cadete':
+              console.log('case usu-cad');
+              this.router.navigate(['/bk-menu-empleado']);
+              break
+          }
+        })
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -60,35 +79,3 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/usuario-cli-registro']);
   }
 }
-
-/*
-var db = firebase.firestore();
-var emailLogeadoGlobal = '';
-var nombreUsuarioGlobal = '';
-var colUsuarios = db.collection("usuarios");
-
-email = $$('#usuarioLogin').val();
-    password = $$('#passLogin').val();
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(function(){
-        usuarioLogueado = true;
-        emailLogeadoGlobal = email;
-        colUsuarios.doc(email).get()
-          .then((doc) => {
-            nombreUsuarioGlobal = doc.data().nombre;
-          })
-          .catch((error) => {
-            console.log("Error getting document:", error);
-          })
-        app.views.main.router.navigate("/domicilios/");
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        fnErrorDialog(errorCode, email, password)
-        console.log('Código error: ' + errorCode + ' / Mensaje: ' + errorMessage);
-      }); 
-  }
-*/
