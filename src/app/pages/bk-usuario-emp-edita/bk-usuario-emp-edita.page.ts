@@ -20,6 +20,7 @@ export class BkUsuarioEmpEditaPage implements OnInit {
   formPass: FormGroup;
   usuario: IUsuario;
   usuId: '';
+  role:'';
   myDate: Date;
   
   constructor(
@@ -42,8 +43,8 @@ export class BkUsuarioEmpEditaPage implements OnInit {
   }
 
   ngOnInit() {
-    //let usuId = '';
-    console.log(this.storage.get('usuario'));
+    //console.log(this.storage.get('rol'));
+    //console.log(this.storage.get('usuario'));
     this.storage.get('usuario').then((val)=>{ 
       this.usuId = val;
       //console.log('usuario: '+this.usuId);
@@ -60,6 +61,9 @@ export class BkUsuarioEmpEditaPage implements OnInit {
   }
 
   async presentAlert() {
+    await this.storage.get('rol').then((ref) => {
+      this.role = ref;
+    });
     const alert = await this.alertController.create({
       header: '¿Confirma que desea actualizar sus datos?',
       buttons: [
@@ -76,18 +80,19 @@ export class BkUsuarioEmpEditaPage implements OnInit {
           role: 'confirm',
           handler: () => {
             //this.handlerMessage = 'Alert confirmed';
-            console.log('alerta confirmada')
+            console.log('alerta confirmada');
+            console.log(this.role);
             var usuCliUpdated = {
               apellido: this.form.controls.apellido.value,
               nombre: this.form.controls.nombre.value,
               fechaNac: this.form.controls.fechaNac.value,
               nroTelefono: this.form.controls.nroTelefono.value,
-              rol: 'usuario-cliente'
+              rol: this.role
             };
             this.usuarioService.updateUser(this.usuId, usuCliUpdated);
             console.log('Usuario actualizado')
-            console.log(this.usuario)
-            this.router.navigate(['/inicio']);
+            //console.log(this.usuario)
+            this.router.navigate(['/bk-menu-usuarios-emp']);
           },
         },
       ],
@@ -116,6 +121,10 @@ export class BkUsuarioEmpEditaPage implements OnInit {
   }
 
   redirectInicio(){
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
+  redirectMenuUsu(){
+    this.router.navigate(['/bk-menu-usuarios-emp']);
   }
 }
