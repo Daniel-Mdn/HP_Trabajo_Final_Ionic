@@ -27,4 +27,8 @@ export class BkMenuUsuariosEmpPage implements OnInit {
     this.router.navigate(['/bk-usuario-emp-edita']);
   }
 
+  goPrevPage(){
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
 }

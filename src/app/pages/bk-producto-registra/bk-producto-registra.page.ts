@@ -63,6 +63,9 @@ export class BkProductoRegistraPage implements OnInit {
     await this.firestore.collection('productos').doc(prodId).collection('historial_precio').add(precioProducto);
       
   }
+  goPrevPage(){
+    this.router.navigate(['/bk-menu-productos']);
+  }
   
 
 }

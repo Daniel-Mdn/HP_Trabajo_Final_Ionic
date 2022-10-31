@@ -2,6 +2,10 @@
     margin-top: 5vh;
 }
 
+.mt-3{
+    margin-top: 3vh;
+}
+
 .btnGde{
     width: 73vw;
     margin-top: 3vh;
@@ -58,10 +62,10 @@
 
 .recResumen{
     margin-bottom: 5vh;
-    border: 4px solid;
-    border-radius: 2%;
+    border:1px solid;
+    border-radius: 1%;
     padding: 2vh; 
-    border-color: var(--ion-color-spezia);
+    border-color: black;
     margin-left: 3vw;
     margin-right: 3vw;
 }
@@ -86,13 +90,6 @@ ion-item {
     flex-direction: column;
     margin-left: 9vw;
     margin-right: 9vw;
-}
-.btnGde{
-    width: 63vw;
-    margin-top: 3vh;
-    height: 8vh;
-    font-size: 2vh;
-    color: black;
 }
 .contFlex{
     display:flex;

@@ -20,7 +20,9 @@ export class BkMenuEmpleadoPage implements OnInit {
     this.router.navigate(['/bk-menu-empleado']);
   }
 
-  redirectPedidosTurno(){}
+  redirectPedidosTurno(){
+    this.router.navigate(['/bk-listado-pedidos-turno']);
+  }
 
   redirectReporteVentas(){}
 

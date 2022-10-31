@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { PrecioEnvioEnum, TypeEnvioEnum } from 'src/app/constants/constants';
 import { IEnvio, ILineaPedido, IPedido } from 'src/app/constants/interfaces';
@@ -12,6 +13,7 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 })
 export class DetallePedidoPage implements OnInit {
   constructor(
+    private router: Router,
     private pedidoService: PedidoService,
     private lineasPedidoService: LineaPedidoService
   ) {}
@@ -39,5 +41,11 @@ export class DetallePedidoPage implements OnInit {
       this.pedidoService.setCurrentPedido$({} as IPedido);
       this.lineasPedidoService.setLineasPedido$([]);
     }
+  }
+
+  redirectBack(){
+    this.pedidoService.setCurrentPedido$({} as IPedido);
+    this.lineasPedidoService.setLineasPedido$([]);
+    this.router.navigate(['/inicio']);
   }
 }

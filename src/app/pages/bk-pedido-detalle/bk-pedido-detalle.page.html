@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar class="contFlex" color="primary">
+    <ion-grid fixed>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="2" class="contFlex">
+          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-col>
+        <ion-col size="8" class="ion-align-self-center">
+          <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
+          <ion-title class="ion-text-center">DETALLE PEDIDO</ion-title>
+        </ion-col>
+        <ion-col size="2" class="contFlex"> 
+          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="recResumen mt-3">
+    <ion-col size="10">
+      <ion-row>
+        <ion-label class="txtTitulo">DETALLE PEDIDO</ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-label>Pedido</ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>Var_pedido_id</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-label>Cliente</ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>Var_cliente_nombre</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-label>Domicilio</ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>Var_domicilio</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="padbot2">
+          <ion-label>Teléfono</ion-label><!--Esta, si se complica, puede no ir-->
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>Var_nro_telefono</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-label class="txtTitulo">PRODUCTOS</ion-label>
+      </ion-row>
+      <ion-list >
+        <ion-item *ngFor="let linea of lineasPedido">
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>Nombre Producto</ion-label><!--Variable previa: {{linea.producto.nombre}}-->
+            </ion-col>
+            <ion-col size="2">
+              <ion-label>1 Unid.</ion-label><!--Variable previa: {{linea.cantidad}} Unid.-->
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="ion-text-end">2000</ion-label><!--Variable previa: {{linea.totalProducto|currency}}-->
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">Notas del producto</ion-col>
+            <ion-col size="8">Val_notas_producto</ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+      <ion-row class="padbot2">
+        <ion-col size="6">
+          <ion-label>Cadete</ion-label><!--Variable previa: {{envio.service|titlecase}}-->
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end">
+            <ion-label>300</ion-label><!--Variable previa: {{envio.price|currency}}-->
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="padbot2">
+        <ion-col size="6">
+          <ion-label class="txtTitulo">TOTAL</ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end txtTitulo">
+            <ion-label>2300</ion-label><!-- Variable previa: {{pedido.total|currency}}-->
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="padbot2">
+        <ion-col size="6">
+          <ion-label class="txtTitulo">FORMA DE PAGO</ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end">
+            <ion-label>Efectivo en la entrega</ion-label><!--No es necesario poner variable por el momento-->
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="padbot2">
+        <ion-col size="6">
+          <ion-label class="txtTitulo">Notas del pedido</ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end">
+            <ion-label>Val_notas_pedido</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="padbot2">
+        <ion-col size="6">
+          <ion-label class="txtTitulo">ESTADO</ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <div class="ion-text-end">
+            <ion-label>En preparación</ion-label><!--Va variable de estado-->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </div>
+  <div class="contFlex">
+    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="confirmaPedido()">Imprimir</ion-button>
+    <ion-button expand="block" class="mt-3" color="danger" type="submit" (click)="rechazaPedido()">Rechazar</ion-button>
+  </div>
+</ion-content>
