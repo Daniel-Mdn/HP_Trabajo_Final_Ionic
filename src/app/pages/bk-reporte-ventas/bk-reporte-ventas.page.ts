@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bk-reporte-ventas',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BkReporteVentasPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+  redirectHome(){
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
+  goPrevPage(){
+    this.router.navigate(['/bk-menu-empleado']);
   }
 
 }

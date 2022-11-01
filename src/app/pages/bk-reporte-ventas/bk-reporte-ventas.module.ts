@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { BkReporteVentasPageRoutingModule } from './bk-reporte-ventas-routing.module';
 
 import { BkReporteVentasPage } from './bk-reporte-ventas.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
