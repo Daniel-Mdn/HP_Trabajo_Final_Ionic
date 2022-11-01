@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BkListadoPedidosTurnoPageRoutingModule } from './bk-listado-pedidos-turno-routing.module';
+import { BkReporteVentasPageRoutingModule } from './bk-reporte-ventas-routing.module';
 
-import { BkListadoPedidosTurnoPage } from './bk-listado-pedidos-turno.page';
+import { BkReporteVentasPage } from './bk-reporte-ventas.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -15,8 +15,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    BkListadoPedidosTurnoPageRoutingModule
+    BkReporteVentasPageRoutingModule
   ],
-  declarations: [BkListadoPedidosTurnoPage]
+  declarations: [BkReporteVentasPage]
 })
-export class BkListadoPedidosTurnoPageModule {}
+export class BkReporteVentasPageModule {}

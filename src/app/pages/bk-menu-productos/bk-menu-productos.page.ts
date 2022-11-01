@@ -27,4 +27,8 @@ export class BkMenuProductosPage implements OnInit {
     this.router.navigate(['/bk-producto-lista']);
   }
 
+  goPrevPage(){
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
 }

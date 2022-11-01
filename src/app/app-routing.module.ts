@@ -108,6 +108,19 @@ const routes: Routes = [
     path: 'bk-producto-edita',
     loadChildren: () => import('./pages/bk-producto-edita/bk-producto-edita.module').then( m => m.BkProductoEditaPageModule)
   },
+
+  {
+    path: 'bk-pedido-detalle',
+    loadChildren: () => import('./pages/bk-pedido-detalle/bk-pedido-detalle.module').then( m => m.BkPedidoDetallePageModule)
+  },
+  {
+    path: 'bk-pedido-estado',
+    loadChildren: () => import('./pages/bk-pedido-estado/bk-pedido-estado.module').then( m => m.BkPedidoEstadoPageModule)
+  },
+  {
+    path: 'bk-reporte-ventas',
+    loadChildren: () => import('./pages/bk-reporte-ventas/bk-reporte-ventas.module').then( m => m.BkReporteVentasPageModule)
+  },
   {
     path: '**',
     redirectTo: 'login',
