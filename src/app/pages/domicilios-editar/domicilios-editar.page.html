@@ -1,9 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>domicilios_editar</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header> </app-header>
 
 <ion-content>
-
+  <div class="contFlex padtop5">
+    <h3 class="ion-text-center mgTop6">EDITAR DOMICILIO</h3>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="presentAlert()">
+    <ion-item>
+      <ion-label position="stacked">Calle</ion-label>
+      <ion-input formControlName="domiCalle"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Número</ion-label>
+      <ion-input formControlName="domiNumero"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Piso</ion-label>
+      <ion-input formControlName="domiPiso"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Departamento</ion-label>
+      <ion-input formControlName="domiDpto"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Localidad</ion-label>
+      <ion-input formControlName="domiLoc"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Provincia</ion-label>
+      <ion-input formControlName="domiProv"></ion-input>
+    </ion-item>
+    <div class="btnForm">
+      <ion-button color="spezia" type="submit" class="mgTop6 ion-align-self-center">Actualizar domicilio</ion-button>
+      <ion-button color="spezia" (click)="redirectInicio()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
+    </div>
+  </form>
 </ion-content>
