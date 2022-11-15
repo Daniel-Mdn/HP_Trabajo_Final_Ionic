@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar class="contFlex" color="primary">
+    <ion-grid fixed>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="2" class="contFlex">
+          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-col>
+        <ion-col size="8" class="ion-align-self-center">
+          <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
+          <ion-title class="ion-text-center">REPORTE VENTAS</ion-title>
+        </ion-col>
+        <ion-col size="2" class="contFlex"> 
+          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed class="mt-4">
+    <ion-row>
+      <ion-col size="4">
+        <ion-label>Fecha desde:</ion-label>
+      </ion-col>
+      <ion-col size="8">
+        <ion-datetime-button color="primary" datetime="datetimeDesde"></ion-datetime-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-label>Fecha hasta:</ion-label>
+      </ion-col>
+      <ion-col size="8">
+        <ion-datetime-button color="primary" datetime="datetimeHasta"></ion-datetime-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="grid-borders grid-margins">
+    <ion-row>
+      <ion-col class="ion-text-center">Fecha</ion-col>
+      <ion-col class="ion-text-center">Pedido Nro</ion-col>
+      <ion-col class="ion-text-center">Monto</ion-col>
+      <ion-col class="ion-text-center">Detalles</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid fixed class="mt-4">
+    <ion-row>
+      <ion-col class="ion-text-right" size="6">Total:</ion-col>
+      <ion-col size="6"><ion-label>VAR_TOTAL_SUMA</ion-label></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-right" size="6">Cantidad de pedidos</ion-col>
+      <ion-col size="6"><ion-label>VAR_CANTIDAD_PEDIDOS</ion-label></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-right" size="6">Promedio de $ por pedidos</ion-col>
+      <ion-col size="6"><ion-label>TOTAL_SUMA/CANT_PEDIDOS</ion-label></ion-col>
+    </ion-row>
+  </ion-grid>
+<!--MODAL-->
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="datetimeDesde"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="datetimeHasta"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+</ion-content>

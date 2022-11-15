@@ -44,9 +44,10 @@ export class UsuarioCliEditaPage implements OnInit {
 
   ngOnInit() {
     //let usuId = '';
+    console.log(this.storage.get('usuario'))
     this.storage.get('usuario').then((val)=>{ 
       this.usuId = val;
-      //console.log('usuario: '+this.usuId);
+      console.log('usuario: '+this.usuId);
       this.usuarioService.getUser(this.usuId).subscribe((usu)=>{
         //console.log(usu);
         this.usuario = usu;

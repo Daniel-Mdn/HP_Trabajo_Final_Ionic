@@ -61,4 +61,8 @@ export class CarritoPage implements OnInit {
 
       }
   }
+
+  redirectBack(){
+    this.router.navigate(['/inicio']);
+  }
 }
