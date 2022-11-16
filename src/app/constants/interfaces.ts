@@ -96,4 +96,5 @@ export interface IDomicilio{
     nroCasa:string,
     piso?:string,
     estaActivo:boolean
+    domiObs:string
 }
