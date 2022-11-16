@@ -1,10 +1,10 @@
 <app-header> </app-header>
 
 <ion-content>
-  <div class="contFlex padtop5">
-    <h3 class="ion-text-center mgTop6">EDITAR DOMICILIO</h3>
+  <div class="contFlex mt-4">
+    <h3 class="ion-text-center">EDITAR DOMICILIO</h3>
   </div>
-  <form [formGroup]="form" (ngSubmit)="presentAlert()">
+  <form [formGroup]="form" (ngSubmit)="presentAlert()" class="mt-4">
     <ion-item>
       <ion-label position="stacked">Calle</ion-label>
       <ion-input formControlName="domiCalle"></ion-input>
@@ -22,6 +22,10 @@
       <ion-input formControlName="domiDpto"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label position="stacked">Observaciones</ion-label>
+      <ion-input formControlName="domiObs"></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label position="stacked">Localidad</ion-label>
       <ion-input formControlName="domiLoc"></ion-input>
     </ion-item>
@@ -31,7 +35,7 @@
     </ion-item>
     <div class="btnForm">
       <ion-button color="spezia" type="submit" class="mgTop6 ion-align-self-center">Actualizar domicilio</ion-button>
-      <ion-button color="spezia" (click)="redirectInicio()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
+      <ion-button color="spezia" (click)="redirectDomicilios()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
     </div>
   </form>
 </ion-content>

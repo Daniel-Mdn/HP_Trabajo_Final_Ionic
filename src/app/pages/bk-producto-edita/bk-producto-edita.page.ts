@@ -43,7 +43,7 @@ export class BkProductoEditaPage implements OnInit {
   ngOnInit() {
   //  this.storage.get('productoSeleccionado').then((prod)=>{
   //  this.prodId = prod.id;
-    this.prodId = 'yfJiHKH3UUknM6pr6J7D';
+    this.prodId = 'yfJiHKH3UUknM6pr6J7D'; //valor harcodeado para probar funcionalidad. El valor tiene que venir del producto que seleccione en producto-lista
     console.log(this.prodId);
     this.productService.getProduct(this.prodId).subscribe((p)=>{
       this.producto = p;

@@ -58,6 +58,14 @@ export class SeleccionDomicilioPage implements OnInit {
     );
   }
 
+  editaDomicilio(){
+    this.route.navigate(['/domicilios-editar'])
+  }
+
+  redirectDomicilioRegistro(){
+    this.route.navigate(['/domicilios-registro'])
+  }
+
   selectPredeterminado(selectedDomicilio:IDomicilio){
     this.domicilioService.setCurrentDomicilio$(selectedDomicilio);
     this.route.navigate(['/inicio'])

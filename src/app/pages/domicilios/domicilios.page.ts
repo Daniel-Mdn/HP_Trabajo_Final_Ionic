@@ -43,6 +43,10 @@ export class DomiciliosPage implements OnInit {
       });
   }
 
+  editaDomicilio(){
+    this.route.navigate(['/domicilios-editar'])
+  }
+
   formatDomicilio(domicilio: IDomicilio): string {
     let depto: string;
     if (domicilio.dpto && domicilio.piso) {
@@ -56,6 +60,10 @@ export class DomiciliosPage implements OnInit {
       (depto ? depto + ', ' : '') +
       domicilio.idLocalidad
     );
+  }
+
+  redirectDomicilioRegistro(){
+    this.route.navigate(['/domicilios-registro'])
   }
 
   selectPredeterminado(selectedDomicilio:IDomicilio){
