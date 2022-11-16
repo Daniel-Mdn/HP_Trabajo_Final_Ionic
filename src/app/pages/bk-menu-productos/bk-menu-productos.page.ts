@@ -31,4 +31,12 @@ export class BkMenuProductosPage implements OnInit {
     this.router.navigate(['/bk-menu-empleado']);
   }
 
+  redirectAdicRegistro(){
+    this.router.navigate(['/bk-adicional-carga']);
+  }
+
+  redirectAdicEdita(){
+    this.router.navigate(['/bk-adicional-lista']);
+  }
+
 }
