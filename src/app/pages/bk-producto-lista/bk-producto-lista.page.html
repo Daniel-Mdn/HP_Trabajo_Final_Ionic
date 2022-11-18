@@ -1,9 +1,111 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>bk_producto_lista</ion-title>
+  <ion-toolbar class="contFlex" color="primary">
+    <ion-grid fixed>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="2" class="contFlex">
+          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-col>
+        <ion-col size="8" class="ion-align-self-center">
+          <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
+          <ion-title class="ion-text-center">ELEGIR PRODUCTO</ion-title>
+        </ion-col>
+        <ion-col size="2" class="contFlex"> 
+          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="container">
+  <ion-grid class="colorShade">
+    <ion-row class="ion-justify-content-center colorShade">
+      <ion-col class="colorShade" size="6">
+        <ion-list class="colorShade">
+          <ion-item class="colorShade" lines="none">
+            <ion-select
+              interface="popover"
+              placeholder="Filtros"
+              (ionChange)="handleFilter($event)"
+            >
+              <ion-content *ngFor="let cat of categorias">
+                <ion-select-option [value]="cat.id"
+                  >{{cat.descCategoria}}</ion-select-option
+                >
+              </ion-content>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <!-- List of Text Items -->
+
+  <ion-list>
+    <ion-item
+      *ngFor="let prod of productos$|async"
+      (click)="selectProduct(prod.id)"
+      lines="none"
+    >
+      <ion-buttons class="cadaProd">
+        <ion-row>
+          <ion-row class="width100">
+            <ion-col size="4">
+              <ion-row class="">
+                <ion-img
+                  class="avatar-producto imgSize"
+                  [src]="prod?.imagen||'assets/img/no-image.png'"
+                  onerror="assets/img/no-image.png"
+                ></ion-img>
+              </ion-row>
+            </ion-col>
+            <ion-col size="8" class="padLeft">
+              <ion-row>
+                <ion-label class="txtCateg"
+                  >{{getCategoriaProducto(prod.idCategoria)}}</ion-label
+                >
+              </ion-row>
+              <ion-row>
+                <ion-label class="txtNombre">{{prod.nombre}}</ion-label>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row class="width100">
+            <ion-col>
+              <ion-label class="ion-text-wrap ion-text-center">
+                {{prod.descProd}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="lineasCurrentPedido.length">
+    <ion-fab-button class="button-pedido" (click)="navigateToCarrito()">
+      <ion-row
+        class="ion-justify-content-between ion-align-items-center"
+        style="width: -webkit-fill-available"
+      >
+        <ion-col size="3">
+          <ion-icon
+            name="bag-outline"
+            style="width: 6vw; height: 5vh"
+          ></ion-icon>
+          <ion-badge
+            color="danger"
+            style="position: absolute; right: 8px; top: 4px"
+            >{{lineasCurrentPedido.length}}</ion-badge
+          >
+        </ion-col>
+        <ion-col size="auto">
+          <div>Ver pedido</div>
+        </ion-col>
+        <ion-col size="3">
+          <div>${{currentPedido.total??0}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IProducto } from 'src/app/constants/interfaces';
 import { ProductoService } from 'src/app/services/producto/producto.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -21,7 +21,8 @@ export class BkProductoEditaPage implements OnInit {
     private router:Router,
     private storage:StorageService,
     private productService:ProductoService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private route:ActivatedRoute
   ) {
     this.form = this.formBuilder.group({
       prodId: [{value: '', disabled: true}],
@@ -43,22 +44,26 @@ export class BkProductoEditaPage implements OnInit {
   ngOnInit() {
   //  this.storage.get('productoSeleccionado').then((prod)=>{
   //  this.prodId = prod.id;
-    this.prodId = 'yfJiHKH3UUknM6pr6J7D'; //valor harcodeado para probar funcionalidad. El valor tiene que venir del producto que seleccione en producto-lista
-    console.log(this.prodId);
-    this.productService.getProduct(this.prodId).subscribe((p)=>{
-      this.producto = p;
-      this.form.controls.prodId.setValue(this.prodId);
-      this.form.controls.categoria.setValue(this.producto.idCategoria);
-      this.form.controls.tamanio.setValue(this.producto.tamanio);
-      this.form.controls.nombre.setValue(this.producto.nombre);
-      this.form.controls.descProd.setValue(this.producto.descProd);
-      if (this.producto.disponibilidad){
-        this.form.controls.disponibilidad.setValue('Activo');
-      }else{
-        this.form.controls.disponibilidad.setValue('Inactivo');
-      }
-      this.form.controls.imagen.setValue(this.producto.imagen);
-      //this.form.controls.precioProd.setValue(this.producto.historial_precio[0].precioProd);
+    //this.prodId = 'yfJiHKH3UUknM6pr6J7D'; //valor harcodeado para probar funcionalidad. El valor tiene que venir del producto que seleccione en producto-lista
+    
+    this.route.params.subscribe((params) => {
+      this.prodId = params.id;
+      console.log(this.prodId);
+      this.productService.getProduct(this.prodId).subscribe((p)=>{
+        this.producto = p;
+        this.form.controls.prodId.setValue(this.prodId);
+        this.form.controls.categoria.setValue(this.producto.idCategoria);
+        this.form.controls.tamanio.setValue(this.producto.tamanio);
+        this.form.controls.nombre.setValue(this.producto.nombre);
+        this.form.controls.descProd.setValue(this.producto.descProd);
+        if (this.producto.disponibilidad){
+          this.form.controls.disponibilidad.setValue('Activo');
+        }else{
+          this.form.controls.disponibilidad.setValue('Inactivo');
+        }
+        this.form.controls.imagen.setValue(this.producto.imagen);
+        //this.form.controls.precioProd.setValue(this.producto.historial_precio[0].precioProd);
+      })
     })
   //  }
   }

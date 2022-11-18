@@ -5,7 +5,7 @@ import { BkProductoEditaPage } from './bk-producto-edita.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: BkProductoEditaPage
   }
 ];

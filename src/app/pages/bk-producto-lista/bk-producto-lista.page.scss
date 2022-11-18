@@ -1,0 +1,64 @@
+.cadaProd{
+    margin-bottom: 5vh;
+    border: 4px solid;
+    border-radius: 2%;
+    padding: 2vh; 
+    border-color: var(--ion-color-spezia);
+    width: 100%;
+}
+.contFlex{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.filtrosCont{
+    margin-bottom: 5vh;
+    padding: 3vh; 
+    background-color: var(--ion-color-spezia-shade);
+    padding-top: 0vh;
+}
+.colorShade{
+    background-color: var(--ion-color-spezia-shade);
+}
+
+.width30{
+    width:30%;
+}
+.width100{
+    width: 100%;
+}
+
+.imgSize{
+    height: 22vw;
+    width: 22vw;
+}
+
+.txtCateg{
+    font-size: medium;
+}
+
+.txtNombre{
+    font-size: large;
+    font-weight: 600;
+    padding-top: 1vw;
+}
+
+.padLeft{
+    padding-left: 2vw;
+}
+
+ion-toolbar {
+    --min-height: 50px;
+  }
+
+  .button-pedido{
+    --border-radius: 60px;
+    width: 50vw;
+    height: 10vh;
+  }
+
+  .fab-horizontal-center{
+    left: 31vw;
+    margin-left: -28px;
+  }
