@@ -52,6 +52,14 @@
               <ion-row>
                 <ion-label class="txtNombre">{{prod.nombre}}</ion-label>
               </ion-row>
+              <ion-row>
+                <ng-container *ngFor="let precio of prod.historial_precio">
+                  <ion-col>
+                    <ion-label class="txtTamanio">{{precio.tamanio}}: </ion-label>
+                    <ion-label class="txtPrecio">{{precio.precioProd|currency}}</ion-label>
+                  </ion-col>
+                </ng-container>
+              </ion-row>
             </ion-col>
           </ion-row>
           <ion-row class="width100">

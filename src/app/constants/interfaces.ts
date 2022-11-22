@@ -15,7 +15,7 @@ export interface IProducto{
     categoria?:ICategoria
     historial_precio:IHistorialPrecio[],
     histPath:string,
-
+    histPaths:{tamanio:Tamanios, hist:string}[]
 }
 
 export interface IEnvio{
@@ -85,7 +85,8 @@ export interface IHistorialExtras{
 
 export interface IHistorialPrecio{
     fechaDesde:Date,
-    precioProd: number
+    precioProd: number,
+    tamanio:Tamanios
 }
 export interface IDomicilio{
     id:string,
