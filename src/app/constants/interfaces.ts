@@ -93,8 +93,19 @@ export interface IDomicilio{
     dpto?:string,
     idUsuario:string,
     idLocalidad:string,
+    idProvincia:string,
     nroCasa:string,
     piso?:string,
     estaActivo:boolean
     domiObs:string
+}
+export interface ILocalidad{
+    id:string,
+    cpLoc:string
+    descLoc:string
+    idProvincia:string
+}
+export interface IProvincia{
+    id:string,
+    descProv:string
 }

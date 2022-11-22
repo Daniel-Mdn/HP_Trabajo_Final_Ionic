@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [showMenu]="false"></app-header>
 
 <ion-content>
   <h3 class="txtCenter">MIS DOMICILIOS</h3>
@@ -14,7 +14,7 @@
         </ion-col>
         <ion-col size="2" class="contFlex padleft3">
           <!-- <ion-button (click)="selectPredeterminado(domicilio)" size="default" expand="block" fill="solid" class="btnDomiPredet padbot1" [color]="domicilio.estaActivo?'spezia':'light'" type="reset">Predeterminado</ion-button> Este botón debería ser de los activado-desactivado. Pero me parece que eso se hace desde el código -->
-          <ion-button fill="clear" class="" size="small" color="spezia" (click)="editaDomicilio()">
+          <ion-button fill="clear" class="" size="small" color="spezia" (click)="editaDomicilio(domicilio.id)">
             <ion-img class="imgEdit" src="assets/img/edit.png"></ion-img>
           </ion-button>
         </ion-col>

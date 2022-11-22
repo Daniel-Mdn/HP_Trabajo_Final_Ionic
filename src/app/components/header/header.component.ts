@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
     private storage: StorageService
   ) {}
   @Input() prevPage: string = 'inicio';
+  @Input() showMenu: boolean = true;
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   currentDomicilio$: Observable<IDomicilio> = of();
   currentDomicilio: IDomicilio;
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   currentUrl:string;
   async ngOnInit() {
     this.currentUrl=this.router.url;
+    console.log('currentUrl', this.currentUrl)
     this.currentDomicilio$ = this.domicilioService.getCurrentDomicilio$;
     this.currentDomicilio$.subscribe((dom) => {
       if (Object.entries(dom).length !== 0) {

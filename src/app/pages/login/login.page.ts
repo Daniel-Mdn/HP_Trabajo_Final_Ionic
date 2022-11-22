@@ -44,6 +44,7 @@ export class LoginPage implements OnInit {
         // Signed in
         this.storage.set('usuario', email);
         this.usuarioService.getUser(email).subscribe((u) => {
+          console.log(u)
           let usuario = u;
           this.storage.set('rol', usuario.rol);
           console.log(usuario.rol);

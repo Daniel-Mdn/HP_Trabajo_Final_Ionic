@@ -20,31 +20,24 @@ export class DomiciliosPage implements OnInit {
     private domicilioService: DomicilioService,
     private storage: StorageService,
     private route: Router
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     await this.storage.get('usuario').then((res) => (this.usuario = res));
     this.listaDomicilios$ = this.domicilioService.getDomicilios$;
     this.domicilioService
-      .getDomiciliosId()
-      .pipe(first()).subscribe((res) => {
-        console.log('domicilios prueba')
-        console.log(res)
-      });
-    this.domicilioService
       .getDomiciliosId({
         where: [{ name: 'idUsuario', validation: '==', value: this.usuario }]
       })
       .pipe(first()).subscribe((res) => {
-        console.log('domicilios')
-        console.log(res)
         this.domicilioService.setDomicilios$(res);
         this.listaDomicilios=res;
       });
   }
 
-  editaDomicilio(){
-    this.route.navigate(['/domicilios-editar'])
+  editaDomicilio(id:string){
+    this.route.navigate(['/domicilios-editar', id])
   }
 
   formatDomicilio(domicilio: IDomicilio): string {

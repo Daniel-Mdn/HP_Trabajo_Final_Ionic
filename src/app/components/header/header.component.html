@@ -4,7 +4,7 @@
       <ion-row>
         <ion-col class="ion-align-self-center ion-justify-content-center">
           <ion-row>
-            <ion-icon *ngIf="currentDomicilio!==undefined" (click)="goPrevPage()" name="arrow-back" size="large" class="btnBack"></ion-icon>
+            <ion-icon (click)="goPrevPage()" name="arrow-back" size="large" class="btnBack"></ion-icon>
           </ion-row>
         </ion-col>
         <ion-col  size="6">
@@ -21,7 +21,7 @@
           </ion-row>
         </ion-col>
         <ion-col class="ion-align-self-end ion-text-end">
-          <ion-icon *ngIf="currentDomicilio!==undefined || currentUrl=='/inicio'" name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
+          <ion-icon *ngIf='showMenu' name="menu" (click)="openCustom()" class="ion-align-self-center btnMenu" size="large"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
