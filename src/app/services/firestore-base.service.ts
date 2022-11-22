@@ -65,6 +65,7 @@ export class FirestoreBaseService {
     return this.firestore.doc(path + '/' + id).delete();
   }
   public updateOne<T>(path: string, id: string, data: T): Observable<T> {
+    console.log(data)
     this.firestore.doc(path + '/' + id).update(data);
     return this.firestore.doc<T>(path + '/' + id).valueChanges();
   }

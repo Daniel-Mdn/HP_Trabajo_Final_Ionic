@@ -1,4 +1,4 @@
-<app-header> </app-header>
+<app-header [showMenu]="false" [prevPage]="'/domicilios'"> </app-header>
 
 <ion-content>
   <div class="contFlex mt-4">
@@ -7,19 +7,19 @@
   <form [formGroup]="form" (ngSubmit)="presentAlert()" class="mt-4">
     <ion-item>
       <ion-label position="stacked">Calle</ion-label>
-      <ion-input formControlName="domiCalle"></ion-input>
+      <ion-input formControlName="calle"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Número</ion-label>
-      <ion-input formControlName="domiNumero"></ion-input>
+      <ion-input formControlName="nroCasa"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Piso</ion-label>
-      <ion-input formControlName="domiPiso"></ion-input>
+      <ion-input formControlName="piso"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Departamento</ion-label>
-      <ion-input formControlName="domiDpto"></ion-input>
+      <ion-input formControlName="dpto"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Observaciones</ion-label>
@@ -27,15 +27,25 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Localidad</ion-label>
-      <ion-input formControlName="domiLoc"></ion-input>
+      <ion-input formControlName="idLocalidad"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Provincia</ion-label>
-      <ion-input formControlName="domiProv"></ion-input>
+      <ion-input formControlName="idProvincia"></ion-input>
     </ion-item>
     <div class="btnForm">
-      <ion-button color="spezia" type="submit" class="mgTop6 ion-align-self-center">Actualizar domicilio</ion-button>
-      <ion-button color="spezia" (click)="redirectDomicilios()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
+      <ion-button
+        color="spezia"
+        type="submit"
+        class="mgTop6 ion-align-self-center"
+        >Actualizar domicilio</ion-button
+      >
+      <ion-button
+        color="spezia"
+        (click)="redirectDomicilios()"
+        class="mgTop6 ion-align-self-center"
+        >Cancelar</ion-button
+      >
     </div>
   </form>
 </ion-content>
