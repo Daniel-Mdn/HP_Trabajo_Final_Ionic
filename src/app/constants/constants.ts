@@ -1,5 +1,5 @@
 export enum Categorias{
-    Hamburguesas="hamburguesas",
+    Hamburguesas="hamburguesa",
     DescHamburguesas="Medallón de Carne",
     PizzasMolde="pizzaAlMolde",
     PizzasParrilla="pizzaAlaParrilla"

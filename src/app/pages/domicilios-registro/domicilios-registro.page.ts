@@ -5,6 +5,7 @@ import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AlertController } from '@ionic/angular';
 import { IDomicilio } from 'src/app/constants/interfaces';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class DomiciliosRegistroPage implements OnInit {
   form:FormGroup;
   domicilio:IDomicilio;
   usuId:string;
+  usuario:string;
   domiId:string;
   
   constructor(
@@ -36,7 +38,8 @@ export class DomiciliosRegistroPage implements OnInit {
       })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.storage.get('usuario').then((res) => (this.usuario = res));
   }
 
   registraDomicilio(){
@@ -50,11 +53,16 @@ export class DomiciliosRegistroPage implements OnInit {
         piso: this.form.controls.domiPiso.value,
         dpto: this.form.controls.domiDpto.value,
         idLocalidad: 'rosario',
+        idProvincia: 'santaFe',
         domiObs: this.form.controls.domiObs.value,
         idUsuario: this.usuId,
         estaActivo: true
       };
       this.domicilioService.createDomicilio(domi)
+      this.domicilioService.getDomiciliosId({
+        where: [{ name: 'idUsuario', validation: '==', value: this.usuario }]
+      }).pipe(first()).subscribe((doms)=>{
+        this.domicilioService.setDomicilios$(doms)})
       //this.router.navigate(['/domicilios']);
     })
   }

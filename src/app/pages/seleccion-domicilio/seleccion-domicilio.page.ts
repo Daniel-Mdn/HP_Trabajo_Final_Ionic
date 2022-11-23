@@ -26,12 +26,6 @@ export class SeleccionDomicilioPage implements OnInit {
     await this.storage.get('usuario').then((res) => (this.usuario = res));
     this.listaDomicilios$ = this.domicilioService.getDomicilios$;
     this.domicilioService
-      .getDomiciliosId()
-      .pipe(first()).subscribe((res) => {
-        console.log('domicilios prueba')
-        console.log(res)
-      });
-    this.domicilioService
       .getDomiciliosId({
         where: [{ name: 'idUsuario', validation: '==', value: this.usuario }]
       })
@@ -58,8 +52,9 @@ export class SeleccionDomicilioPage implements OnInit {
     );
   }
 
-  editaDomicilio(){
-    this.route.navigate(['/domicilios-editar'])
+  editaDomicilio(id:string){
+    console.log(id)
+    this.route.navigate(['/domicilios-editar', id])
   }
 
   redirectDomicilioRegistro(){

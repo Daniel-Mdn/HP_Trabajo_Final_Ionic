@@ -145,7 +145,7 @@
           </ion-item>
         </div>
         <ion-item *ngFor="let extra of extras$|async" lines="none">
-          <ion-label>{{extra.descExtra}}</ion-label>
+          <ion-label>{{extra.descExtra}} ({{extra.precio??0|currency}})</ion-label>
           <ion-checkbox
             (ionChange)="setExtra($event)"
             color="spezia"

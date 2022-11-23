@@ -116,6 +116,7 @@ export class ProductoPage implements OnInit {
           if (prod) {
             this.producto = prod;
             this.producto.histPath = 'productos/' + id;
+            console.log(this.producto)
             if (this.producto.idCategoria == Categorias.Hamburguesas) {
               this.isBurger = true;
             }
@@ -140,10 +141,8 @@ export class ProductoPage implements OnInit {
               prods.map((prod) => {
                 prod.histPath = 'productos/' + prod.id;
               });
-              console.log(prods);
               this.productos = prods;
               this.productos.map((p) => {
-                console.log(p)
                 this.tamanios.push({ id: p.id, tamanio: p.tamanio });
                 const hist = this.firestore.doc(p.histPath);
                 hist
@@ -237,6 +236,7 @@ export class ProductoPage implements OnInit {
     let precio=[];
     this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
     const totalExtras= precio.reduce((a,b)=>a+b,0)
+    this.subtotal = totalExtras;
     this.totalProducto=this.productoSelected.precio + totalExtras??0;    
   }
 
