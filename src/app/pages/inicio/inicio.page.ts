@@ -7,6 +7,7 @@ import {
   IPedido,
   IProducto,
   IUsuario,
+  IWhere,
 } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
 import { first, map } from 'rxjs/operators';
@@ -111,18 +112,51 @@ export class InicioPage implements OnInit {
   handleFilter(ev: Event) {
     let event = ev as RadioGroupCustomEvent;
     this.catFiltrada = event.detail.value;
+    let where:IWhere;
+    if (this.catFiltrada=="todos"){
+      where=null;
+    }else{
+      where={ name: 'idCategoria', validation: '==', value: this.catFiltrada };
+    }
     this.productoService
       .getProductsId({
-        where: [
-          { name: 'idCategoria', validation: '==', value: this.catFiltrada },
-        ],
+        where: where?[
+          where
+        ]:[],
         order: 'nombre',
       })
       .subscribe((res) => {
+        res.map((value, index, self) => {
+          let list = self.filter(
+            (s) =>
+              s.nombre === value.nombre && s.idCategoria === value.idCategoria
+          );
+          value.histPaths = [];
+          list.forEach((l) => {
+            value.histPaths.push({tamanio:l.tamanio,hist:l.histPath});
+          });
+        });
         res = res.filter(
           (value, index, self) =>
             index === self.findIndex((t) => t.nombre === value.nombre)
         );
+        res.map((p) => {
+          p.histPaths.forEach((path) => {
+            p.historial_precio = [];
+            const hist = this.firestore.doc(path.hist);
+            hist
+              .collection<IHistorialPrecio>('historial_precio', (ref) =>
+                ref.orderBy('fechaDesde', 'desc')
+              )
+              .valueChanges()
+              .pipe(first())
+              .subscribe((x) => {
+                p.historial_precio.push({ tamanio:path.tamanio,...x[0]});
+                p.precio = x[0]?.precioProd ?? 0;
+                // this.totalProducto = this.producto.precio;
+              });
+          });
+        });
         this.productoService.setProducts$(res);
       });
   }

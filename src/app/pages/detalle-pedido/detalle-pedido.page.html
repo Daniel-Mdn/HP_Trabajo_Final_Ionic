@@ -3,7 +3,7 @@
 <ion-content>
   <div class="contFlex padtop3">
     <h3 class="txtCenter">DETALLE PEDIDO</h3>
-    <h4 class="txtCenter padbot4">Código pedido:<br>XXXX-CLAVE-DEL-PEDIDO-0000</h4>
+    <h4 class="txtCenter padbot4">Código pedido:<br>{{pedido.id}}</h4>
   </div>
   <div class="recResumen">
     <ion-col size="10">
@@ -11,7 +11,7 @@
         <ion-label class="txtTitulo">DOMICILIO</ion-label>
       </ion-row>
       <ion-row class="padbot4">
-        <ion-label>calle + nroCasa + piso + dpto</ion-label>
+        <ion-label>{{formatDomicilio()|titlecase}}</ion-label>
       </ion-row>
       <ion-row>
         <ion-label class="txtTitulo">DETALLE PEDIDO</ion-label>
@@ -55,7 +55,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>Efectivo en la entrega</ion-label><!--No es necesario poner variable por el momento-->
+            <ion-label>{{pedido.formaDePago|titlecase}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -65,7 +65,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>En preparación</ion-label><!--Va variable de estado-->
+            <ion-label>{{pedido.estadoPedido|titlecase}}</ion-label>
           </div>
         </ion-col>
       </ion-row>

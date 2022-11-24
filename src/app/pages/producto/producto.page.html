@@ -46,14 +46,14 @@
         <span class="error ion-padding" *ngIf="isSubmitted && controls.tamanio.errors?.required">
           El tamaño es requerido.
         </span>
-        <ion-item lines="none" *ngIf="isBurger" >
+        <!-- <ion-item lines="none" *ngIf="isBurger" >
           <ion-checkbox
             color="spezia"
             class="mr-10"
             slot="start"
           ></ion-checkbox>
           <ion-label>Con papas</ion-label>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item id="open-modal" expand="block" [disabled]="!tamanioSelected" lines="none" *ngIf="isBurger">
           <ion-icon

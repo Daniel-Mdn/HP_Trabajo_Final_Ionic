@@ -19,14 +19,15 @@ export class DomicilioService extends FirestoreBaseService {
     IDomicilio[]
   >([] as IDomicilio[]);
 
+  currentDomicilio$: BehaviorSubject<IDomicilio> =
+    new BehaviorSubject<IDomicilio>({} as IDomicilio);
+
   public get getDomicilios$() {
     return this.listaDomicilios$.asObservable();
   }
   public setDomicilios$(list: IDomicilio[]): void {
     this.listaDomicilios$.next(list);
   }
-  currentDomicilio$: BehaviorSubject<IDomicilio> =
-    new BehaviorSubject<IDomicilio>({} as IDomicilio);
 
   public get getCurrentDomicilio$() {
     return this.currentDomicilio$.asObservable();
@@ -71,5 +72,20 @@ export class DomicilioService extends FirestoreBaseService {
   }
 
   public async recargarDomiciliosWithId(params?: IParams) {
+  }
+
+  public formatDomicilio(currentDomicilio:IDomicilio): string {
+    let depto: string;
+    if (currentDomicilio.dpto && currentDomicilio.piso) {
+      depto = currentDomicilio.piso + ' ' + currentDomicilio.dpto;
+    }
+    return (
+      currentDomicilio.calle +
+      ' ' +
+      currentDomicilio.nroCasa +
+      ', ' +
+      (depto ? depto + ', ' : '') +
+      currentDomicilio.idLocalidad
+    );
   }
 }
