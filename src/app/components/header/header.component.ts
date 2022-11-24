@@ -6,6 +6,8 @@ import { IDomicilio } from 'src/app/constants/interfaces';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { EmailAuthProvider, getAuth, reauthenticateWithCredential, signOut, updatePassword } from 'firebase/auth';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +21,8 @@ export class HeaderComponent implements OnInit {
     private domicilioService: DomicilioService,
     private storage: StorageService,
     private usuarioService:UsuarioService,
+    private angularFireAuth: AngularFireAuth,
+
 
   ) {}
   @Input() prevPage: string = 'inicio';
@@ -65,6 +69,12 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.storage.remove('usuario').then((res) => console.log);
+    const auth = getAuth()
+    signOut(auth).then(() => {
+        console.log('Sign-out successful')
+      }).catch((error) => {
+        console.log('Error en sign-out')
+      });
     this.router.navigate(['/login']);
   }
 

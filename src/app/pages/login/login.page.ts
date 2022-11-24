@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
   form: FormGroup;
   errorControls: any;
   loading: boolean = false;
+  mensajeError:string;
   constructor(
     private angularFireAuth: AngularFireAuth,
     private formBuilder: FormBuilder,
@@ -42,6 +43,7 @@ export class LoginPage implements OnInit {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
+        this.mensajeError = "";
         this.storage.set('usuario', email);
         this.usuarioService.getUser(email).subscribe((u) => {
           console.log(u)
@@ -73,10 +75,41 @@ export class LoginPage implements OnInit {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        this.fnErrorDialog(errorCode, email, password);
       });
   }
 
   redirectUsuCliRegistro() {
     this.router.navigate(['/usuario-cli-registro']);
+  }
+
+  fnErrorDialog(errorCode,email,password){
+    if (errorCode == 'auth/email-already-in-use') {
+      this.mensajeError = "El email "+email+" ya está registrado. Por favor, ingrese una dirección de email distinta.";
+    }
+  
+    if (errorCode == 'auth/weak-password') {
+      this.mensajeError = "La contraseña debe tener más de 6 números o letras";
+    }
+
+    if (errorCode == 'auth/operation-not-allowed') {
+      this.mensajeError = "Debe ingresar una dirección de email y una contraseña";
+    }
+
+    if (errorCode == 'auth/invalid-email') {
+      this.mensajeError = "La dirección de email ingresada no es válida. El formato debe ser, por ejemplo, juan@email.com";
+    }
+    
+    if (errorCode == 'auth/user-disabled') {
+      this.mensajeError = "El usuario "+email+" ha sido desabilitado";
+    }
+    
+    if (errorCode == 'auth/user-not-found') {
+      this.mensajeError = 'El usuario con el email '+email+' no existe';
+    }
+  
+    if (errorCode == 'auth/wrong-password') {
+      this.mensajeError = 'La contraseña es incorrecta';
+    }
   }
 }

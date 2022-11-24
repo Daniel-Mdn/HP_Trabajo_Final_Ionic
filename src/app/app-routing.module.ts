@@ -134,6 +134,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/bk-adicional-edita/bk-adicional-edita.module').then( m => m.BkAdicionalEditaPageModule)
   },
   {
+    path: 'bk-usuario-lista',
+    loadChildren: () => import('./pages/bk-usuario-lista/bk-usuario-lista.module').then( m => m.BkUsuarioListaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
