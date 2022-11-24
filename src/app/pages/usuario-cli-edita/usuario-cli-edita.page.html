@@ -25,12 +25,6 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <!--
-    <ion-item>
-      <ion-label position="stacked">Fecha de nacimiento</ion-label>
-      <ion-input formControlName="fechaNac"></ion-input>
-    </ion-item>
-  -->
     <ion-item>
       <ion-label position="stacked">Número de teléfono</ion-label>
       <ion-input formControlName="nroTelefono"></ion-input>
@@ -40,6 +34,9 @@
       <ion-button color="spezia" (click)="redirectInicio()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>
     </div>
   </form>
+  <ion-text color="danger">
+    <h4 class="ion-text-center"> {{mensajeError}} </h4>
+  </ion-text>
 <!--  MODAL  -->
   <ion-button id="open-modal" color="#f4f4f4" expand="block" class="btnModalPass">Actualizar contraseña</ion-button>
   <ion-modal trigger="open-modal">
@@ -57,16 +54,25 @@
       </ion-header>
       <ion-content class="ion-padding">
         <form [formGroup]="formPass">
+          <!--
           <ion-item>
-            <ion-label position="stacked">Nueva contraseña</ion-label>
-            <ion-input formControlName="newPass"></ion-input>
+            <ion-label position="stacked">Contraseña actual</ion-label>
+            <ion-input type="password" formControlName="oldPass"></ion-input>
+          </ion-item>
+          -->
+          <ion-item>
+            <ion-label position="stacked">Nueva contraseña*</ion-label>
+            <ion-input type="password" formControlName="newPass"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">Repita nueva contraseña</ion-label>
-            <ion-input></ion-input>
+            <ion-label position="stacked">Repita nueva contraseña*</ion-label>
+            <ion-input type="password" formControlName="newPass2"></ion-input>
           </ion-item>
           <!--<ion-button block color="spezia" type="submit">Actualizar contraseña</ion-button>-->
         </form>
+        <ion-text color="danger">
+          <h4 class="ion-text-center"> {{mensajeErrorModal}} </h4>
+        </ion-text>
       </ion-content>
     </ng-template>
   </ion-modal>

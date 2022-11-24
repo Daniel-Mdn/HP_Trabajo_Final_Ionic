@@ -5,6 +5,7 @@ import { from, Observable, of } from 'rxjs';
 import { IDomicilio } from 'src/app/constants/interfaces';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,9 @@ export class HeaderComponent implements OnInit {
     private menu: MenuController,
     private router: Router,
     private domicilioService: DomicilioService,
-    private storage: StorageService
+    private storage: StorageService,
+    private usuarioService:UsuarioService,
+
   ) {}
   @Input() prevPage: string = 'inicio';
   @Input() showMenu: boolean = true;
@@ -25,6 +28,7 @@ export class HeaderComponent implements OnInit {
   currentDomicilio: IDomicilio;
   userDomicilios: Observable<IDomicilio[]> = from([]);
   currentUrl:string;
+  currentUser:string;
   async ngOnInit() {
     this.currentUrl=this.router.url;
     console.log('currentUrl', this.currentUrl)
@@ -37,6 +41,12 @@ export class HeaderComponent implements OnInit {
   }
 
   openCustom() {
+    this.storage.get('usuario').then((val)=>{
+      this.usuarioService.getUser(val).subscribe((usu)=>{      
+        console.log(usu);
+        this.currentUser = usu.nombre;
+      })
+    })
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }

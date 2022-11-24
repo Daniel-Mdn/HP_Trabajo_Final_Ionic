@@ -17,6 +17,11 @@ export class UsuarioCliRegistroPage implements OnInit {
   formAuth:FormGroup;
   errorControls:any;
   loading:boolean= false;
+  email: string;
+  password: string;
+  mensajeError:string;
+  mensajeForm:string;
+
   constructor(
     private angularFireAuth: AngularFireAuth,
     private formBuilder:FormBuilder,
@@ -40,12 +45,11 @@ export class UsuarioCliRegistroPage implements OnInit {
     this.formAuth = this.formBuilder.group({
       email:['', Validators.required],
       password:['', Validators.required],
+      password2:['', Validators.required]
     })
     this.errorControls = this.form.controls;
    }
 
-  email: string;
-  password: string;
   ngOnInit() {
   }
 
@@ -57,22 +61,29 @@ export class UsuarioCliRegistroPage implements OnInit {
   registrarEmail(){
     this.email = this.formAuth.controls.email.value;
     this.password = this.formAuth.controls.password.value;
-    console.log("email: ", this.email, ", password: ", this.password);
-    this.angularFireAuth.createUserWithEmailAndPassword(this.email, this.password)
-    .then((userCredential) => {
-      // Signed in
-      console.log("Usuario creado")
-      this.modal.dismiss(null, 'cancel');
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      //fnErrorDialog(errorCode, email, password)
-      console.log('Código error: ' + errorCode + ' / Mensaje: ' + errorMessage);
-    });
+    const password2 = this.formAuth.controls.password2.value;
+    console.log("email: ", this.email, ", password: ", this.password, ", password2: ", password2);
+    if (this.password == password2) {
+      this.angularFireAuth.createUserWithEmailAndPassword(this.email, this.password)
+      .then((userCredential) => {
+        // Signed in
+        console.log("Usuario creado")
+        this.modal.dismiss(null, 'cancel');
+      })
+      .catch((error) => {
+        console.log('error')
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        this.fnErrorDialog(errorCode, this.email, this.password);
+        console.log('Código error: ' + errorCode + ' / Mensaje: ' + errorMessage);
+      });
+    } else {
+      console.log('else')
+      this.mensajeError = "Las contraseñas ingresadas deben ser iguales";
+    }
   }
 
-  registroUsuCli(){
+  async registroUsuCli(){
     var dataUsu = {
       apellido: this.form.controls.apellido.value,
       nombre: this.form.controls.nombre.value,
@@ -89,50 +100,54 @@ export class UsuarioCliRegistroPage implements OnInit {
       domiObs: this.form.controls.domiObs.value,
       idLocalidad: this.form.controls.domiLoc.value,
     }
-    this.firestore.collection('usuarios').doc(this.email).set(dataUsu);
-    this.firestore.collection('domicilios').doc().set(dataDomi);
-    console.log("Cliente registrado con éxito")
-    this.router.navigate(['/login']);
+    if(this.form.valid){
+      this.mensajeForm = '';  
+      this.firestore.collection('usuarios').doc(this.email).set(dataUsu);
+      this.firestore.collection('domicilios').doc().set(dataDomi);
+      console.log("Cliente registrado con éxito")
+      this.router.navigate(['/login']);
+    }else{
+      console.log(dataUsu)
+      console.log(dataDomi)
+      console.log('Datos en null:');
+      this.form.markAllAsTouched();
+      for (let el in this.form.controls) {
+        if (this.form.controls[el].errors) {
+          console.log(el)
+        }
+      }
+      this.mensajeForm = "Los campos con * son obligatorios";
+    }
   }
 
-  /*
-  fnErrorDialog(){
+  fnErrorDialog(errorCode,email,password){
     if (errorCode == 'auth/email-already-in-use') {
-      var txt = 'El/la usuario/a '+email+' ya existe';
-      app.dialog.alert(txt, 'Un momento...');
+      this.mensajeError = "El email "+email+" ya está registrado. Por favor, ingrese una dirección de email distinta.";
+    }
+  
+    if (errorCode == 'auth/weak-password') {
+      this.mensajeError = "La contraseña debe tener más de 6 números o letras";
+    }
+
+    if (errorCode == 'auth/operation-not-allowed') {
+      this.mensajeError = "Debe ingresar una dirección de email y una contraseña";
+    }
+
+    if (errorCode == 'auth/invalid-email') {
+      this.mensajeError = "La dirección de email ingresada no es válida. El formato debe ser, por ejemplo, juan@email.com";
     }
     
-    if (errorCode == 'auth/weak-password') {
-      var txt = 'La clave es muy débil. Intente utilizando más de 8 letras o números, incluyendo mayúsculas/minúsculas';
-      app.dialog.alert(txt, 'Un momento...');
-    }
-  
-    if (errorCode == 'auth/operation-not-allowed') {
-      var txt = 'Debe ingresar un e-mail y una contraseña';
-      app.dialog.alert(txt, 'Un momento...');
-    }
-   
-    if (errorCode == 'auth/invalid-email') {
-      var txt = 'La dirección de correo no es válida';
-      app.dialog.alert(txt, 'Un momento...');
-    }
-  
     if (errorCode == 'auth/user-disabled') {
-      var txt = 'El usuario '+email+' ha sido desabilitado';
-      app.dialog.alert(txt, 'Un momento...');
+      this.mensajeError = "El usuario "+email+" ha sido desabilitado";
     }
     
     if (errorCode == 'auth/user-not-found') {
-      var txt = 'El usuario con el email '+email+' no existe';
-      app.dialog.alert(txt, 'Un momento...');
+      this.mensajeError = 'El usuario con el email '+email+' no existe';
     }
   
     if (errorCode == 'auth/wrong-password') {
-      var txt = 'La contraseña es incorrecta';
-      app.dialog.alert(txt, 'Un momento...');
+      this.mensajeError = 'La contraseña es incorrecta';
     }
   }
-  */ 
-
 }
 
