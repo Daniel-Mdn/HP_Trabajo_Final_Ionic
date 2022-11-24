@@ -111,4 +111,8 @@ export class BkProductoEditaPage implements OnInit {
   redirectHome(){
     this.router.navigate(['/bk-menu-empleado']);
   }
+
+  redirectMenuProdLista(){
+    this.router.navigate(['/bk-producto-lista']);
+  }
 }

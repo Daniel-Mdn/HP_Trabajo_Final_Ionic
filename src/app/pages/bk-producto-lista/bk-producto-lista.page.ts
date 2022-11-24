@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Categorias, Tamanios } from 'src/app/constants/constants';
-import { ICategoria, ILineaPedido, IPedido, IProducto, IUsuario } from 'src/app/constants/interfaces';
+import {
+  ICategoria,
+  IHistorialPrecio,
+  ILineaPedido,
+  IPedido,
+  IProducto,
+  IUsuario,
+} from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
 import { first, map } from 'rxjs/operators';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
@@ -40,16 +47,16 @@ export class BkProductoListaPage implements OnInit {
   productos: IProducto[] = [];
   productos$: Observable<IProducto[]> = from([]);
   lineasPedido$: Observable<ILineaPedido[]> = from([]);
-  lineasCurrentPedido: ILineaPedido[] =[];
-  currentPedido: IPedido ={} as IPedido;
+  lineasCurrentPedido: ILineaPedido[] = [];
+  currentPedido: IPedido = {} as IPedido;
 
   ngOnInit() {
     this.productos$ = this.productoService.getProducts$;
-     this.lineasPedidoService.getLineasPedido$.subscribe((lineas)=>{
-      this.lineasCurrentPedido=lineas;
+    this.lineasPedidoService.getLineasPedido$.subscribe((lineas) => {
+      this.lineasCurrentPedido = lineas;
     });
-     this.pedidoService.getCurrentPedido$.subscribe((ped)=>{
-      this.currentPedido=ped
+    this.pedidoService.getCurrentPedido$.subscribe((ped) => {
+      this.currentPedido = ped;
     });
     this.categoriesService.getCategoriesId().subscribe((resp) => {
       this.categorias = resp;
@@ -57,18 +64,48 @@ export class BkProductoListaPage implements OnInit {
     this.productoService
       .getProductsId({ order: 'nombre' })
       .subscribe((resp) => {
+        resp.map((value, index, self) => {
+          let list = self.filter(
+            (s) =>
+              s.nombre === value.nombre && s.idCategoria === value.idCategoria
+          );
+          value.histPaths = [];
+          list.forEach((l) => {
+            value.histPaths.push({tamanio:l.tamanio,hist:l.histPath});
+          });
+        });
         resp = resp.filter(
           (value, index, self) =>
             index ===
-            self.findIndex(
-              (t) =>
-                t.nombre === value.nombre && t.idCategoria === value.idCategoria
-            )
+            self.findIndex((t) => {
+              if (
+                t.nombre === value.nombre &&
+                t.idCategoria === value.idCategoria
+              ) {
+                return t;
+              }
+            })
         );
         this.productos = resp;
-        this.productoService.setProducts$(resp);
+        this.productos.map((p) => {
+          p.histPaths.forEach((path) => {
+            p.historial_precio = [];
+            const hist = this.firestore.doc(path.hist);
+            hist
+              .collection<IHistorialPrecio>('historial_precio', (ref) =>
+                ref.orderBy('fechaDesde', 'desc')
+              )
+              .valueChanges()
+              .pipe(first())
+              .subscribe((x) => {
+                p.historial_precio.push({ tamanio:path.tamanio,...x[0]});
+                p.precio = x[0]?.precioProd ?? 0;
+                // this.totalProducto = this.producto.precio;
+              });
+          });
+        });
+        this.productoService.setProducts$(this.productos);
       });
-
   }
 
   handleFilter(ev: Event) {
@@ -76,7 +113,9 @@ export class BkProductoListaPage implements OnInit {
     this.catFiltrada = event.detail.value;
     this.productoService
       .getProductsId({
-        where: [{ name: 'idCategoria', validation:'==',value: this.catFiltrada }],
+        where: [
+          { name: 'idCategoria', validation: '==', value: this.catFiltrada },
+        ],
         order: 'nombre',
       })
       .subscribe((res) => {
@@ -89,14 +128,16 @@ export class BkProductoListaPage implements OnInit {
   }
 
   selectProduct(id: string) {
-    console.log('id: '+id)
-    this.router.navigate(['/bk-producto-edita', id]);
+    this.router.navigate(['/bk-producto-edita/', id]);
   }
   getCategoriaProducto(id: string): string {
     const desc = this.categorias.find((c) => c.id === id)?.descCategoria;
     return desc ? desc : 'Sin categoria';
   }
-  navigateToCarrito(){
+  navigateToCarrito() {
     this.router.navigate(['/carrito']);
+  }
+  goPrevPage(){
+    this.router.navigate(['/bk-menu-productos']);
   }
 }

@@ -18,11 +18,11 @@
 </ion-header>
 
 <ion-content class="container">
-  <ion-grid class="colorShade">
-    <ion-row class="ion-justify-content-center colorShade">
-      <ion-col class="colorShade" size="6">
-        <ion-list class="colorShade">
-          <ion-item class="colorShade" lines="none">
+  <ion-grid color="primary">
+    <ion-row class="ion-justify-content-center">
+      <ion-col color="primary" size="6">
+        <ion-list color="primary">
+          <ion-item color="primary" lines="none">
             <ion-select
               interface="popover"
               placeholder="Filtros"
@@ -51,6 +51,7 @@
       <ion-buttons class="cadaProd">
         <ion-row>
           <ion-row class="width100">
+            <!--
             <ion-col size="4">
               <ion-row class="">
                 <ion-img
@@ -60,23 +61,36 @@
                 ></ion-img>
               </ion-row>
             </ion-col>
+            -->
             <ion-col size="8" class="padLeft">
               <ion-row>
-                <ion-label class="txtCateg"
-                  >{{getCategoriaProducto(prod.idCategoria)}}</ion-label
-                >
+                <ion-label>
+                  Categoría: {{getCategoriaProducto(prod.idCategoria)}}
+                </ion-label>
               </ion-row>
               <ion-row>
-                <ion-label class="txtNombre">{{prod.nombre}}</ion-label>
+                <ion-label>
+                  Nombre: {{prod.nombre}}
+                </ion-label>
               </ion-row>
             </ion-col>
           </ion-row>
-          <ion-row class="width100">
+          <!--
+          <ion-row>
             <ion-col>
-              <ion-label class="ion-text-wrap ion-text-center">
-                {{prod.descProd}}
+              <ion-label class="ion-text-wrap">
+                Descripción: {{prod.descProd}}
               </ion-label>
             </ion-col>
+          </ion-row>
+          -->
+          <ion-row>
+            <ng-container *ngFor="let precio of prod.historial_precio">
+              <ion-col class="ml-2">
+                <ion-label class="txtTamanio">Precio: {{precio.tamanio}}: </ion-label>
+                <ion-label class="txtPrecio">{{precio.precioProd|currency}}</ion-label>
+              </ion-col>
+            </ng-container>
           </ion-row>
         </ion-row>
       </ion-buttons>

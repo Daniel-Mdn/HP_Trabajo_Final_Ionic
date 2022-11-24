@@ -22,6 +22,29 @@
 </ion-header>
 
 <ion-content>
+  <!--
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-select
+              interface="popover"
+              placeholder="Filtros"
+              (ionChange)="handleFilter($event)"
+            >
+              <ion-content *ngFor="let cat of categorias">
+                <ion-select-option [value]="cat.id"
+                  >{{cat.descCategoria}}</ion-select-option
+                >
+              </ion-content>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  -->
   <div class="contFlex padtop5">
     <h3 class="ion-text-center mgTop6">DATOS PERSONALES</h3>
   </div>
