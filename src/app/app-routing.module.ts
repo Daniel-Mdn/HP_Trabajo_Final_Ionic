@@ -122,6 +122,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/bk-reporte-ventas/bk-reporte-ventas.module').then( m => m.BkReporteVentasPageModule)
   },
   {
+    path: 'bk-adicional-carga',
+    loadChildren: () => import('./pages/bk-adicional-carga/bk-adicional-carga.module').then( m => m.BkAdicionalCargaPageModule)
+  },
+  {
+    path: 'bk-adicional-lista',
+    loadChildren: () => import('./pages/bk-adicional-lista/bk-adicional-lista.module').then( m => m.BkAdicionalListaPageModule)
+  },
+  {
+    path: 'bk-adicional-edita',
+    loadChildren: () => import('./pages/bk-adicional-edita/bk-adicional-edita.module').then( m => m.BkAdicionalEditaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'

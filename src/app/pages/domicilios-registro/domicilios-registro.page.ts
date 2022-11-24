@@ -68,7 +68,7 @@ export class DomiciliosRegistroPage implements OnInit {
   }
 
   redirectSeleccionDomicilio(){
-    this.router.navigate(['/seleccion-domicilio']);
+    this.router.navigate(['/domicilios']);
   }
 
 }

@@ -6,7 +6,7 @@ import { IUsuario } from 'src/app/constants/interfaces';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Router } from '@angular/router';
-import { getAuth, updatePassword } from 'firebase/auth';
+import { EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import { AlertController, IonModal } from '@ionic/angular';
 
 
@@ -22,6 +22,8 @@ export class UsuarioCliEditaPage implements OnInit {
   usuario: IUsuario;
   usuId: '';
   myDate: Date;
+  mensajeError:string;
+  mensajeErrorModal:string;
   
   constructor(
     private firestore: AngularFirestore,
@@ -38,7 +40,9 @@ export class UsuarioCliEditaPage implements OnInit {
       nroTelefono: [''],
     })
     this.formPass = this.formBuilder.group({
-      newPass: ['']
+      //oldPass: ['', Validators.required],
+      newPass: ['', Validators.required],
+      newPass2: ['', Validators.required]
     })
   }
 
@@ -101,15 +105,50 @@ export class UsuarioCliEditaPage implements OnInit {
   }
 
   editaPass(){
+    //const oldPassword = this.formPass.controls.oldPass.value;
+    const newPassword = this.formPass.controls.newPass.value;
+    const newPassword2 = this.formPass.controls.newPass2.value;
+    const email = '';
     const auth = getAuth();
     const user = auth.currentUser;
-    const newPassword = this.formPass.controls.newPass.value;
-    updatePassword(user, newPassword).then(() => {
-      console.log('Contraseña actualizada')
-      this.modal.dismiss(null, 'cancel');
-    }).catch((error) => {
-      console.log('Error'+error)
-    });
+    //var flag = false;
+    //const credential = EmailAuthProvider.credential(user.email,oldPassword);
+    if(newPassword == newPassword2){
+      /*
+      reauthenticateWithCredential(user,credential).then(()=>{
+        this.router.navigate(['/usuario-cli-edita']);
+        console.log('reauth OK');
+        //flag = true;
+      */
+      if(this.formPass.valid){  
+        updatePassword(user, newPassword).then(() => {
+            console.log('Contraseña actualizada')
+            this.mensajeError = "Contraseña actualizada con éxito";
+            this.modal.dismiss(null, 'cancel');
+          }).catch((error) => {
+            console.log('Error '+error)
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            this.fnErrorDialog(errorCode, email , newPassword);
+            console.log('Código error: ' + errorCode + ' / Mensaje: ' + errorMessage);
+            //this.modal.dismiss(null, 'cancel');
+        });}else{
+          this.mensajeErrorModal = "Los campos con * son obligatorios";
+        }
+      /*  
+      }).catch((error)=>{
+        console.log('reauth FAIL')
+        console.log(error);
+        this.mensajeError = "La contraseña actual ingresada es inválida. Vuelva a intentarlo";
+        this.modal.dismiss(null, 'cancel');
+        //flag = false;
+        })
+      */
+    }else{
+      console.log('else')
+      this.mensajeErrorModal = "Las contraseñas ingresadas deben ser iguales";
+      //this.modal.dismiss(null, 'cancel');
+    }
   }
 
   cancel() {
@@ -118,6 +157,36 @@ export class UsuarioCliEditaPage implements OnInit {
 
   redirectInicio(){
     this.router.navigate(['/inicio']);
+  }
+
+  fnErrorDialog(errorCode,email,password){
+    if (errorCode == 'auth/email-already-in-use') {
+      this.mensajeErrorModal = "El email "+email+" ya está registrado. Por favor, ingrese una dirección de email distinta.";
+    }
+  
+    if (errorCode == 'auth/weak-password') {
+      this.mensajeErrorModal = "La contraseña debe tener más de 6 números o letras.";
+    }
+
+    if (errorCode == 'auth/operation-not-allowed') {
+      this.mensajeErrorModal = "Debe ingresar una dirección de email y una contraseña.";
+    }
+
+    if (errorCode == 'auth/invalid-email') {
+      this.mensajeErrorModal = "La dirección de email ingresada no es válida. El formato debe ser, por ejemplo, juan@email.com.";
+    }
+    
+    if (errorCode == 'auth/user-disabled') {
+      this.mensajeErrorModal = "El usuario "+email+" ha sido desabilitado.";
+    }
+    
+    if (errorCode == 'auth/user-not-found') {
+      this.mensajeErrorModal = 'El usuario con el email '+email+' no existe.';
+    }
+  
+    if (errorCode == 'auth/wrong-password') {
+      this.mensajeErrorModal = 'La contraseña es incorrecta.';
+    }
   }
 
 }
