@@ -53,6 +53,9 @@
                   <ion-label position="floating">Ingrese contraseña</ion-label>
                   <ion-input type="password" formControlName="password"></ion-input>
                 </ion-item>
+                <ion-text color="danger">
+                  <h4 class="ion-text-center"> {{mensajeError}} </h4>
+                </ion-text>
                 <div class="mt-8 contCenter">
                   <ion-button expand="block" class="btnGde" color="spezia" type="submit">Ingresar</ion-button>
                   <ion-button expand="block" class="btnGde" color="spezia" (click)="redirectUsuCliRegistro()">Registrarme</ion-button>
