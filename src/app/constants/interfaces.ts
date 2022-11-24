@@ -34,6 +34,8 @@ export interface IPedido{
     envio?:IEnvio,
     idSucursal:string,
     idUsuario?:string,
+    idDomicilio?:string,
+    domicilio?:IDomicilio,
     lineasPedido?:ILineaPedido[]
 }
 export interface ILineaPedido{

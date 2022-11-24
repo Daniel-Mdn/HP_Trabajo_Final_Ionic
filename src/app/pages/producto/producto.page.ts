@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, RouteConfigLoadEnd, Router } from '@angular/router';
 import {
   AlertController,
   CheckboxCustomEvent,
@@ -197,7 +197,7 @@ export class ProductoPage implements OnInit {
   }
 
   confirm() {
-    this.form.controls['subtotal'].setValue(this.totalProducto);
+    this.form.controls['subtotal'].setValue(this.subtotal);
     this.modal.dismiss(this.extrasSelected, 'confirm');
   }
 
@@ -215,14 +215,14 @@ export class ProductoPage implements OnInit {
     const ev = event as CheckboxCustomEvent;
     if (ev.detail.checked) {
       this.extrasSelected.push(ev.detail.value);
-      this.subtotal = this.subtotal + ev.detail.value.precio;
-      this.totalProducto = this.totalProducto + ev.detail.value.precio;
+      this.subtotal = this.subtotal + ev.detail.value.precio*this.cantidad;
+      this.totalProducto = this.totalProducto + ev.detail.value.precio*this.cantidad;
     } else {
       this.extrasSelected = this.extrasSelected.filter((extra) => {
         return extra !== ev.detail.value;
       });
-      this.subtotal = this.subtotal - ev.detail.value.precio;
-      this.totalProducto = this.totalProducto - ev.detail.value.precio;
+      this.subtotal = this.subtotal - ev.detail.value.precio*this.cantidad;
+      this.totalProducto = this.totalProducto - ev.detail.value.precio*this.cantidad;
     }
   }
 
@@ -233,11 +233,11 @@ export class ProductoPage implements OnInit {
     this.extrasProduct = this.extrasProduct.filter((extra) => {
       return extra.id !== event.target.id;
     });
-    let precio=[];
-    this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
-    const totalExtras= precio.reduce((a,b)=>a+b,0)
+    // let precio=[];
+    // this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
+    const totalExtras= this.extrasProduct.reduce((a,b)=>a+b.precio,0)
     this.subtotal = totalExtras;
-    this.totalProducto=this.productoSelected.precio + totalExtras??0;    
+    this.totalProducto=(this.productoSelected.precio + (totalExtras??0))*this.cantidad;    
   }
 
   isChecked(id: string): boolean {
@@ -260,13 +260,17 @@ export class ProductoPage implements OnInit {
     if (this.cantidad > 1) {
       this.cantidad = this.cantidad - 1;
       this.form.controls['cantidad'].setValue(this.cantidad);
-      this.totalProducto = this.totalProducto - this.productoSelected.precio;
+      const preciosExtras= this.extrasSelected.reduce((a,b)=>a+b.precio,0);
+      this.subtotal=this.subtotal-preciosExtras
+      this.totalProducto = this.totalProducto - this.productoSelected.precio-preciosExtras;
     }
   }
   sumar() {
     this.cantidad = this.cantidad + 1;
     this.form.controls['cantidad'].setValue(this.cantidad);
-    this.totalProducto = this.totalProducto + this.productoSelected.precio;
+    const preciosExtras= this.extrasSelected.reduce((a,b)=>a+b.precio,0);
+    this.subtotal=this.subtotal+preciosExtras
+    this.totalProducto = this.totalProducto + this.productoSelected.precio+preciosExtras;
   }
 
   addProduct() {
@@ -285,7 +289,6 @@ export class ProductoPage implements OnInit {
       console.log(lineaPedido);
       let usuario = '';
       this.storage.get('usuario').then((val) => {
-        console.log(val);
         usuario=val;
       });
       let totalPedido = 0;

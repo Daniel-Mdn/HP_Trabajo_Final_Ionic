@@ -38,3 +38,6 @@ export enum estadosPedido{
     EnCamino="en camino",
     Cancelado="cancelado"
 }
+export enum formasPago{
+    Efectivo="efectivo",
+}

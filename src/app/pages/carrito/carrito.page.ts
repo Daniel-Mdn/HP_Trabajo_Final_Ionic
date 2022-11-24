@@ -41,11 +41,16 @@ export class CarritoPage implements OnInit {
 
     this.lineas.splice(index, 1);
       this.lineasService.setLineasPedido$(this.lineas);
+    if (this.lineas.length==0){
+      this.router.navigate(['/inicio']);
+    }
   }
   addCantidadLineaPed(index: number) {
     const precioProducto=this.lineas[index].totalProducto/this.lineas[index].cantidad
+    const precioAdicionalesProducto=this.lineas[index].subtotal/this.lineas[index].cantidad
       this.lineas[index].cantidad=this.lineas[index].cantidad+1;
       this.lineas[index].totalProducto=this.lineas[index].totalProducto+precioProducto;
+      this.lineas[index].subtotal=this.lineas[index].subtotal+precioAdicionalesProducto;
       this.lineasService.setLineasPedido$(this.lineas);
       this.pedido.total=this.pedido.total+precioProducto;
       this.pedidoService.setCurrentPedido$(this.pedido);
@@ -53,8 +58,10 @@ export class CarritoPage implements OnInit {
   restCantidadLineaPed(index: number) {
     if (this.lineas[index].cantidad>1){
         const precioProducto=this.lineas[index].totalProducto/this.lineas[index].cantidad
+        const precioAdicionalesProducto=this.lineas[index].subtotal/this.lineas[index].cantidad
         this.lineas[index].cantidad=this.lineas[index].cantidad-1;
         this.lineas[index].totalProducto=this.lineas[index].totalProducto-precioProducto;
+        this.lineas[index].subtotal=this.lineas[index].subtotal-precioAdicionalesProducto;
         this.lineasService.setLineasPedido$(this.lineas);
         this.pedido.total=this.pedido.total-precioProducto;
         this.pedidoService.setCurrentPedido$(this.pedido);
