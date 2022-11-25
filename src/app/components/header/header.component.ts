@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   ) {}
   @Input() prevPage: string = 'inicio';
   @Input() showMenu: boolean = true;
+  @Input() showBack: boolean = true;
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
   currentDomicilio$: Observable<IDomicilio> = of();
   currentDomicilio: IDomicilio;

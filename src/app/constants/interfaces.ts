@@ -1,4 +1,4 @@
-import { DocumentReference, WhereFilterOp } from "firebase/firestore";
+import { DocumentReference, OrderByDirection, WhereFilterOp } from "firebase/firestore";
 import { Observable } from "rxjs";
 import { PrecioEnvioEnum, Tamanios, TypeEnvioEnum } from "./constants";
 
@@ -15,7 +15,8 @@ export interface IProducto{
     categoria?:ICategoria
     historial_precio:IHistorialPrecio[],
     histPath:string,
-    histPaths:{tamanio:Tamanios, hist:string}[]
+    histPaths:{tamanio:Tamanios, hist:string}[],
+    extrasProducto?: IExtras[]
 }
 
 export interface IEnvio{
@@ -72,6 +73,7 @@ export interface IUsuario{
 
 export interface IParams{
     order?:string,
+    orderOrientacion?:OrderByDirection,
     where?:IWhere[]
 }
 export interface IWhere{

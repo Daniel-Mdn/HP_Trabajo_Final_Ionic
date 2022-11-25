@@ -2,7 +2,7 @@ export enum Categorias{
     Hamburguesas="hamburguesa",
     DescHamburguesas="Medallón de Carne",
     PizzasMolde="pizzaAlMolde",
-    PizzasParrilla="pizzaAlaParrilla"
+    PizzasParrilla="pizzaALaParrilla"
 }
 export enum Tamanios{
     Grande="grande",

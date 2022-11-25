@@ -276,6 +276,8 @@ export class ProductoPage implements OnInit {
   addProduct() {
     this.isSubmitted = true;
     if (this.form.valid) {
+    console.log('this.extrasProduct', this.extrasProduct)
+      this.producto.extrasProducto=this.extrasProduct;
       let lineaPedido: ILineaPedido = {
         cantidad: this.form.controls['cantidad'].value,
         subtotal: this.form.controls['subtotal'].value,

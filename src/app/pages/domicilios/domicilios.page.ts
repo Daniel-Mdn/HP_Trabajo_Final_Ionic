@@ -14,30 +14,34 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class DomiciliosPage implements OnInit {
   usuario: string;
   listaDomicilios$: Observable<IDomicilio[]> = from([]);
-  listaDomicilios: IDomicilio[] =[];
-  domicilioActivated:boolean=false;
+  listaDomicilios: IDomicilio[] = [];
+  currentDomicilio: IDomicilio;
+  domicilioActivated: boolean = false;
   constructor(
     private domicilioService: DomicilioService,
     private storage: StorageService,
     private route: Router
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     await this.storage.get('usuario').then((res) => (this.usuario = res));
     this.listaDomicilios$ = this.domicilioService.getDomicilios$;
     this.domicilioService
       .getDomiciliosId({
-        where: [{ name: 'idUsuario', validation: '==', value: this.usuario }]
+        where: [{ name: 'idUsuario', validation: '==', value: this.usuario }],
       })
-      .pipe(first()).subscribe((res) => {
+      .pipe(first())
+      .subscribe((res) => {
         this.domicilioService.setDomicilios$(res);
-        this.listaDomicilios=res;
+        this.listaDomicilios = res;
       });
+    this.domicilioService.currentDomicilio$.subscribe(
+      (dom) => (this.currentDomicilio = dom)
+    );
   }
 
-  editaDomicilio(id:string){
-    this.route.navigate(['/domicilios-editar', id])
+  editaDomicilio(id: string) {
+    this.route.navigate(['/domicilios-editar', id]);
   }
 
   formatDomicilio(domicilio: IDomicilio): string {
@@ -55,13 +59,13 @@ export class DomiciliosPage implements OnInit {
     );
   }
 
-  redirectDomicilioRegistro(){
-    this.route.navigate(['/domicilios-registro'])
+  redirectDomicilioRegistro() {
+    this.route.navigate(['/domicilios-registro']);
   }
 
-  selectPredeterminado(selectedDomicilio:IDomicilio){
+  selectPredeterminado(selectedDomicilio: IDomicilio) {
     this.domicilioService.setCurrentDomicilio$(selectedDomicilio);
-    this.route.navigate(['/inicio'])
+    this.route.navigate(['/inicio']);
     // this.listaDomicilios.forEach((dom)=>{
     //   if (dom.estaActivo && dom.id!=selectedDomicilio.id){
     //     dom.estaActivo=false;
@@ -72,5 +76,13 @@ export class DomiciliosPage implements OnInit {
     //     this.domicilioService.updateDomicilio(dom.id, dom)
     //   }
     // })
+  }
+
+  estaCurrentDomicilio(){
+    if(this.currentDomicilio && Object.entries(this.currentDomicilio).length>0){
+      return true
+    }else{
+      return false
+    }
   }
 }

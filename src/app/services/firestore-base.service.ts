@@ -51,7 +51,7 @@ export class FirestoreBaseService {
           });
         }
         if (params.order) {
-          this.queryData = this.queryData.orderBy(params.order, 'asc');
+          this.queryData = this.queryData.orderBy(params.order,(params.orderOrientacion??'asc') );
         }
       }
       return this.queryData;
