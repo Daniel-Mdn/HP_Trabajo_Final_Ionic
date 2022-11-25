@@ -4,7 +4,8 @@ import { MenuController } from '@ionic/angular';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
-import { ILineaPedido, IPedido } from 'src/app/constants/interfaces';
+import { IDomicilio, ILineaPedido, IPedido } from 'src/app/constants/interfaces';
+import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -24,20 +25,21 @@ export class PedidosHistoricoPage implements OnInit {
     private router: Router,
     private pedidosService: PedidoService,
     private storage: StorageService,
-    private lineaPedidoService: LineaPedidoService
+    private lineaPedidoService: LineaPedidoService,
+    private domicilioService: DomicilioService
   ) {}
 
   async ngOnInit() {
-    // await this.storage
-    //   .get('usuario')
-    //   .then((value) => (this.currentUsuario = value));
+    await this.storage
+      .get('usuario')
+      .then((value) => (this.currentUsuario = value));
     this.listaPedidos$ = this.pedidosService
       .getPedidosId({
         where: [
           {
             name: 'idUsuario',
             validation: '==',
-            value: 'danielmedina012@gmail.com',
+            value: this.currentUsuario,
           },
         ],
         order: 'fechaPedido',
@@ -46,6 +48,11 @@ export class PedidosHistoricoPage implements OnInit {
       .pipe(
         map((res) => {
           res.forEach((pedido) => {
+            this.domicilioService
+              .getDomicilio(pedido.idDomicilio)
+              .subscribe((dom) => {
+                pedido.domicilio = dom;
+              });
             this.lineaPedidoService
               .getLineasPedidoId({
                 where: [
@@ -65,8 +72,8 @@ export class PedidosHistoricoPage implements OnInit {
       );
   }
 
-  redirectDetallePedido() {
-    this.router.navigate(['/detalle-pedido']);
+  redirectDetallePedido(id: string) {
+    this.router.navigate(['/detalle-pedido', id]);
   }
   getNombreCategoria(idCategoria: string) {
     switch (idCategoria) {
@@ -80,8 +87,12 @@ export class PedidosHistoricoPage implements OnInit {
         return 'hamburguesa';
       }
       default: {
-        return 'sin categoria'
+        return 'sin categoria';
       }
     }
+  }
+
+  formatDomicilio(dom:IDomicilio){
+    return this.domicilioService.formatDomicilio(dom)
   }
 }
