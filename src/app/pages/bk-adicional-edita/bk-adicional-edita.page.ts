@@ -85,7 +85,7 @@ export class BkAdicionalEditaPage implements OnInit {
     }
 
     goPrevPage(){
-      this.router.navigate(['/bk-menu-productos']);
+      this.router.navigate(['/bk-adicional-edita']);
     }
 
     redirectHome(){

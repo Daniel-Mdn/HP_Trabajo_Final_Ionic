@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { BkAdicionalListaPageRoutingModule } from './bk-adicional-lista-routing.module';
 
 import { BkAdicionalListaPage } from './bk-adicional-lista.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
