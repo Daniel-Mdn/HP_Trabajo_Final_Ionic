@@ -77,24 +77,24 @@
     </ion-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="lineasCurrentPedido.length">
-    <ion-fab-button class="button-pedido" (click)="navigateToCarrito()">
+    <ion-fab-button color="spezia" class="button-pedido" (click)="navigateToCarrito()">
       <ion-row
         class="ion-justify-content-between ion-align-items-center"
         style="width: -webkit-fill-available"
       >
-        <ion-col size="3">
+        <ion-col size="2">
           <ion-icon
             name="bag-outline"
             style="width: 6vw; height: 5vh"
           ></ion-icon>
           <ion-badge
             color="danger"
-            style="position: absolute; right: 8px; top: 4px"
+            style="position: absolute; left: 1px; top: 2px"
             >{{lineasCurrentPedido.length}}</ion-badge
           >
         </ion-col>
         <ion-col size="auto">
-          <div>Ver pedido</div>
+          <div>VER PEDIDO</div>
         </ion-col>
         <ion-col size="3">
           <div>${{currentPedido.total??0}}</div>

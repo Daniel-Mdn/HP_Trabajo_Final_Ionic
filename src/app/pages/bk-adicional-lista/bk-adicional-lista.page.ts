@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bk-adicional-lista',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BkAdicionalListaPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router:Router,
+  ) { }
 
   ngOnInit() {
+  }
+
+  goPrevPage(){
+    this.router.navigate(['/bk-menu-productos']);
+  }
+
+  redirectHome(){
+    this.router.navigate(['/bk-menu-empleado']);
   }
 
 }

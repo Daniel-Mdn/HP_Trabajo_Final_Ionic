@@ -63,7 +63,7 @@ export class DomiciliosRegistroPage implements OnInit {
         where: [{ name: 'idUsuario', validation: '==', value: this.usuario }]
       }).pipe(first()).subscribe((doms)=>{
         this.domicilioService.setDomicilios$(doms)})
-      //this.router.navigate(['/domicilios']);
+      this.router.navigate(['/domicilios']);
     })
   }
 

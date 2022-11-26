@@ -66,7 +66,7 @@ export class DetallePedidoPage implements OnInit {
   redirectBack() {
     this.pedidoService.setCurrentPedido$({} as IPedido);
     this.lineasPedidoService.setLineasPedido$([]);
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/pedidos-historico']);
   }
 
   formatDomicilio() {
