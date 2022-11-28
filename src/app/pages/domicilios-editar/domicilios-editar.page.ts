@@ -24,6 +24,7 @@ export class DomiciliosEditarPage implements OnInit {
   usuId: string;
   usuario: string;
   listDomicilios: IDomicilio[];
+  mensajeError:string;
   form: FormGroup = new FormGroup({
     id: new FormControl(null, Validators.required),
     calle: new FormControl(null, Validators.required),
@@ -86,42 +87,43 @@ export class DomiciliosEditarPage implements OnInit {
   }
 
   async presentAlert() {
-    console.log('fnpresentAlert');
-    const alert = await this.alertController.create({
-      header: '¿Confirma que desea actualizar sus datos?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => {
-            //this.handlerMessage = 'Alert canceled';
-            console.log('alerta cancelada');
+    if(this.form.valid){
+      console.log('fnpresentAlert');
+      const alert = await this.alertController.create({
+        header: '¿Confirma que desea actualizar sus datos?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              //this.handlerMessage = 'Alert canceled';
+              console.log('alerta cancelada');
+            },
           },
-        },
-        {
-          text: 'Sí',
-          role: 'confirm',
-          handler: () => {
-            this.storage.get('usuario').then((val) => {
-              this.usuId = val;
-              console.log('alerta confirmada');
-              console.log('usuId: ', this.usuId);
-              console.log(this.form.controls.id.value);
-              var domiActualizado = {
-                id: this.form.controls.id.value,
-                calle: this.form.controls.calle.value,
-                nroCasa: this.form.controls.nroCasa.value,
-                piso: this.form.controls.piso.value,
-                dpto: this.form.controls.dpto.value,
-                idLocalidad: this.form.controls.idLocalidad.value,
-                domiObs: this.form.controls.domiObs.value,
-                idUsuario: this.usuId,
-                estaActivo: true,
-              } as IDomicilio;
-              let DomicilioActualizado = this.domicilioService.updateDomicilio(
-                domiActualizado.id,
-                domiActualizado
-              );
+          {
+            text: 'Sí',
+            role: 'confirm',
+            handler: () => {
+              this.storage.get('usuario').then((val) => {
+                this.usuId = val;
+                console.log('alerta confirmada');
+                console.log('usuId: ', this.usuId);
+                console.log(this.form.controls.id.value);
+                var domiActualizado = {
+                  id: this.form.controls.id.value,
+                  calle: this.form.controls.calle.value,
+                  nroCasa: this.form.controls.nroCasa.value,
+                  piso: this.form.controls.piso.value,
+                  dpto: this.form.controls.dpto.value,
+                  idLocalidad: this.form.controls.idLocalidad.value,
+                  domiObs: this.form.controls.domiObs.value,
+                  idUsuario: this.usuId,
+                  estaActivo: true,
+                } as IDomicilio;
+                let DomicilioActualizado = this.domicilioService.updateDomicilio(
+                  domiActualizado.id,
+                  domiActualizado
+                );
 
               DomicilioActualizado.pipe(first()).subscribe((domActualizado) => {
                 let index = this.listDomicilios.findIndex(
@@ -133,14 +135,16 @@ export class DomiciliosEditarPage implements OnInit {
                 }
                 this.domicilioService.setDomicilios$(this.listDomicilios)
               });
+              })
               this.router.navigate(['/domicilios']);
-            });
-          },
-        },
-      ],
-    });
-
-    await alert.present();
+            }
+          }
+        ],
+      });
+      await alert.present();
+    } else {
+      this.mensajeError='Los campos con * son obligatorios';
+    }
   }
 
   redirectDomicilios() {

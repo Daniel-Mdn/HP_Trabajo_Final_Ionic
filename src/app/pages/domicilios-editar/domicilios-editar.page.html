@@ -6,11 +6,11 @@
   </div>
   <form [formGroup]="form" (ngSubmit)="presentAlert()" class="mt-4">
     <ion-item>
-      <ion-label position="stacked">Calle</ion-label>
+      <ion-label position="stacked">Calle*</ion-label>
       <ion-input formControlName="calle"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Número</ion-label>
+      <ion-label position="stacked">Número*</ion-label>
       <ion-input formControlName="nroCasa"></ion-input>
     </ion-item>
     <ion-item>
@@ -26,13 +26,16 @@
       <ion-input formControlName="domiObs"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Localidad</ion-label>
+      <ion-label position="stacked">Localidad*</ion-label>
       <ion-input formControlName="idLocalidad"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Provincia</ion-label>
+      <ion-label position="stacked">Provincia*</ion-label>
       <ion-input formControlName="idProvincia"></ion-input>
     </ion-item>
+    <ion-text color="danger">
+      <h4 class="ion-text-center"> {{mensajeError}} </h4>
+    </ion-text>
     <div class="btnForm">
       <ion-button
         color="spezia"
