@@ -27,7 +27,7 @@
     </ion-item>
     <ion-item class="mb-10">
       <ion-label>Provincia*</ion-label>
-      <ion-select name="domiProv" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+      <ion-select formControlName="domiProv" name="domiProv" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
         <ion-select-option value="santaFe">Santa Fe</ion-select-option>
       </ion-select>
     </ion-item>
@@ -37,6 +37,9 @@
         <ion-select-option value="rosario">Rosario</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-text color="danger">
+      <h4 class="ion-text-center"> {{mensajeError}} </h4>
+    </ion-text>
     <div class="btnForm">
       <ion-button color="spezia" type="submit" class="mgTop6 ion-align-self-center">Guardar domicilio</ion-button>
       <ion-button color="spezia" (click)="redirectSeleccionDomicilio()" class="mgTop6 ion-align-self-center">Cancelar</ion-button>

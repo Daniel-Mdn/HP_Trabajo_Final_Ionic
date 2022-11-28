@@ -111,6 +111,7 @@ export class UsuarioCliRegistroPage implements OnInit {
       console.log(dataDomi)
       console.log('Datos en null:');
       this.form.markAllAsTouched();
+      // ESTE FOR SIRVE PARA SABER CUÁL ES EL FIELD QUE NO ESTÁ VALIDANDO
       for (let el in this.form.controls) {
         if (this.form.controls[el].errors) {
           console.log(el)

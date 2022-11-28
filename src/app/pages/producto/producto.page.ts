@@ -71,7 +71,7 @@ export class ProductoPage implements OnInit {
   extraHamburguesas: extrasHamburguesas[] = [
     extrasHamburguesas.uno,
     extrasHamburguesas.dos,
-    extrasHamburguesas.tres,
+    //extrasHamburguesas.tres,
   ];
   extras$: Observable<IExtras[]> = from([]);
 

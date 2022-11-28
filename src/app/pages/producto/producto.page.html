@@ -129,12 +129,13 @@
       <ion-content class="ion-padding">
         <div>
           <ion-item>
+            <ion-label>Medallones extra:</ion-label>
             <ion-select
               (ionChange)="handleFilterHamburguesas($event)"
-              placeholder="Desea medallones extras?"
+              placeholder="Seleccione"
             >
               <ion-select-option [value]="-1"
-                >Sin medallones extras</ion-select-option
+                >Ninguno</ion-select-option
               >
               <ion-content *ngFor="let extraHamb of extraHamburguesas">
                 <ion-select-option [value]="extraHamb"
