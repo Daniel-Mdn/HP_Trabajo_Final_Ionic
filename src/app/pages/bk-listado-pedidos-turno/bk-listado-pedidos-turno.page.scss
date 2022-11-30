@@ -10,3 +10,75 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+.ml-6 {
+    margin-left: 6vw;
+  }
+  .pl-1{
+    padding-left: 1vw;
+  }
+  
+  .pedEntregado {
+    margin-bottom: 5vh;
+    border: 4px solid;
+    border-radius: 2%;
+    border-color: grey;
+    margin-left: 3vw;
+    margin-right: 3vw;
+  }
+  
+  .pedPendiente {
+    margin-bottom: 5vh;
+    border: 4px solid;
+    border-radius: 2%;
+    border-color: red;
+    margin-left: 3vw;
+    margin-right: 3vw;
+  }
+
+  .pedEnPreparacion {
+    margin-bottom: 5vh;
+    border: 4px solid;
+    border-radius: 2%;
+    border-color: rgb(248, 235, 4);
+    margin-left: 3vw;
+    margin-right: 3vw;
+  }
+
+  .pedEnCamino {
+    margin-bottom: 5vh;
+    border: 4px solid;
+    border-radius: 2%;
+    border-color: rgb(98, 248, 4);
+    margin-left: 3vw;
+    margin-right: 3vw;
+  }
+  
+  ion-item {
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+    --padding-start: 0px;
+    --inner-padding-start: 0px;
+  }
+  
+  // ion-list{
+  //     display:flex;
+  // }
+  .extras {
+    font-weight: bold;
+    color: black;
+  }
+  .price {
+    text-align: right;
+  }
+  .w-100 {
+    width: 100%;
+  }
+  .w-min-content {
+    width: min-content;
+  }
+  .contFlex{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}  
