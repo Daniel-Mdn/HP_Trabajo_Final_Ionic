@@ -8,6 +8,7 @@ import {
 import { orderBy, query, QueryConstraint, where } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { whereDateFilter } from '../constants/constants';
 import { IParams } from '../constants/interfaces';
 
 @Injectable({
@@ -52,6 +53,15 @@ export class FirestoreBaseService {
         }
         if (params.order) {
           this.queryData = this.queryData.orderBy(params.order,(params.orderOrientacion??'asc') );
+        }
+        if (params.whereDate) {
+          params.whereDate.forEach((wd) => {
+            if (wd.validation==whereDateFilter.startAt){
+              this.queryData = this.queryData.startAt(wd.value);
+            }else{
+              this.queryData = this.queryData.endAt(wd.value);
+            }
+          });          
         }
       }
       return this.queryData;

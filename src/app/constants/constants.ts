@@ -1,3 +1,5 @@
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+
 export enum Categorias{
     Hamburguesas="hamburguesa",
     DescHamburguesas="Medallón de Carne",
@@ -41,3 +43,14 @@ export enum estadosPedido{
 export enum formasPago{
     Efectivo="efectivo",
 }
+export enum whereDateFilter{
+    endAt="endAt",
+    startAt="startAt"
+}
+
+export function fechasValidator(fechaDesde: AbstractControl): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = fechaDesde.value<(control.value);
+      return forbidden ? {fechas: true} : null;
+    };
+  }
