@@ -24,7 +24,9 @@ export class BkMenuEmpleadoPage implements OnInit {
     this.router.navigate(['/bk-listado-pedidos-turno']);
   }
 
-  redirectReporteVentas(){}
+  redirectReporteVentas(){
+    this.router.navigate(['/bk-reporte-ventas']);
+  }
 
   redirectMenuUsuarios(){
     this.router.navigate(['/bk-usuario-lista']);

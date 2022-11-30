@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Timestamp } from 'firebase/firestore';
 import { BehaviorSubject, concat } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
@@ -38,7 +39,10 @@ export class PedidoService extends FirestoreBaseService {
     return super.getAllId(this.path, params).stateChanges(['added']).pipe(
       map(actions=>actions.map(a=>
         {
-          const data = a.payload.doc.data() as IPedido;
+          let doc= a.payload.doc.data() as IPedido;
+          doc.fechaPedido=(doc.fechaPedido as Timestamp).toDate();
+          const data = doc;
+          
           const id = a.payload.doc.id;
           return { id, ...data };
         }))

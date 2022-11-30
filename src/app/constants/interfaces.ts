@@ -1,6 +1,6 @@
-import { DocumentReference, OrderByDirection, WhereFilterOp } from "firebase/firestore";
+import { DocumentReference, OrderByDirection, Timestamp, WhereFilterOp } from "firebase/firestore";
 import { Observable } from "rxjs";
-import { PrecioEnvioEnum, Tamanios, TypeEnvioEnum } from "./constants";
+import { PrecioEnvioEnum, Tamanios, TypeEnvioEnum, whereDateFilter } from "./constants";
 
 export interface IProducto{
     id:string,
@@ -25,7 +25,7 @@ export interface IEnvio{
 }
 export interface IPedido{
     id?:string,
-    fechaPedido: Date,
+    fechaPedido: Date|Timestamp,
     estadoPedido:string,
     notasPedido:string,
     entregaRealPed:Date,
@@ -74,11 +74,16 @@ export interface IUsuario{
 export interface IParams{
     order?:string,
     orderOrientacion?:OrderByDirection,
-    where?:IWhere[]
+    where?:IWhere[],
+    whereDate?:IWhereDate[]
 }
 export interface IWhere{
     name:string,
     validation:WhereFilterOp,
+    value:string|Date
+}
+export interface IWhereDate{
+    validation:whereDateFilter,
     value:string
 }
 
