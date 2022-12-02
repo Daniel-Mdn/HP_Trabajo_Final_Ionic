@@ -34,23 +34,17 @@ export class BkListadoPedidosTurnoPage implements OnInit {
     let hoy = new Date();
     let ayer = new Date();
     ayer.setDate(ayer.getDate() - 1);
+    ayer.setHours(23,59,59)
+    console.log('hoy: ',hoy);
+    console.log('ayer: ',ayer)
     await this.storage
       .get('usuario')
       .then((value) => (this.currentUsuario = value));
     this.listaPedidos$ = this.pedidosService
       .getPedidosId({
         where: [
-          
             { name: 'fechaPedido', validation: '<=', value: hoy },
-            { name: 'fechaPedido', validation: '>=', value: ayer },
-            /*
-          {
-            name: 'idUsuario',
-            validation: '==',
-            value: this.currentUsuario,
-            
-          },
-            */
+            { name: 'fechaPedido', validation: '>', value: ayer },
         ],
         order: 'fechaPedido',
         orderOrientacion: 'desc',
@@ -83,7 +77,7 @@ export class BkListadoPedidosTurnoPage implements OnInit {
   }
 
   redirectDetallePedido(id: string) {
-    this.router.navigate(['/detalle-pedido', id]);
+    this.router.navigate(['/bk-pedido-detalle', id]);
   }
   getNombreCategoria(idCategoria: string) {
     switch (idCategoria) {
