@@ -131,8 +131,17 @@
       </ion-row>
     </ion-col>
   </div>
-  <div class="contFlex">
-    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="confirmaPedido()">Imprimir</ion-button>
-    <ion-button expand="block" class="mt-3" color="danger" type="submit" (click)="rechazaPedido()">Rechazar</ion-button>
+  <div 
+  class="contFlex"
+  *ngIf='pedido.estadoPedido==estadosPedido.Pendiente' 
+  >
+    <ion-button expand="block" class="btnGde" color="primary" type="submit" (click)="confirmaPedido()">Imprimir</ion-button>
+    <ion-button expand="block" class="mt-3 btnGde" color="danger" type="submit" (click)="rechazaPedido()">Rechazar</ion-button>
+  </div>
+  <div 
+  class="contFlex"
+  *ngIf='pedido.estadoPedido!=estadosPedido.Pendiente' 
+  >
+    <ion-button expand="block" class="btnGde mb-3" color="primary" type="submit" (click)="redirectEstadoPedido(pedido.id)">Estado pedido</ion-button>
   </div>
 </ion-content>
