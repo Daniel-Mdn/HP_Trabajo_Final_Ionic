@@ -13,6 +13,8 @@ import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { Categorias, estadosPedido } from 'src/app/constants/constants';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -21,13 +23,16 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
   styleUrls: ['./bk-pedido-detalle.page.scss'],
 })
 export class BkPedidoDetallePage implements OnInit {
+  estadosPedido = estadosPedido;
+  handlerMessage = '';
   constructor(
     private router: Router,
     private pedidoService: PedidoService,
     private lineasPedidoService: LineaPedidoService,
     private domicilioService: DomicilioService,
     private route: ActivatedRoute,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private alertController: AlertController
   ) {
     
   }
@@ -43,6 +48,7 @@ export class BkPedidoDetallePage implements OnInit {
   nombreApellido:string;
   telefono:string;
   usuario: IUsuario;
+  
 
   async ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -93,6 +99,46 @@ export class BkPedidoDetallePage implements OnInit {
       return '';
     }
   }
+
+  redirectEstadoPedido(id: string){
+    this.router.navigate(['/bk-pedido-estado', id]);
+  }
+
+  confirmaPedido(){
+    this.pedido.estadoPedido = 'en preparacion';
+    console.log(this.pedido);
+    this.pedidoService.updatePedido(this.pedido.id, this.pedido)
+    this.router.navigate(['/bk-listado-pedidos-turno']);
+  }
+
+  async rechazaPedido() {
+    const alert = await this.alertController.create({
+      header: '¿Desea rechazar el pedido?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('alerta cancelada');
+          },
+        },
+        {
+          text: 'Rechazar',
+          role: 'confirm',
+          handler: () => {
+            console.log('pedido rechazado');
+            this.pedido.estadoPedido = 'cancelado';
+            console.log(this.pedido);
+            this.pedidoService.updatePedido(this.pedido.id, this.pedido)
+            this.router.navigate(['/bk-listado-pedidos-turno']);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+  
 
   goPrevPage(){
     this.router.navigate(['/bk-listado-pedidos-turno']);

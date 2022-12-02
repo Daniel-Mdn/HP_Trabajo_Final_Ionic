@@ -18,10 +18,12 @@
 </ion-header>
 
 <ion-content>
+  <h4 class="ml-6">Pedidos en curso</h4>
+
   <ion-list>
     <ng-container *ngFor="let ped of listaPedidos$|async">
       <ion-item
-        *ngIf="ped.estadoPedido!=estadosPedido.Entregado"
+        *ngIf="ped.estadoPedido!=estadosPedido.Entregado&&ped.estadoPedido!=estadosPedido.Cancelado"
         (click)="redirectDetallePedido(ped.id)"
         lines="none"
         [ngClass]="{
@@ -98,12 +100,12 @@
     </ng-container>
   </ion-list>
 
-  <h4 class="ml-6">Pedidos entregados</h4>
+  <h4 class="ml-6">Pedidos entregados / cancelados</h4>
 
   <ion-list>
     <ng-container *ngFor="let ped of listaPedidos$|async">
       <ion-item
-        *ngIf="ped.estadoPedido==estadosPedido.Entregado"
+        *ngIf="ped.estadoPedido==estadosPedido.Entregado||ped.estadoPedido==estadosPedido.Cancelado"
         (click)="redirectDetallePedido(ped.id)"
         class="pedEntregado ion-text-wrap"
         lines="none"
