@@ -28,7 +28,7 @@
           <ion-label>Pedido</ion-label>
         </ion-col>
         <ion-col size="8">
-          <ion-label>Var_pedido_id</ion-label>
+          <ion-label>{{pedido.id}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -36,7 +36,7 @@
           <ion-label>Cliente</ion-label>
         </ion-col>
         <ion-col size="8">
-          <ion-label>Var_cliente_nombre</ion-label>
+          <ion-label>{{nombreApellido|titlecase}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -44,15 +44,15 @@
           <ion-label>Domicilio</ion-label>
         </ion-col>
         <ion-col size="8">
-          <ion-label>Var_domicilio</ion-label>
+          <ion-label>{{formatDomicilio()|titlecase}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="4" class="padbot2">
-          <ion-label>Teléfono</ion-label><!--Esta, si se complica, puede no ir-->
+          <ion-label>Teléfono</ion-label>
         </ion-col>
         <ion-col size="8">
-          <ion-label>Var_nro_telefono</ion-label>
+          <ion-label>{{telefono|titlecase}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -60,30 +60,32 @@
       </ion-row>
       <ion-list >
         <ion-item *ngFor="let linea of lineasPedido">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Nombre Producto</ion-label><!--Variable previa: {{linea.producto.nombre}}-->
-            </ion-col>
-            <ion-col size="2">
-              <ion-label>1 Unid.</ion-label><!--Variable previa: {{linea.cantidad}} Unid.-->
-            </ion-col>
-            <ion-col size="3">
-              <ion-label class="ion-text-end">2000</ion-label><!--Variable previa: {{linea.totalProducto|currency}}-->
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="4">Notas del producto</ion-col>
-            <ion-col size="8">Val_notas_producto</ion-col>
-          </ion-row>
+          <ion-grid fixed>
+            <ion-row class="w-100">
+              <ion-col>
+                <ion-label>{{linea.producto.nombre}}</ion-label><!--Variable previa: {{linea.producto.nombre}}-->
+              </ion-col>
+              <ion-col>
+                <ion-label>{{linea.cantidad}} Unid.</ion-label><!--Variable previa: {{linea.cantidad}} Unid.-->
+              </ion-col>
+              <ion-col>
+                <ion-label class="ion-text-end">{{linea.totalProducto|currency}}</ion-label><!--Variable previa: {{linea.totalProducto|currency}}-->
+              </ion-col>
+            </ion-row>
+            <ion-row class="w-100">
+              <ion-col>Notas del producto:</ion-col>
+              <ion-col>{{linea.notasDeProducto}}</ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
       </ion-list>
       <ion-row class="padbot2">
         <ion-col size="6">
-          <ion-label>Cadete</ion-label><!--Variable previa: {{envio.service|titlecase}}-->
+          <ion-label>{{envio.service|titlecase}}</ion-label><!--Variable previa: {{envio.service|titlecase}}-->
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>300</ion-label><!--Variable previa: {{envio.price|currency}}-->
+            <ion-label>{{envio.price|currency}}</ion-label><!--Variable previa: {{envio.price|currency}}-->
           </div>
         </ion-col>
       </ion-row>
@@ -93,7 +95,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end txtTitulo">
-            <ion-label>2300</ion-label><!-- Variable previa: {{pedido.total|currency}}-->
+            <ion-label>{{pedido.total|currency}}</ion-label><!-- Variable previa: {{pedido.total|currency}}-->
           </div>
         </ion-col>
       </ion-row>
@@ -113,7 +115,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>Val_notas_pedido</ion-label>
+            <ion-label>{{pedido.notasPedido|titlecase}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -123,7 +125,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>En preparación</ion-label><!--Va variable de estado-->
+            <ion-label>{{pedido.estadoPedido|titlecase}}</ion-label><!--Va variable de estado-->
           </div>
         </ion-col>
       </ion-row>
