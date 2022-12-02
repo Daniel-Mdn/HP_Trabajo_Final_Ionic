@@ -45,16 +45,20 @@ export class BkPedidoDetallePage implements OnInit {
   usuario: IUsuario;
 
   async ngOnInit() {
-    console.log('init')
-
     this.route.params.subscribe((params) => {
       this.pedidoService.getPedido(params.pedidoId).subscribe((ped) => {
         this.pedido = ped;
-        console.log(this.pedido);
         this.pedido.id = params.pedidoId;
         this.domicilioService.getDomicilio(ped.idDomicilio).subscribe((dom) => {
           this.pedido.domicilio = dom;
         });
+        this.usuarioService.getUser(this.pedido.idUsuario)
+          .subscribe((usu)=>{
+            console.log(this.pedido.idUsuario)
+            console.log(usu)
+            this.nombreApellido = usu.apellido + ' ' + usu.nombre;
+            this.telefono = usu.nroTelefono;
+          });
       });
       this.lineasPedidoService
         .getLineasPedidoId({
@@ -67,13 +71,6 @@ export class BkPedidoDetallePage implements OnInit {
         });
     });
 
-    await this.usuarioService.getUser(this.pedido.idUsuario)
-      .subscribe((usu)=>{
-        console.log(this.pedido.idUsuario)
-        console.log(usu)
-        this.nombreApellido = usu.apellido + ' ' + usu.nombre;
-        this.telefono = usu.nroTelefono;
-      });
   }
 
   cleanPedido(event: boolean) {

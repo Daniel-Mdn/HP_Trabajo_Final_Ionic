@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { now } from '@ionic/core/dist/types/utils/helpers';
+import { Timestamp } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { fechasValidator, whereDateFilter } from 'src/app/constants/constants';
@@ -218,5 +219,9 @@ export class BkReporteVentasPage implements OnInit {
     } else {
       return '';
     }
+  }
+
+  getFechaPedido(fecha: Date|Timestamp){
+    return fecha as Date
   }
 }

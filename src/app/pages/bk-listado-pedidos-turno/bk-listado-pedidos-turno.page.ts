@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { Timestamp } from 'firebase/firestore';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
@@ -37,9 +38,9 @@ export class BkListadoPedidosTurnoPage implements OnInit {
     ayer.setHours(23,59,59)
     console.log('hoy: ',hoy);
     console.log('ayer: ',ayer)
-    await this.storage
-      .get('usuario')
-      .then((value) => (this.currentUsuario = value));
+    // await this.storage
+    //   .get('usuario')
+    //   .then((value) => (this.currentUsuario = value));
     this.listaPedidos$ = this.pedidosService
       .getPedidosId({
         where: [
@@ -97,10 +98,20 @@ export class BkListadoPedidosTurnoPage implements OnInit {
   }
 
   formatDomicilio(dom:IDomicilio){
-    return this.domicilioService.formatDomicilio(dom)
+    if (dom){
+      return this.domicilioService.formatDomicilio(dom)
+    }else{
+      return ''
+    }
   }
   goPrevPage(){
     this.router.navigate(['/bk-menu-empleado']);
   }
 
+  getFechaPedido(fecha: Date|Timestamp){
+    return fecha as Date
+  }
+  redirectHome(){
+    this.router.navigate(['/bk-menu-empleado']);
+  }
 }

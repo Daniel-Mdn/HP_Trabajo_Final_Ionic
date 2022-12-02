@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { getAuth, signOut } from 'firebase/auth';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-bk-menu-empleado',
@@ -10,7 +12,8 @@ export class BkMenuEmpleadoPage implements OnInit {
   
 
   constructor(
-    private router: Router
+    private router: Router,
+    private storage: StorageService
   ) { }
 
   ngOnInit() {
@@ -36,6 +39,15 @@ export class BkMenuEmpleadoPage implements OnInit {
     this.router.navigate(['/bk-menu-productos']);
   }
 
-  logout(){}
+  logout(){
+    this.storage.remove('usuario').then((res) => console.log);
+    const auth = getAuth()
+    signOut(auth).then(() => {
+        console.log('Sign-out successful')
+      }).catch((error) => {
+        console.log('Error en sign-out')
+      });
+      this.router.navigate(['/login']);
+  }
 
 }

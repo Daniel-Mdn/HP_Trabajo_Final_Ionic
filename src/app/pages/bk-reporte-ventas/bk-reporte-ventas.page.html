@@ -65,7 +65,7 @@
       class="ion-align-items-center"
       *ngFor="let ped of listaPedidos$|async"
     >
-      <ion-col class="ion-text-center">{{ped.fechaPedido|date}}</ion-col>
+      <ion-col class="ion-text-center">{{getFechaPedido(ped.fechaPedido) |date}}</ion-col>
       <ion-col class="ion-text-center"
         >{{ped.id.length>10?ped.id.slice(0,9)+'...':ped.id}}</ion-col
       >
