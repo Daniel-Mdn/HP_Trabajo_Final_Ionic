@@ -32,13 +32,10 @@
         <ion-label>Fecha desde:</ion-label>
       </ion-col>
       <ion-col size="6">
-        <ion-datetime-button
-          color="primary"
+        <ion-datetime-button class="datetime-button"
+          color="light"
           datetime="datetimeDesde"
         ></ion-datetime-button>
-      </ion-col>
-      <ion-col size="auto">
-        <ion-button (click)="getReporte()">Buscar</ion-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-align-items-center">
@@ -52,7 +49,11 @@
         ></ion-datetime-button>
       </ion-col>
     </ion-row>
-    <ion-row> </ion-row>
+    <ion-row class="contFlex"> 
+      <ion-col size="auto">
+        <ion-button (click)="getReporte()">Buscar</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
   <ion-grid class="grid-borders grid-margins">
     <ion-row>
@@ -143,19 +144,22 @@
     <ion-content class="ion-padding">
       <div class="recResumen">
         <ion-col size="10">
-          <ion-row>
-            <ion-label class="txtTitulo">DOMICILIO: {{formatDomicilio()|titlecase}}</ion-label>
+          <ion-row class="mb-2">  
+            <ion-label class="txtTitulo"><strong>DOMICILIO:</strong> {{formatDomicilio()|titlecase}}</ion-label>
+          </ion-row>
+          <ion-row class="mb-2">  
+            <ion-label class="txtTitulo"><strong>FECHA:</strong> {{pedidoSelected.fechaPedido|date:'short'}}</ion-label>
           </ion-row>
           <ion-grid class="modal">
             <ion-row class="ion-justify-content-center">
-              <ion-label class="txtTitulo">DETALLE PEDIDO</ion-label>
+              <ion-label class="txtTitulo"><strong>DETALLE PEDIDO</strong></ion-label>
             </ion-row>
             <ion-list>
               <ion-item *ngFor="let linea of pedidoSelected.lineasPedido">
                 <ion-col size="6">
                   <ion-label>{{linea.producto.nombre}}</ion-label>
                 </ion-col>
-                <ion-col size="2">
+                <ion-col size="3">
                   <ion-label>{{linea.cantidad}} Unid.</ion-label>
                 </ion-col>
                 <ion-col size="3">
@@ -178,7 +182,7 @@
           </ion-row>
           <ion-row class="padbot4">
             <ion-col size="6">
-              <ion-label class="txtTitulo">TOTAL</ion-label>
+              <ion-label class="txtTitulo"><strong>TOTAL</strong></ion-label>
             </ion-col>
             <ion-col size="5">
               <div class="ion-text-end txtTitulo">
@@ -188,7 +192,7 @@
           </ion-row>
           <ion-row class="padbot4">
             <ion-col size="6">
-              <ion-label class="txtTitulo">FORMA DE PAGO</ion-label>
+              <ion-label class="txtTitulo"><strong>FORMA DE PAGO</strong></ion-label>
             </ion-col>
             <ion-col size="5">
               <div class="ion-text-end">
@@ -198,7 +202,7 @@
           </ion-row>
           <ion-row class="padbot4">
             <ion-col size="6">
-              <ion-label class="txtTitulo">ESTADO</ion-label>
+              <ion-label class="txtTitulo"><strong>ESTADO</strong></ion-label>
             </ion-col>
             <ion-col size="5">
               <div class="ion-text-end">
