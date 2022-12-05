@@ -106,6 +106,7 @@ export class BkPedidoDetallePage implements OnInit {
 
   confirmaPedido(){
     this.pedido.estadoPedido = 'en preparacion';
+    this.pedido.estadoPago = 'pendiente';
     console.log(this.pedido);
     this.pedidoService.updatePedido(this.pedido.id, this.pedido)
     this.router.navigate(['/bk-listado-pedidos-turno']);
@@ -128,6 +129,7 @@ export class BkPedidoDetallePage implements OnInit {
           handler: () => {
             console.log('pedido rechazado');
             this.pedido.estadoPedido = 'cancelado';
+            this.pedido.estadoPago = 'pendiente';
             console.log(this.pedido);
             this.pedidoService.updatePedido(this.pedido.id, this.pedido)
             this.router.navigate(['/bk-listado-pedidos-turno']);
