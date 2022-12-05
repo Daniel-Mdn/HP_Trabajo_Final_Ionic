@@ -24,7 +24,7 @@ export class BkMenuUsuariosEmpPage implements OnInit {
   }
 
   redirectUsuEdita(){
-    this.router.navigate(['/bk-usuario-emp-edita']);
+    this.router.navigate(['/bk-usuario-lista']);
   }
 
   goPrevPage(){
