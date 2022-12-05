@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { formasPago, PrecioEnvioEnum, TypeEnvioEnum } from 'src/app/constants/constants';
+import { estadosPago, formasPago, PrecioEnvioEnum, TypeEnvioEnum } from 'src/app/constants/constants';
 import { IPedido, ILineaPedido, IEnvio, IDomicilio } from 'src/app/constants/interfaces';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
@@ -58,6 +58,7 @@ export class ConfirmarPedidoPage implements OnInit {
     this.pedido.notasPedido=this.notasPedido.value;
     this.pedido.formaDePago=formasPago.Efectivo;
     this.pedido.idUsuario=this.usuario;
+    this.pedido.estadoPago=estadosPago.Pendiente;
     this.pedidoService.setCurrentPedido$(this.pedido);
     let pedidoId;
     await this.pedidoService.createPedido(this.pedido).then((id)=>pedidoId=id);

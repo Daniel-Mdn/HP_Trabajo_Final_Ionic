@@ -20,47 +20,68 @@
 <ion-content>
   <ion-grid fixed>
     <h4 class="txtCenter padbot4">Código pedido:<br>{{pedido.id}}</h4>
-    <ion-row class="mt-10">
-      <ion-col size="6" class="contFlex"><ion-label>Estado del Pedido:</ion-label></ion-col>
-      <ion-col class="contFlex" size="6"><ion-label>{{pedido.estadoPedido}}</ion-label></ion-col>
-    </ion-row>
-    <ion-row class="contFlex">
-      <ion-col size="10">
-        <ion-select name="estado-pedido" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
-          <ion-select-option value="pendiente">Pendiente</ion-select-option>
-          <ion-select-option value="en preparación">En Preparación</ion-select-option>
-          <ion-select-option value="en camino">En camino</ion-select-option>
-          <ion-select-option value="entregado">Entregado</ion-select-option>
-          <ion-select-option value="cancelado">Cancelado</ion-select-option>
-        </ion-select>
-      </ion-col>
-    </ion-row>
-    <ion-row class="contFlex">
-      <ion-col size="10">
-        <ion-button (click)="updateEstadoPedido()" expand="block" class="h6">
-          APLICAR
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="mt-10">
-      <ion-col size="6" class="contFlex"><ion-label>Estado del Pago:</ion-label></ion-col>
-      <ion-col class="contFlex" size="6"><ion-label>{{pedido.estadoPago}}</ion-label></ion-col>
-    </ion-row>
-    <ion-row class="contFlex">
-      <ion-col size="10">
-        <ion-select name="estado-pago" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
-          <ion-select-option value="pendiente">Pendiente</ion-select-option>
-          <ion-select-option value="pago-recibido-por-cadete">Pago recibido por Cadete</ion-select-option>
-          <ion-select-option value="pagado">Pagado</ion-select-option>
-        </ion-select>
-      </ion-col>
-    </ion-row>
-    <ion-row class="contFlex">
-      <ion-col size="10">
-        <ion-button (click)="updateEstadoPago()" expand="block" class="h6">
-          APLICAR
-        </ion-button>
-      </ion-col>
-    </ion-row>
+    <form [formGroup]="cambioEstados">
+      <ion-row class="mt-10">
+        <ion-col size="6" class="contFlex"><ion-label>Estado del Pedido:</ion-label></ion-col>
+        <ion-col class="contFlex" size="6"><ion-label><strong>{{pedido.estadoPedido|titlecase}}</strong></ion-label></ion-col>
+      </ion-row>
+      <ion-row class="contFlex">
+        <ion-col size="10">
+          <ion-select 
+            name="estado-pedido" 
+            placeholder="Elija..." 
+            okText="Listo" 
+            cancelText="Cancelar"
+            formControlName="estadoPedido">
+            <ion-select-option value="pendiente">Pendiente</ion-select-option>
+            <ion-select-option value="en preparación">En Preparación</ion-select-option>
+            <ion-select-option value="en camino">En camino</ion-select-option>
+            <ion-select-option value="entregado">Entregado</ion-select-option>
+            <ion-select-option value="cancelado">Cancelado</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row class="contFlex">
+        <ion-col size="10">
+          <ion-button (click)="updateEstadoPedido()" expand="block" class="h6">
+            APLICAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt-10">
+        <ion-col size="6" class="contFlex"><ion-label>Estado del Pago:</ion-label></ion-col>
+        <ion-col class="contFlex" size="6"><ion-label><strong>{{pedido.estadoPago|titlecase}}</strong></ion-label></ion-col>
+      </ion-row>
+      <ion-row class="contFlex">
+        <ion-col size="10">
+          <ion-select 
+          name="estado-pago" 
+          placeholder="Elija..." 
+          okText="Listo" 
+          cancelText="Cancelar" 
+          formControlName="estadoPago">
+            <ion-select-option value="pendiente">Pendiente</ion-select-option>
+            <ion-select-option value="pago recibido por cadete">Pago recibido por Cadete</ion-select-option>
+            <ion-select-option value="pagado">Pagado</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row class="contFlex">
+        <ion-col size="10">
+          <ion-button (click)="updateEstadoPago()" expand="block" class="h6">
+            APLICAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-text color="danger">
+      <h4 class="ion-text-center"> {{mensajeError}} </h4>
+    </ion-text>
+    <ion-text color="success">
+      <h4 class="ion-text-center"> {{mensajeOK}} </h4>
+    </ion-text>
+    <div class="contFlex mt-10">
+      <ion-button expand="block" class="btnGde mb-3" color="primary" (click)="goPrevPage()">Volver</ion-button>
+    </div>
   </ion-grid>
 </ion-content>

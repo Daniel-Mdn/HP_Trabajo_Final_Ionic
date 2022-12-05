@@ -67,7 +67,7 @@ export class LoginPage implements OnInit {
               break
             case 'usuario-cadete':
               console.log('case usu-cad');
-              this.router.navigate(['/bk-menu-empleado']);
+              this.router.navigate(['/bk-listado-pedidos-turno']);
               break
           }
         })

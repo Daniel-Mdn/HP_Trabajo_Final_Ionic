@@ -23,7 +23,7 @@
   <ion-list>
     <ng-container *ngFor="let ped of listaPedidos$|async">
       <ion-item
-        *ngIf="ped.estadoPedido!=estadosPedido.Entregado&&ped.estadoPedido!=estadosPedido.Cancelado"
+        *ngIf="ped.estadoPedido!=estadosPedido.Entregado && ped.estadoPedido!=estadosPedido.Cancelado && usuario.rol!='usuario-cadete'"
         (click)="redirectDetallePedido(ped.id)"
         lines="none"
         [ngClass]="{
@@ -44,7 +44,7 @@
           <ion-row class="w-100">
             <ion-col size="auto">
               <ion-label class="ion-text-wrap" >
-                Domicilio: {{formatDomicilio(ped.domicilio)|uppercase}}
+                Domicilio: <strong>{{formatDomicilio(ped.domicilio)|uppercase}}</strong>
               </ion-label>
             </ion-col>
           </ion-row>
@@ -56,7 +56,7 @@
                   class="ion-align-items-center ion-justify-content-between"
                 >
                   <ion-col size="6" size-sm="auto">
-                    <ion-label class="ion-padding-start ion-text-wrap">
+                    <ion-label class="ion-padding-start ion-text-wrap"><strong>
                       {{getNombreCategoria(linea.producto.idCategoria)|titlecase}}
                       {{linea.producto.nombre}} x {{linea.cantidad}}
                       <br />
@@ -70,7 +70,87 @@
                           </ng-container>
                         </small>
                       </p>
+                    </strong></ion-label>
+                  </ion-col>
+                  <ion-col size="auto" class="price">
+                    <ion-label class="ion-padding-end">
+                      {{linea.totalProducto|currency}}
                     </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+          <ion-row class="w-100">
+            <ion-col size="auto">
+              <ion-label>
+                Total: <strong>{{ped.total|currency}}</strong>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="w-100">
+            <ion-col size="auto">
+              <ion-label>
+                Estado: <strong>{{ped.estadoPedido|uppercase}}</strong>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+  <ion-list>
+    <ng-container *ngFor="let ped of listaPedidos$|async">
+      <ion-item
+        *ngIf="ped.estadoPedido==estadosPedido.EnCamino && usuario.rol=='usuario-cadete'"
+        (click)="redirectDetallePedido(ped.id)"
+        lines="none"
+        [ngClass]="{
+          'pedPendiente' : ped.estadoPedido==estadosPedido.Pendiente,
+          'pedEnPreparacion' : ped.estadoPedido==estadosPedido.Preparacion,
+          'pedEnCamino' : ped.estadoPedido==estadosPedido.EnCamino,
+          'pedEntregado' : ped.estadoPedido==estadosPedido.Cancelado
+        }"
+        class="ion-text-wrap"
+      >
+        <ion-grid fixed>
+          <ion-row class="w-100">
+            <ion-col size="auto">Pedido: {{ped.id}}</ion-col>
+          </ion-row>
+          <ion-row class="w-100">
+            <ion-col size="auto">Fecha: {{getFechaPedido(ped.fechaPedido)|date:'short'}}</ion-col>
+          </ion-row>
+          <ion-row class="w-100">
+            <ion-col size="auto">
+              <ion-label class="ion-text-wrap" >
+                Domicilio: <strong>{{formatDomicilio(ped.domicilio)|uppercase}}</strong>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="w-100">
+            <ion-label class="pl-1">Detalle:</ion-label>
+            <ng-container *ngFor="let linea of ped.lineasPedido">
+              <ion-col size="12">
+                <ion-row
+                  class="ion-align-items-center ion-justify-content-between"
+                >
+                  <ion-col size="6" size-sm="auto">
+                    <ion-label class="ion-padding-start ion-text-wrap"><strong>
+                      {{getNombreCategoria(linea.producto.idCategoria)|titlecase}}
+                      {{linea.producto.nombre}} x {{linea.cantidad}}
+                      <br />
+                      <p class="extras">
+                        {{linea.producto.extrasProducto?.length>0?'Extras:':''}}
+                        <small>
+                          <ng-container
+                            *ngFor="let extra of linea.producto.extrasProducto; let i=last"
+                          >
+                            {{extra.descExtra}}{{i?'':' -'}}
+                          </ng-container>
+                        </small>
+                      </p>
+                    </strong></ion-label>
                   </ion-col>
                   <ion-col size="auto" class="price">
                     <ion-label class="ion-padding-end">

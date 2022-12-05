@@ -5,12 +5,12 @@ import { Timestamp } from 'firebase/firestore';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
-import { IDomicilio, ILineaPedido, IPedido } from 'src/app/constants/interfaces';
+import { IDomicilio, ILineaPedido, IPedido, IUsuario } from 'src/app/constants/interfaces';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
   selector: 'app-bk-listado-pedidos-turno',
@@ -22,13 +22,15 @@ export class BkListadoPedidosTurnoPage implements OnInit {
   listaLineasPedido$: Observable<ILineaPedido[]> = from([]);
   currentUsuario: string;
   estadosPedido = estadosPedido;
+  usuario: IUsuario
   constructor(
     private menu: MenuController,
     private router: Router,
     private pedidosService: PedidoService,
     private storage: StorageService,
     private lineaPedidoService: LineaPedidoService,
-    private domicilioService: DomicilioService
+    private domicilioService: DomicilioService,
+    private usuarioService: UsuarioService
   ) {}
 
   async ngOnInit() {
@@ -36,11 +38,15 @@ export class BkListadoPedidosTurnoPage implements OnInit {
     let ayer = new Date();
     ayer.setDate(ayer.getDate() - 1);
     ayer.setHours(23,59,59)
-    console.log('hoy: ',hoy);
-    console.log('ayer: ',ayer)
-    // await this.storage
-    //   .get('usuario')
-    //   .then((value) => (this.currentUsuario = value));
+    //console.log('hoy: ',hoy);
+    //console.log('ayer: ',ayer);
+    await this.storage
+      .get('usuario')
+      .then((value) => (this.currentUsuario = value));
+    this.usuarioService.getUser(this.currentUsuario).subscribe((usu)=>{
+      this.usuario = usu;
+      console.log(this.usuario)
+    })
     this.listaPedidos$ = this.pedidosService
       .getPedidosId({
         where: [
@@ -65,8 +71,8 @@ export class BkListadoPedidosTurnoPage implements OnInit {
                 ],
               })
               .subscribe((lineas) => {
-                console.log('lineas');
-                console.log('lineas', lineas);
+                //console.log('lineas');
+                //console.log('lineas', lineas);
                 if (lineas) {
                   pedido.lineasPedido = lineas;
                 }

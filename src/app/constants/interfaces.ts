@@ -37,7 +37,8 @@ export interface IPedido{
     idUsuario?:string,
     idDomicilio?:string,
     domicilio?:IDomicilio,
-    lineasPedido?:ILineaPedido[]
+    lineasPedido?:ILineaPedido[],
+    estadoPago?:string
 }
 export interface ILineaPedido{
     id?:string,
