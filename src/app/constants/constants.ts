@@ -43,6 +43,11 @@ export enum estadosPedido{
     EnCamino="en camino",
     Cancelado="cancelado"
 }
+export enum estadosPago{
+    Pendiente="pendiente",
+    Pagado="pagado",
+    PagoConCadete="pago recibido por cadete"
+}
 export enum formasPago{
     Efectivo="efectivo",
 }

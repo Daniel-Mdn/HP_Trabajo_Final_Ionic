@@ -79,19 +79,21 @@
           </ion-grid>
         </ion-item>
       </ion-list>
+      <!--
       <ion-row class="padbot2">
         <ion-col size="6">
-          <ion-label>{{envio.service|titlecase}}</ion-label><!--Variable previa: {{envio.service|titlecase}}-->
+          <ion-label>{{envio.service|titlecase}}</ion-label>
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end">
-            <ion-label>{{envio.price|currency}}</ion-label><!--Variable previa: {{envio.price|currency}}-->
+            <ion-label>{{envio.price|currency}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
+      -->
       <ion-row class="padbot2">
         <ion-col size="6">
-          <ion-label class="txtTitulo">TOTAL</ion-label>
+          <ion-label class="txtTitulo">TOTAL (envío incluido)</ion-label>
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end txtTitulo">
@@ -131,8 +133,17 @@
       </ion-row>
     </ion-col>
   </div>
-  <div class="contFlex">
-    <ion-button expand="block" class="btnGde" color="spezia" type="submit" (click)="confirmaPedido()">Imprimir</ion-button>
-    <ion-button expand="block" class="mt-3" color="danger" type="submit" (click)="rechazaPedido()">Rechazar</ion-button>
+  <div 
+  class="contFlex"
+  *ngIf='pedido.estadoPedido==estadosPedido.Pendiente' 
+  >
+    <ion-button expand="block" class="btnGde" color="primary" type="submit" (click)="confirmaPedido()">Imprimir</ion-button>
+    <ion-button expand="block" class="mt-3 btnGde" color="danger" type="submit" (click)="rechazaPedido()">Rechazar</ion-button>
+  </div>
+  <div 
+  class="contFlex"
+  *ngIf='pedido.estadoPedido!=estadosPedido.Pendiente' 
+  >
+    <ion-button expand="block" class="btnGde mb-3" color="primary" type="submit" (click)="redirectEstadoPedido(pedido.id)">Estado pedido</ion-button>
   </div>
 </ion-content>

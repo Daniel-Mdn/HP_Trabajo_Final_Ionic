@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: BkPedidoEstadoPage
+  },
+  {
+    path: ':pedidoId',
+    component: BkPedidoEstadoPage
   }
 ];
 

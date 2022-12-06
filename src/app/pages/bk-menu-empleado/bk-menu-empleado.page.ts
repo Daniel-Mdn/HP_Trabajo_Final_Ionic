@@ -32,7 +32,7 @@ export class BkMenuEmpleadoPage implements OnInit {
   }
 
   redirectMenuUsuarios(){
-    this.router.navigate(['/bk-usuario-lista']);
+    this.router.navigate(['/bk-menu-usuarios-emp']);
   }
 
   redirectMenuProductos(){
