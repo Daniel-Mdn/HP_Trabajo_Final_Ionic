@@ -6,6 +6,9 @@ export enum Categorias{
     PizzasMolde="pizzaAlMolde",
     PizzasParrilla="pizzaALaParrilla"
 }
+export enum extras{
+    medallon="medallon"
+}
 export enum Tamanios{
     Grande="grande",
     Mediana="mediana",
