@@ -282,7 +282,6 @@ export class ProductoPage implements OnInit {
     this.tamanioSelected = true;
   }
   handleFilterHamburguesas(event: any, extraHamb: IExtras) {
-    debugger;
     let ev = event as SelectCustomEvent;
     let cantidadAnterior = extraHamb.cantidad;
     if (cantidadAnterior == undefined || cantidadAnterior < 1) {
