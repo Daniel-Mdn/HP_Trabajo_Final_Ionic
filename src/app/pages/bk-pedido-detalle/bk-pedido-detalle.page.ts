@@ -25,6 +25,7 @@ import { AlertController } from '@ionic/angular';
 export class BkPedidoDetallePage implements OnInit {
   estadosPedido = estadosPedido;
   handlerMessage = '';
+  
   constructor(
     private router: Router,
     private pedidoService: PedidoService,
