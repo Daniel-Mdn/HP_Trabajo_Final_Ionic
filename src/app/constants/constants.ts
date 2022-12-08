@@ -1,5 +1,10 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
+export enum Roles{
+    usuarioCliente="usuario-cliente",
+    usuarioEmpleado="usuario-empleado",
+    usuarioCadete="usuario-cadete"
+}
 export enum Categorias{
     Hamburguesas="hamburguesa",
     DescHamburguesas="Medallón de Carne",

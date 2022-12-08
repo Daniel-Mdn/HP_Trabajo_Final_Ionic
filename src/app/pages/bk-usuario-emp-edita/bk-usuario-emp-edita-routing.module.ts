@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: BkUsuarioEmpEditaPage
+  },
+  {
+    path: ':id',
+    component: BkUsuarioEmpEditaPage
   }
 ];
 

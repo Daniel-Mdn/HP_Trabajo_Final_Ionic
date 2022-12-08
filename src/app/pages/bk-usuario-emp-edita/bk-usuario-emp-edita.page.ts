@@ -5,9 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUsuario } from 'src/app/constants/interfaces';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { getAuth, updatePassword } from 'firebase/auth';
 import { AlertController, IonModal } from '@ionic/angular';
+import { Roles } from 'src/app/constants/constants';
 
 @Component({
   selector: 'app-bk-usuario-emp-edita',
@@ -20,50 +21,53 @@ export class BkUsuarioEmpEditaPage implements OnInit {
   formPass: FormGroup;
   usuario: IUsuario;
   usuId: '';
-  role:'';
+  role: '';
   myDate: Date;
-  
+  roles: Roles[] = Object.values(Roles);
   constructor(
     private firestore: AngularFirestore,
-    private formBuilder:FormBuilder,
-    private usuarioService:UsuarioService,
+    private formBuilder: FormBuilder,
+    private usuarioService: UsuarioService,
     private storage: StorageService,
-    private router:Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private alertController: AlertController
-  ) { 
+  ) {
     this.form = this.formBuilder.group({
-      apellido: [''],
-      nombre:[''],
-      fechaNac: [''],
-      nroTelefono: [''],
-    })
+      apellido: [null, Validators.required],
+      nombre: [null, Validators.required],
+      fechaNac: [null],
+      nroTelefono: [null],
+      rol: [null],
+    });
     this.formPass = this.formBuilder.group({
-      newPass: ['']
-    })
+      newPass: [null, Validators.required],
+    });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     //console.log(this.storage.get('rol'));
     //console.log(this.storage.get('usuario'));
-    this.storage.get('usuario').then((val)=>{ 
-      this.usuId = val;
-      //console.log('usuario: '+this.usuId);
-      this.usuarioService.getUser(this.usuId).subscribe((usu)=>{
-        //console.log(usu);
-        this.usuario = usu;
-        this.form.controls.apellido.setValue(this.usuario.apellido);
-        this.form.controls.nombre.setValue(this.usuario.nombre);
-        //this.myDate = this.usuario.fechaNac;
-        this.form.controls.fechaNac.setValue(this.usuario.fechaNac);
-        this.form.controls.nroTelefono.setValue(this.usuario.nroTelefono);
-      })
+    this.route.params.subscribe((params) => {
+      const id = params.id;
+      if (id) {
+        this.usuId = id;
+        this.usuarioService.getUser(id).subscribe((usu) => {
+          //console.log(usu);
+          this.usuario = usu;
+          this.form.reset({
+            apellido: usu.apellido,
+            nombre: usu.nombre,
+            fechaNac: new Date(usu.fechaNac).toISOString(),
+            nroTelefono: usu.nroTelefono,
+            rol: { value: usu.rol, disabled: true },
+          });
+        });
+      }
     });
   }
 
   async presentAlert() {
-    await this.storage.get('rol').then((ref) => {
-      this.role = ref;
-    });
     const alert = await this.alertController.create({
       header: '¿Confirma que desea actualizar sus datos?',
       buttons: [
@@ -72,7 +76,6 @@ export class BkUsuarioEmpEditaPage implements OnInit {
           role: 'cancel',
           handler: () => {
             //this.handlerMessage = 'Alert canceled';
-            console.log('alerta cancelada')
           },
         },
         {
@@ -80,18 +83,18 @@ export class BkUsuarioEmpEditaPage implements OnInit {
           role: 'confirm',
           handler: () => {
             //this.handlerMessage = 'Alert confirmed';
-            console.log('alerta confirmada');
-            console.log(this.role);
-            var usuCliUpdated = {
-              apellido: this.form.controls.apellido.value,
-              nombre: this.form.controls.nombre.value,
-              fechaNac: this.form.controls.fechaNac.value,
-              nroTelefono: this.form.controls.nroTelefono.value,
-              rol: this.role
-            };
-            this.usuarioService.updateUser(this.usuId, usuCliUpdated);
-            console.log('Usuario actualizado')
+
+            this.usuarioService.updateUser(this.usuId, this.form.value);
             //console.log(this.usuario)
+            this.usuarioService.getUsersId({
+              where: [
+                {
+                  name: 'rol',
+                  validation: 'in',
+                  value: [Roles.usuarioCadete, Roles.usuarioEmpleado],
+                },
+              ],
+            }).subscribe((lista)=>this.usuarioService.setUsuarios$(lista));
             this.router.navigate(['/bk-menu-usuarios-emp']);
           },
         },
@@ -99,32 +102,38 @@ export class BkUsuarioEmpEditaPage implements OnInit {
     });
 
     await alert.present();
-
-    const { role } = await alert.onDidDismiss();
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  editaPass(){
+  editaPass() {
     const auth = getAuth();
     const user = auth.currentUser;
     const newPassword = this.formPass.controls.newPass.value;
-    updatePassword(user, newPassword).then(() => {
-      console.log('Contraseña actualizada')
-      this.modal.dismiss(null, 'cancel');
-    }).catch((error) => {
-      console.log('Error'+error)
-    });
+    updatePassword(user, newPassword)
+      .then(() => {
+        console.log('Contraseña actualizada');
+        this.modal.dismiss(null, 'cancel');
+      })
+      .catch((error) => {
+        console.log('Error' + error);
+      });
   }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
-  redirectInicio(){
+  submit() {
+    if (this.form.value) {
+      this.presentAlert();
+    }
+  }
+
+  redirectInicio() {
     this.router.navigate(['/bk-menu-empleado']);
   }
 
-  redirectMenuUsu(){
+  redirectMenuUsu() {
     this.router.navigate(['/bk-menu-usuarios-emp']);
   }
 }

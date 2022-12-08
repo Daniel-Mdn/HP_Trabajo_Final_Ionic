@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { IUsuario } from 'src/app/constants/interfaces';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { IParams, IUsuario } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from '../firestore-base.service';
 
 @Injectable({
@@ -17,6 +18,24 @@ export class UsuarioService extends FirestoreBaseService {
   public getUsers():Observable<IUsuario[]> {
     return super.getAll(this.path);
   }
+  listaUsuarios$:BehaviorSubject<IUsuario[]>= new BehaviorSubject<IUsuario[]>([] as IUsuario[])
+
+  public get getUsuarios$(){
+    return this.listaUsuarios$.asObservable();
+  }
+  public setUsuarios$(list:IUsuario[]):void{
+    this.listaUsuarios$.next(list);
+  }
+  public getUsersId(params?: IParams):Observable<IUsuario[]> {
+    return super.getAllId(this.path, params).stateChanges(['added']).pipe(
+      map(actions=>actions.map(a=>
+        {
+          const histPath = a.payload.doc.ref.path;
+          const data = a.payload.doc.data() as IUsuario;
+          const id = a.payload.doc.id;
+          return { id, ...data, histPath };
+        }))
+    );  }
   public getUser(id: string):Observable<IUsuario> {
     return super.getOne(this.path, id);
   }

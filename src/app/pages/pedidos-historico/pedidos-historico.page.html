@@ -1,9 +1,9 @@
 <app-header> </app-header>
-<ion-content>
+<ion-content *ngIf="listaPedidos$|async as listaPedidos">
   <h3 class="ion-text-center">MIS PEDIDOS</h3>
   <h4 class="ml-6">Pedidos en curso</h4>
   <ion-list>
-    <ng-container *ngFor="let ped of listaPedidos$|async">
+    <ng-container *ngFor="let ped of listaPedidos">
       <ion-item
         *ngIf="ped.estadoPedido!=estadosPedido.Entregado"
         (click)="redirectDetallePedido(ped.id)"
@@ -62,7 +62,7 @@
   <h4 class="ml-6">Pedidos anteriores</h4>
 
   <ion-list>
-    <ng-container *ngFor="let ped of listaPedidos$|async">
+    <ng-container *ngFor="let ped of listaPedidos">
       <ion-item
         *ngIf="ped.estadoPedido==estadosPedido.Entregado"
         (click)="redirectDetallePedido(ped.id)"

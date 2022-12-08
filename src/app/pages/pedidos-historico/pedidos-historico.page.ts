@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, reduce, scan } from 'rxjs/operators';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
-import { IDomicilio, ILineaPedido, IPedido } from 'src/app/constants/interfaces';
+import {
+  IDomicilio,
+  ILineaPedido,
+  IPedido,
+} from 'src/app/constants/interfaces';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -30,10 +34,12 @@ export class PedidosHistoricoPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    console.log('hola');
     await this.storage
       .get('usuario')
       .then((value) => (this.currentUsuario = value));
-    this.listaPedidos$ = this.pedidosService
+    
+    this.listaPedidos$= this.pedidosService
       .getPedidosId({
         where: [
           {
@@ -45,6 +51,7 @@ export class PedidosHistoricoPage implements OnInit {
         order: 'fechaPedido',
         orderOrientacion: 'desc',
       })
+      .pipe(scan((action, secondAction) => action.concat(secondAction), []))
       .pipe(
         map((res) => {
           res.forEach((pedido) => {
@@ -60,8 +67,6 @@ export class PedidosHistoricoPage implements OnInit {
                 ],
               })
               .subscribe((lineas) => {
-                console.log('lineas');
-                console.log('lineas', lineas);
                 if (lineas) {
                   pedido.lineasPedido = lineas;
                 }
@@ -69,7 +74,8 @@ export class PedidosHistoricoPage implements OnInit {
           });
           return res;
         })
-      );
+      )
+      this.listaPedidos$.subscribe((r)=>console.log(r))
   }
 
   redirectDetallePedido(id: string) {
@@ -92,7 +98,7 @@ export class PedidosHistoricoPage implements OnInit {
     }
   }
 
-  formatDomicilio(dom:IDomicilio){
-    return this.domicilioService.formatDomicilio(dom)
+  formatDomicilio(dom: IDomicilio) {
+    return dom ? this.domicilioService.formatDomicilio(dom) : '';
   }
 }

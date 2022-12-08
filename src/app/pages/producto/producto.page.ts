@@ -15,6 +15,7 @@ import { first, map } from 'rxjs/operators';
 import {
   Categorias,
   estadosPedido,
+  extras,
   extrasHamburguesas,
   ITamanios,
   Tamanios,
@@ -57,8 +58,9 @@ export class ProductoPage implements OnInit {
 
   @ViewChild(IonModal) modal: IonModal;
 
+  medallonId = extras.medallon;
   producto: IProducto;
-  productoSelected: IProducto={} as IProducto;
+  productoSelected: IProducto = {} as IProducto;
   productos: IProducto[];
   cantidad: number = 1;
 
@@ -116,7 +118,6 @@ export class ProductoPage implements OnInit {
           if (prod) {
             this.producto = prod;
             this.producto.histPath = 'productos/' + id;
-            console.log(this.producto)
             if (this.producto.idCategoria == Categorias.Hamburguesas) {
               this.isBurger = true;
             }
@@ -160,31 +161,21 @@ export class ProductoPage implements OnInit {
             });
         });
 
-      this.extraService
-        .getExtrasId({
-          where: [
-            {
-              name: 'descExtra',
-              validation: '!=',
-              value: Categorias.DescHamburguesas,
-            },
-          ],
-        })
-        .subscribe((resp) => {
-          resp.map((a) => {
-            const hist = this.firestore.doc(a.histPath);
-            hist
-              .collection<IHistorialExtras>('historial_extras', (ref) =>
-                ref.orderBy('fechaDesde', 'desc')
-              )
-              .valueChanges()
-              .subscribe((x) => {
-                a.historial_extra = [x[0]];
-                a.precio = x[0]?.precioExtra ?? 0;
-              });
-          });
-          this.extraService.setExtras$(resp);
+      this.extraService.getExtrasId().subscribe((resp) => {
+        resp.map((a) => {
+          const hist = this.firestore.doc(a.histPath);
+          hist
+            .collection<IHistorialExtras>('historial_extras', (ref) =>
+              ref.orderBy('fechaDesde', 'desc')
+            )
+            .valueChanges()
+            .subscribe((x) => {
+              a.historial_extra = [x[0]];
+              a.precio = x[0]?.precioExtra ?? 0;
+            });
         });
+        this.extraService.setExtras$(resp);
+      });
     });
 
     this.lineasPedido$
@@ -192,7 +183,12 @@ export class ProductoPage implements OnInit {
       .subscribe((lineas) => (this.lineasPedido = lineas));
   }
 
-  cancel() {
+  cancel(extras: IExtras[]) {
+    this.extraService.setExtras$(extras);
+    console.log(extras);
+    this.extrasSelected = [];
+    this.totalProducto = this.totalProducto - this.subtotal;
+    this.subtotal = 0;
     this.modal.dismiss(null, 'cancel');
   }
 
@@ -215,14 +211,16 @@ export class ProductoPage implements OnInit {
     const ev = event as CheckboxCustomEvent;
     if (ev.detail.checked) {
       this.extrasSelected.push(ev.detail.value);
-      this.subtotal = this.subtotal + ev.detail.value.precio*this.cantidad;
-      this.totalProducto = this.totalProducto + ev.detail.value.precio*this.cantidad;
+      this.subtotal = this.subtotal + ev.detail.value.precio * this.cantidad;
+      this.totalProducto =
+        this.totalProducto + ev.detail.value.precio * this.cantidad;
     } else {
       this.extrasSelected = this.extrasSelected.filter((extra) => {
         return extra !== ev.detail.value;
       });
-      this.subtotal = this.subtotal - ev.detail.value.precio*this.cantidad;
-      this.totalProducto = this.totalProducto - ev.detail.value.precio*this.cantidad;
+      this.subtotal = this.subtotal - ev.detail.value.precio * this.cantidad;
+      this.totalProducto =
+        this.totalProducto - ev.detail.value.precio * this.cantidad;
     }
   }
 
@@ -233,11 +231,38 @@ export class ProductoPage implements OnInit {
     this.extrasProduct = this.extrasProduct.filter((extra) => {
       return extra.id !== event.target.id;
     });
+    if (event.target.id == this.medallonId) {
+      this.extras$
+        .pipe(
+          map((res) => {
+            res.map((e) => {
+              if (e.id == this.medallonId) {
+                e.cantidad = 0;
+              }
+            });
+            return res;
+          })
+        )
+        .subscribe();
+    }
     // let precio=[];
     // this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
-    const totalExtras= this.extrasProduct.reduce((a,b)=>a+b.precio,0)
+    const totalExtras = this.extrasProduct.reduce(
+      (a, b) => a + b.precio * b.cantidad ?? 1,
+      0
+    );
     this.subtotal = totalExtras;
-    this.totalProducto=(this.productoSelected.precio + (totalExtras??0))*this.cantidad;    
+    this.totalProducto =
+      (this.productoSelected.precio + (totalExtras ?? 0)) * this.cantidad;
+  }
+  removeAllExtras() {
+    this.extrasSelected = [];
+    this.extrasProduct = [];
+    // let precio=[];
+    // this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
+    const totalExtras = this.extrasProduct.reduce((a, b) => a + b.precio, 0);
+    this.totalProducto = this.totalProducto - this.subtotal;
+    this.subtotal = 0;
   }
 
   isChecked(id: string): boolean {
@@ -246,38 +271,76 @@ export class ProductoPage implements OnInit {
   }
   handleFilter(event: Event) {
     let ev = event as SelectCustomEvent;
-    this.productoSelected= this.productos.find((prod)=>prod.id==ev.detail.value);
-    let precio=[];
-    this.extrasProduct.forEach((extra)=>precio.push(extra.precio))
-    const totalExtras= precio.reduce((a,b)=>a+b,0)
-    this.totalProducto=this.productoSelected.precio + totalExtras??0;    
-    this.cantidad =1;
+    this.productoSelected = this.productos.find(
+      (prod) => prod.id == ev.detail.value
+    );
+    let precio = [];
+    this.extrasProduct.forEach((extra) => precio.push(extra.precio));
+    const totalExtras = precio.reduce((a, b) => a + b, 0);
+    this.totalProducto = this.productoSelected.precio + totalExtras ?? 0;
+    this.cantidad = 1;
     this.tamanioSelected = true;
   }
-  handleFilterHamburguesas(event: any) {}
+  handleFilterHamburguesas(event: any, extraHamb: IExtras) {
+    debugger;
+    let ev = event as SelectCustomEvent;
+    let cantidadAnterior = extraHamb.cantidad;
+    if (cantidadAnterior == undefined || cantidadAnterior < 1) {
+      cantidadAnterior = 0;
+    }
+    if (ev.detail.value != -1) {
+      extraHamb.cantidad = ev.detail.value;
+      this.extrasSelected.push(extraHamb);
+      this.subtotal =
+        this.subtotal +
+        extraHamb.precio * this.cantidad * ev.detail.value -
+        extraHamb.precio * this.cantidad * cantidadAnterior;
+      this.totalProducto =
+        this.totalProducto +
+        extraHamb.precio * this.cantidad * ev.detail.value -
+        extraHamb.precio * this.cantidad * cantidadAnterior;
+    } else {
+      this.extrasSelected = this.extrasSelected.filter((extra) => {
+        return extra !== extraHamb;
+      });
+      extraHamb.cantidad = 0;
+      if (cantidadAnterior) {
+        this.subtotal =
+          this.subtotal - extraHamb.precio * this.cantidad * cantidadAnterior;
+        this.totalProducto =
+          this.totalProducto -
+          extraHamb.precio * this.cantidad * cantidadAnterior;
+      }
+    }
+  }
 
   restar() {
     if (this.cantidad > 1) {
       this.cantidad = this.cantidad - 1;
       this.form.controls['cantidad'].setValue(this.cantidad);
-      const preciosExtras= this.extrasSelected.reduce((a,b)=>a+b.precio,0);
-      this.subtotal=this.subtotal-preciosExtras
-      this.totalProducto = this.totalProducto - this.productoSelected.precio-preciosExtras;
+      const preciosExtras = this.extrasSelected.reduce(
+        (a, b) => a + b.precio,
+        0
+      );
+      this.subtotal = this.subtotal - preciosExtras;
+      this.totalProducto =
+        this.totalProducto - this.productoSelected.precio - preciosExtras;
     }
   }
   sumar() {
     this.cantidad = this.cantidad + 1;
     this.form.controls['cantidad'].setValue(this.cantidad);
-    const preciosExtras= this.extrasSelected.reduce((a,b)=>a+b.precio,0);
-    this.subtotal=this.subtotal+preciosExtras
-    this.totalProducto = this.totalProducto + this.productoSelected.precio+preciosExtras;
+    const preciosExtras = this.extrasSelected.reduce((a, b) => a + b.precio, 0);
+    this.subtotal = this.subtotal + preciosExtras;
+    this.totalProducto =
+      this.totalProducto + this.productoSelected.precio + preciosExtras;
   }
 
   addProduct() {
     this.isSubmitted = true;
     if (this.form.valid) {
-    console.log('this.extrasProduct', this.extrasProduct)
-      this.producto.extrasProducto=this.extrasProduct;
+      console.log('this.extrasProduct', this.extrasProduct);
+      this.producto.extrasProducto = this.extrasProduct;
       let lineaPedido: ILineaPedido = {
         cantidad: this.form.controls['cantidad'].value,
         subtotal: this.form.controls['subtotal'].value,
@@ -291,7 +354,7 @@ export class ProductoPage implements OnInit {
       console.log(lineaPedido);
       let usuario = '';
       this.storage.get('usuario').then((val) => {
-        usuario=val;
+        usuario = val;
       });
       let totalPedido = 0;
       this.lineasPedido.forEach((linea) => {
@@ -305,7 +368,7 @@ export class ProductoPage implements OnInit {
         idSucursal: 'españa1901',
         notasPedido: null,
         retiroLocalPed: null,
-        envio:null,
+        envio: null,
         idUsuario: usuario,
         total: totalPedido,
       };

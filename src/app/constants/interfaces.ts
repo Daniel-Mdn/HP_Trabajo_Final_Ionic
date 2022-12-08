@@ -65,6 +65,8 @@ export interface IExtras{
 }
 
 export interface IUsuario{
+    id?:string;
+    email?:string;
     nombre:string,
     apellido:string,
     fechaNac:Date,
@@ -81,7 +83,7 @@ export interface IParams{
 export interface IWhere{
     name:string,
     validation:WhereFilterOp,
-    value:string|Date
+    value:string|Date|string[]
 }
 export interface IWhereDate{
     validation:whereDateFilter,

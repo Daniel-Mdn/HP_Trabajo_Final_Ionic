@@ -148,7 +148,7 @@
             <ion-label class="txtTitulo"><strong>DOMICILIO:</strong> {{formatDomicilio()|titlecase}}</ion-label>
           </ion-row>
           <ion-row class="mb-2">  
-            <ion-label class="txtTitulo"><strong>FECHA:</strong> {{pedidoSelected.fechaPedido|date:'short'}}</ion-label>
+            <ion-label class="txtTitulo"><strong>FECHA:</strong> {{getFechaPedido(pedidoSelected.fechaPedido)|date:'short'}}</ion-label>
           </ion-row>
           <ion-grid class="modal">
             <ion-row class="ion-justify-content-center">

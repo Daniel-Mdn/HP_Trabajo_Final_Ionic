@@ -76,7 +76,7 @@ export class DomicilioService extends FirestoreBaseService {
 
   public formatDomicilio(currentDomicilio:IDomicilio): string {
     let depto: string;
-    if (currentDomicilio.dpto && currentDomicilio.piso) {
+    if (currentDomicilio?.dpto && currentDomicilio?.piso) {
       depto = currentDomicilio.piso + ' ' + currentDomicilio.dpto;
     }
     return (
