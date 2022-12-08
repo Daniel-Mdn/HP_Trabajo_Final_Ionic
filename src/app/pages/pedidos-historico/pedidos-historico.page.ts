@@ -6,6 +6,7 @@ import { map, reduce, scan } from 'rxjs/operators';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
 import {
   IDomicilio,
+  IEnvio,
   ILineaPedido,
   IPedido,
 } from 'src/app/constants/interfaces';
@@ -13,6 +14,7 @@ import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { PrecioEnvioEnum, TypeEnvioEnum } from 'src/app/constants/constants';
 
 @Component({
   selector: 'app-pedidos-historico',
@@ -24,6 +26,10 @@ export class PedidosHistoricoPage implements OnInit {
   listaLineasPedido$: Observable<ILineaPedido[]> = from([]);
   currentUsuario: string;
   estadosPedido = estadosPedido;
+  envio: IEnvio = {
+    service: TypeEnvioEnum.Cadete,
+    price: PrecioEnvioEnum.Cadete,
+  };
   constructor(
     private menu: MenuController,
     private router: Router,

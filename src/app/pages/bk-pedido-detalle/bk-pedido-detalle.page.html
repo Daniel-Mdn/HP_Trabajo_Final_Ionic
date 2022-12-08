@@ -97,7 +97,7 @@
         </ion-col>
         <ion-col size="5">
           <div class="ion-text-end txtTitulo">
-            <ion-label>{{pedido.total|currency}}</ion-label><!-- Variable previa: {{pedido.total|currency}}-->
+            <ion-label>{{pedido.total+envio.price|currency}}</ion-label><!-- Variable previa: {{pedido.total|currency}}-->
           </div>
         </ion-col>
       </ion-row>

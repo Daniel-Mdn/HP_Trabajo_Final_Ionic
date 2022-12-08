@@ -5,12 +5,14 @@ import { Timestamp } from 'firebase/firestore';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
-import { IDomicilio, ILineaPedido, IPedido, IUsuario } from 'src/app/constants/interfaces';
+import { IDomicilio, IEnvio, ILineaPedido, IPedido, IUsuario } from 'src/app/constants/interfaces';
 import { DomicilioService } from 'src/app/services/domicilio/domicilio.service';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { PrecioEnvioEnum, TypeEnvioEnum } from 'src/app/constants/constants';
+
 
 @Component({
   selector: 'app-bk-listado-pedidos-turno',
@@ -22,7 +24,11 @@ export class BkListadoPedidosTurnoPage implements OnInit {
   listaLineasPedido$: Observable<ILineaPedido[]> = from([]);
   currentUsuario: string;
   estadosPedido = estadosPedido;
-  usuario: IUsuario
+  usuario: IUsuario;
+  envio: IEnvio = {
+    service: TypeEnvioEnum.Cadete,
+    price: PrecioEnvioEnum.Cadete,
+  };
   constructor(
     private menu: MenuController,
     private router: Router,
