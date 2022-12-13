@@ -53,7 +53,9 @@ export class BkListadoPedidosTurnoPage implements OnInit {
       this.usuario = usu;
       console.log(this.usuario)
     })
-    this.listaPedidos$ = this.pedidosService
+    this.listaPedidos$= this.pedidosService.getPedidos$;
+
+    this.pedidosService
       .getPedidosId({
         where: [
             { name: 'fechaPedido', validation: '<=', value: hoy },
@@ -86,7 +88,8 @@ export class BkListadoPedidosTurnoPage implements OnInit {
           });
           return res;
         })
-      );
+      ).subscribe((lista)=>this.pedidosService.setPedidos$(lista));
+
   }
 
   redirectDetallePedido(id: string) {

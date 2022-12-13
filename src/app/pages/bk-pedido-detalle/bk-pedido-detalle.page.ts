@@ -15,7 +15,7 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { Categorias, estadosPedido } from 'src/app/constants/constants';
 import { AlertController } from '@ionic/angular';
-
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bk-pedido-detalle',
@@ -25,7 +25,7 @@ import { AlertController } from '@ionic/angular';
 export class BkPedidoDetallePage implements OnInit {
   estadosPedido = estadosPedido;
   handlerMessage = '';
-  
+
   constructor(
     private router: Router,
     private pedidoService: PedidoService,
@@ -33,10 +33,8 @@ export class BkPedidoDetallePage implements OnInit {
     private domicilioService: DomicilioService,
     private route: ActivatedRoute,
     private usuarioService: UsuarioService,
-    private alertController: AlertController
-  ) {
-    
-  }
+    private alertController: AlertController,
+  ) {}
 
   envio: IEnvio = {
     service: TypeEnvioEnum.Cadete,
@@ -46,12 +44,16 @@ export class BkPedidoDetallePage implements OnInit {
   pedido$: Observable<IPedido> = of();
   lineasPedido$: Observable<ILineaPedido[]> = of();
   lineasPedido: ILineaPedido[] = [];
-  nombreApellido:string;
-  telefono:string;
+  nombreApellido: string;
+  telefono: string;
   usuario: IUsuario;
-  
+  pedidos:IPedido[];
 
   async ngOnInit() {
+    this.pedidoService.getPedidos$.subscribe((peds)=>{
+      console.log('peds', peds)
+      this.pedidos=peds
+    })
     this.route.params.subscribe((params) => {
       this.pedidoService.getPedido(params.pedidoId).subscribe((ped) => {
         this.pedido = ped;
@@ -59,13 +61,12 @@ export class BkPedidoDetallePage implements OnInit {
         this.domicilioService.getDomicilio(ped.idDomicilio).subscribe((dom) => {
           this.pedido.domicilio = dom;
         });
-        this.usuarioService.getUser(this.pedido.idUsuario)
-          .subscribe((usu)=>{
-            console.log(this.pedido.idUsuario)
-            console.log(usu)
-            this.nombreApellido = usu.apellido + ' ' + usu.nombre;
-            this.telefono = usu.nroTelefono;
-          });
+        this.usuarioService.getUser(this.pedido.idUsuario).subscribe((usu) => {
+          console.log(this.pedido.idUsuario);
+          console.log(usu);
+          this.nombreApellido = usu.apellido + ' ' + usu.nombre;
+          this.telefono = usu.nroTelefono;
+        });
       });
       this.lineasPedidoService
         .getLineasPedidoId({
@@ -77,7 +78,6 @@ export class BkPedidoDetallePage implements OnInit {
           this.lineasPedido = lineas;
         });
     });
-
   }
 
   cleanPedido(event: boolean) {
@@ -101,15 +101,23 @@ export class BkPedidoDetallePage implements OnInit {
     }
   }
 
-  redirectEstadoPedido(id: string){
+  redirectEstadoPedido(id: string) {
     this.router.navigate(['/bk-pedido-estado', id]);
   }
 
-  confirmaPedido(){
-    this.pedido.estadoPedido = 'en preparacion';
-    this.pedido.estadoPago = 'pendiente';
-    console.log(this.pedido);
-    this.pedidoService.updatePedido(this.pedido.id, this.pedido)
+  confirmaPedido() {
+    this.pedido.estadoPedido = estadosPedido.Preparacion;
+    this.pedido.estadoPago = estadosPedido.Pendiente;
+    this.pedidoService
+      .updatePedido(this.pedido.id, this.pedido).pipe(first())
+      .subscribe((ped) => {
+        this.pedidos.forEach((item)=>{
+          if(item.id==ped.id){
+            item.estadoPedido=ped.estadoPedido
+          }
+        })
+        this.pedidoService.setPedidos$(this.pedidos);
+      });
     this.router.navigate(['/bk-listado-pedidos-turno']);
   }
 
@@ -132,7 +140,7 @@ export class BkPedidoDetallePage implements OnInit {
             this.pedido.estadoPedido = 'cancelado';
             this.pedido.estadoPago = 'pendiente';
             console.log(this.pedido);
-            this.pedidoService.updatePedido(this.pedido.id, this.pedido)
+            this.pedidoService.updatePedido(this.pedido.id, this.pedido);
             this.router.navigate(['/bk-listado-pedidos-turno']);
           },
         },
@@ -141,14 +149,12 @@ export class BkPedidoDetallePage implements OnInit {
 
     await alert.present();
   }
-  
 
-  goPrevPage(){
+  goPrevPage() {
     this.router.navigate(['/bk-listado-pedidos-turno']);
   }
 
-  redirectHome(){
+  redirectHome() {
     this.router.navigate(['/bk-menu-empleado']);
   }
-
 }
