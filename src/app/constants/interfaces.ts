@@ -101,7 +101,7 @@ export interface IHistorialPrecio{
     tamanio:Tamanios
 }
 export interface IDomicilio{
-    id:string,
+    id?:string,
     calle:string,
     dpto?:string,
     idUsuario:string,
@@ -109,7 +109,7 @@ export interface IDomicilio{
     idProvincia:string,
     nroCasa:string,
     piso?:string,
-    estaActivo:boolean
+    estaActivo?:boolean
     domiObs:string
 }
 export interface ILocalidad{

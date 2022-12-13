@@ -23,55 +23,85 @@
 
 <ion-content>
   <div class="contFlex">
-    <h4 class="txtCenter padbot4">Ingrese los datos del/de la empleado/a<br>Los campos con * son obligatorios</h4>
+    <h4 class="txtCenter padbot4">
+      Ingrese los datos del/de la empleado/a<br />Los campos con * son
+      obligatorios
+    </h4>
   </div>
-  <form [formGroup]="form" (ngSubmit)="registroUsuEmp()">
+  <form [formGroup]="form">
+    <div class="contFlex mb-10">
+      <ion-button
+        expand="block"
+        class="btnGde"
+        color="primary"
+        (click)="isOpen=true"
+        >Editar email y contraseña</ion-button
+      >
+    </div>
+
     <ion-item class="mb-10">
       <ion-label>Rol*</ion-label>
-      <ion-select formControlName="rol" name="rol" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
-        <ion-select-option value="usuario-empleado">Usuario Empleado</ion-select-option>
-        <ion-select-option value="usuario-cadete">Usuario Cadete</ion-select-option>
+      <ion-select
+        formControlName="rol"
+        name="rol"
+        placeholder="Elija..."
+        okText="Listo"
+        cancelText="Cancelar"
+      >
+        <ion-select-option value="usuario-empleado"
+          >Usuario Empleado</ion-select-option
+        >
+        <ion-select-option value="usuario-cadete"
+          >Usuario Cadete</ion-select-option
+        >
       </ion-select>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Apellido*</ion-label>
-      <ion-input formControlName="apellido"></ion-input>
+      <ion-input autocomplete="off" formControlName="apellido"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Nombres*</ion-label>
-      <ion-input formControlName="nombre"></ion-input>
+      <ion-input autocomplete="off" formControlName="nombre"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-grid [fixed]="true">
         <ion-row>
-          <ion-col size="12"><ion-label>Fecha de nacimiento*</ion-label></ion-col>
+          <ion-col size="12"
+            ><ion-label>Fecha de nacimiento*</ion-label></ion-col
+          >
         </ion-row>
         <ion-row>
           <ion-col class="ion-align-self-center" size="12">
-            <ion-datetime [preferWheel]="true" size="cover" formControlName="fechaNac" presentation="date"></ion-datetime>
+            <ion-datetime
+              [preferWheel]="true"
+              size="cover"
+              formControlName="fechaNac"
+              presentation="date"
+            ></ion-datetime>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Número de teléfono*</ion-label>
-      <ion-input formControlName="nroTel"></ion-input>
+      <ion-input autocomplete="off" formControlName="nroTel"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Calle*</ion-label>
-      <ion-input formControlName="domiCalle"></ion-input>
+      <ion-input autocomplete="off" formControlName="domiCalle"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Número*</ion-label>
-      <ion-input formControlName="domiNro"></ion-input>
+      <ion-input autocomplete="off" formControlName="domiNro"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Piso</ion-label>
-      <ion-input formControlName="domiPiso"></ion-input>
+      <ion-input autocomplete="off" formControlName="domiPiso"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="floating">Departamento</ion-label>
-      <ion-input formControlName="domiDpto"></ion-input>
+      <ion-input autocomplete="off" formControlName="domiDpto" ></ion-input>
     </ion-item>
     <!--
     <ion-item class="mb-10">
@@ -81,50 +111,113 @@
     -->
     <ion-item class="mb-10">
       <ion-label>Provincia*</ion-label>
-      <ion-select name="domiProv" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+      <ion-select
+        formControlName="domiProv"
+        placeholder="Elija..."
+        okText="Listo"
+        cancelText="Cancelar"
+      >
         <ion-select-option value="santaFe">Santa Fe</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label>Localidad*</ion-label>
-      <ion-select formControlName="domiLoc" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
+      <ion-select
+        formControlName="domiLoc"
+        placeholder="Elija..."
+        okText="Listo"
+        cancelText="Cancelar"
+      >
         <ion-select-option value="rosario">Rosario</ion-select-option>
       </ion-select>
     </ion-item>
     <div class="contFlex mb-10">
-      <ion-button expand="block" class="btnGde" color="primary" type="submit">REGISTRAR</ion-button>
+      <ion-button
+        expand="block"
+        class="btnGde"
+        color="danger"
+        (click)="cancelAlert()"
+        >CANCELAR</ion-button
+      >
+      <ion-button
+        expand="block"
+        class="btnGde"
+        color="primary"
+        type="submit"
+        (click)="registroUsuEmp()"
+        >REGISTRAR</ion-button
+      >
     </div>
   </form>
 
-  <ion-modal #modal isOpen="true">
+  <ion-modal #modal [isOpen]="isOpen">
     <ng-template>
       <ion-header>
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
             <ion-button (click)="redirectMenu()">Cancelar</ion-button>
           </ion-buttons>
-          <ion-title>REGISTRO</ion-title>
+          <ion-title class="ion-text-center">REGISTRO</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="registrarEmail()" [strong]="true">Confirmar</ion-button>
+            <ion-button (click)="confirmarEmail()" [strong]="true"
+              >Confirmar</ion-button
+            >
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <h4 class="ion-text-center">Ingrese el email y contraseña<br>(Los campos con * son obligatorios)</h4>
-        <form [formGroup]="formAuth" (ngSubmit)="function()">
+        <h4 class="ion-text-center">
+          Ingrese el email y contraseña<br />(Los campos con * son obligatorios)
+        </h4>
+        <form [formGroup]="formAuth">
           <ion-list>
             <ion-item class="mb-10">
-              <ion-label position="floating">e-mail*</ion-label>
-              <ion-input formControlName="email"></ion-input>
+              <ion-label position="floating">e-mail *</ion-label>
+              <ion-input
+                type="text"
+                formControlName="email"
+                [autocomplete]="'false'"
+              ></ion-input>
             </ion-item>
+            <span
+              class="error ion-padding"
+              *ngIf="isSubmittedFormAuth && formAuth.controls.email.errors?.required"
+            >
+              <small> El email es requerido </small>
+            </span>
             <ion-item class="mb-10">
-              <ion-label position="floating">Contraseña*</ion-label>
-              <ion-input type="password" formControlName="password"></ion-input>
+              <ion-label position="floating">Contraseña *</ion-label>
+              <ion-input
+                type="password"
+                formControlName="password"
+                [autocomplete]="'false'"
+              ></ion-input>
             </ion-item>
+            <span
+              class="error ion-padding"
+              *ngIf="isSubmittedFormAuth && formAuth.controls.password.errors?.required "
+            >
+              <small> Las contraseña es requerida. </small>
+            </span>
+            <span
+              class="error ion-padding"
+              *ngIf="isSubmittedFormAuth && formAuth.controls.password.errors?.minlength "
+            >
+              <small> Las contraseña debe tener al menos 6 caracteres. </small>
+            </span>
             <ion-item class="mb-10">
               <ion-label position="floating">Repetir contraseña*</ion-label>
-              <ion-input type="password"></ion-input>
+              <ion-input
+                type="password"
+                formControlName="repeatPassword"
+              ></ion-input>
             </ion-item>
+            <span
+              class="error ion-padding"
+              *ngIf="isSubmittedFormAuth &&( formAuth.controls.repeatPassword.errors?.required || formAuth.controls.repeatPassword.errors?.different) "
+            >
+              <small> Las contraseñas no coinciden. </small>
+            </span>
           </ion-list>
         </form>
       </ion-content>
