@@ -20,7 +20,7 @@ export class CategoriesService extends FirestoreBaseService {
   public get getCategories$(){
     return this.listCategories$.asObservable();
   }
-  public setProducts$(list:ICategoria[]):void{
+  public setCategories$(list:ICategoria[]):void{
     this.listCategories$.next(list);
   }
   

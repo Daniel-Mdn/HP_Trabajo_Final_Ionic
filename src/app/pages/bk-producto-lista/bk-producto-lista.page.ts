@@ -7,6 +7,7 @@ import {
   IPedido,
   IProducto,
   IUsuario,
+  IWhere,
 } from 'src/app/constants/interfaces';
 import { FirestoreBaseService } from 'src/app/services/firestore-base.service';
 import { first, map } from 'rxjs/operators';
@@ -18,12 +19,13 @@ import { CategoriesService } from 'src/app/services/categories/categories.servic
 import {
   RadioGroupChangeEventDetail,
   RadioGroupCustomEvent,
+  SearchbarCustomEvent,
 } from '@ionic/angular';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-import { DocumentSnapshot } from 'firebase/firestore';
+import { DocumentSnapshot, where } from 'firebase/firestore';
 import { LineaPedidoService } from 'src/app/services/linea_pedido/linea-pedido.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
@@ -44,6 +46,7 @@ export class BkProductoListaPage implements OnInit {
   ) {}
   categorias: ICategoria[] = [];
   catFiltrada?: string;
+  searchFiltrado?: string;
   productos: IProducto[] = [];
   productos$: Observable<IProducto[]> = from([]);
   lineasPedido$: Observable<ILineaPedido[]> = from([]);
@@ -64,46 +67,24 @@ export class BkProductoListaPage implements OnInit {
     this.productoService
       .getProductsId({ order: 'nombre' })
       .subscribe((resp) => {
-        resp.map((value, index, self) => {
-          let list = self.filter(
-            (s) =>
-              s.nombre === value.nombre && s.idCategoria === value.idCategoria
-          );
-          value.histPaths = [];
-          list.forEach((l) => {
-            value.histPaths.push({tamanio:l.tamanio,hist:l.histPath});
-          });
-        });
-        resp = resp.filter(
-          (value, index, self) =>
-            index ===
-            self.findIndex((t) => {
-              if (
-                t.nombre === value.nombre &&
-                t.idCategoria === value.idCategoria
-              ) {
-                return t;
-              }
-            })
-        );
         this.productos = resp;
         this.productos.map((p) => {
-          p.histPaths.forEach((path) => {
-            p.historial_precio = [];
-            const hist = this.firestore.doc(path.hist);
-            hist
-              .collection<IHistorialPrecio>('historial_precio', (ref) =>
-                ref.orderBy('fechaDesde', 'desc')
-              )
-              .valueChanges()
-              .pipe(first())
-              .subscribe((x) => {
-                p.historial_precio.push({ tamanio:path.tamanio,...x[0]});
-                p.precio = x[0]?.precioProd ?? 0;
-                // this.totalProducto = this.producto.precio;
-              });
-          });
+          p.histPaths;
+          p.historial_precio = [];
+          const hist = this.firestore.doc(p.histPath);
+          hist
+            .collection<IHistorialPrecio>('historial_precio', (ref) =>
+              ref.orderBy('fechaDesde', 'desc')
+            )
+            .valueChanges()
+            .pipe(first())
+            .subscribe((x) => {
+              p.historial_precio.push({ tamanio: p.tamanio, ...x[0] });
+              p.precio = x[0]?.precioProd ?? 0;
+              // this.totalProducto = this.producto.precio;
+            });
         });
+        console.log(this.productos);
         this.productoService.setProducts$(this.productos);
       });
   }
@@ -111,19 +92,45 @@ export class BkProductoListaPage implements OnInit {
   handleFilter(ev: Event) {
     let event = ev as RadioGroupCustomEvent;
     this.catFiltrada = event.detail.value;
+    let where:IWhere[]=[];
+    if (this.catFiltrada=="todos"){
+      where=[];
+    }else{
+      where.push({ name: 'idCategoria', validation: '==', value: this.catFiltrada })
+    }
     this.productoService
       .getProductsId({
-        where: [
-          { name: 'idCategoria', validation: '==', value: this.catFiltrada },
-        ],
+        where: where,
         order: 'nombre',
       })
-      .subscribe((res) => {
-        res = res.filter(
-          (value, index, self) =>
-            index === self.findIndex((t) => t.nombre === value.nombre)
-        );
-        this.productoService.setProducts$(res);
+      .pipe(
+        map((res) => {
+          return res.filter((item) =>
+            item.nombre
+              .toLowerCase()
+              .includes(this.searchFiltrado??'')
+          );
+        })
+      )
+      .subscribe((resp) => {
+        this.productos = resp;
+        this.productos.map((p) => {
+          p.histPaths;
+          p.historial_precio = [];
+          const hist = this.firestore.doc(p.histPath);
+          hist
+            .collection<IHistorialPrecio>('historial_precio', (ref) =>
+              ref.orderBy('fechaDesde', 'desc')
+            )
+            .valueChanges()
+            .pipe(first())
+            .subscribe((x) => {
+              p.historial_precio.push({ tamanio: p.tamanio, ...x[0] });
+              p.precio = x[0]?.precioProd ?? 0;
+              // this.totalProducto = this.producto.precio;
+            });
+        });
+        this.productoService.setProducts$(this.productos);
       });
   }
 
@@ -137,7 +144,57 @@ export class BkProductoListaPage implements OnInit {
   navigateToCarrito() {
     this.router.navigate(['/carrito']);
   }
-  goPrevPage(){
+  goPrevPage() {
     this.router.navigate(['/bk-menu-productos']);
+  }
+  redirectHome() {
+    this.router.navigate(['/bk-menu-empleado']);
+  }
+
+  handleChange(event: any) {
+    let eventSearch = event as SearchbarCustomEvent;
+    this.searchFiltrado=eventSearch.target.value.toLowerCase()
+    let whereQuery: IWhere[]=[];
+    if (this.catFiltrada && this.catFiltrada!='todos') {
+      whereQuery.push({
+        name: 'idCategoria',
+        validation: '==',
+        value: this.catFiltrada,
+      });
+    }
+    this.productoService
+      .getProductsId({
+        order: 'nombre',
+        where: whereQuery,
+      })
+      .pipe(
+        map((res) => {
+          return res.filter((item) =>
+            item.nombre
+              .toLowerCase()
+              .includes(eventSearch.target.value.toLowerCase())
+          );
+        })
+      )
+      .subscribe((resp) => {
+        this.productos = resp;
+        this.productos.map((p) => {
+          p.histPaths;
+          p.historial_precio = [];
+          const hist = this.firestore.doc(p.histPath);
+          hist
+            .collection<IHistorialPrecio>('historial_precio', (ref) =>
+              ref.orderBy('fechaDesde', 'desc')
+            )
+            .valueChanges()
+            .pipe(first())
+            .subscribe((x) => {
+              p.historial_precio.push({ tamanio: p.tamanio, ...x[0] });
+              p.precio = x[0]?.precioProd ?? 0;
+              // this.totalProducto = this.producto.precio;
+            });
+        });
+        this.productoService.setProducts$(this.productos);
+      });
   }
 }

@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { PrecioEnvioEnum, Tamanios, TypeEnvioEnum, whereDateFilter } from "./constants";
 
 export interface IProducto{
-    id:string,
+    id?:string,
     nombre:string,
     descProd:string,
     disponibilidad:boolean,
@@ -13,9 +13,9 @@ export interface IProducto{
     tamanio:Tamanios,
     idCategoria:string,
     categoria?:ICategoria
-    historial_precio:IHistorialPrecio[],
-    histPath:string,
-    histPaths:{tamanio:Tamanios, hist:string}[],
+    historial_precio?:IHistorialPrecio[],
+    histPath?:string,
+    histPaths?:{tamanio:Tamanios, hist:string}[],
     extrasProducto?: IExtras[]
 }
 

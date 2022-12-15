@@ -11,6 +11,11 @@ export enum Categorias{
     PizzasMolde="pizzaAlMolde",
     PizzasParrilla="pizzaALaParrilla"
 }
+export enum CategoriasSelect{
+    Hamburguesas="hamburguesa",
+    PizzasMolde="pizzaAlMolde",
+    PizzasParrilla="pizzaALaParrilla"
+}
 export enum extras{
     medallon="medallon"
 }
@@ -35,6 +40,20 @@ export interface ITamanios{
 export enum TamaniosHamburguesa{
     Simple="simple",
     Doble="doble"
+}
+export enum TamaniosSelect{
+    Entera="Entera",
+    Media="Media",
+    Simple="Simple",
+    Doble="Doble"
+}
+export enum TamaniosSelectPizza{
+    Entera="Entera",
+    Media="Media",
+}
+export enum TamaniosSelectHamb{
+    Simple="Simple",
+    Doble="Doble"
 }
 export enum extrasHamburguesas{
     uno="1",

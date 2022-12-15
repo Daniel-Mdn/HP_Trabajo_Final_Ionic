@@ -3,14 +3,22 @@
     <ion-grid fixed>
       <ion-row class="ion-justify-content-center">
         <ion-col size="2" class="contFlex">
-          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+          <ion-icon
+            (click)="goPrevPage()"
+            name="arrow-back-circle-outline"
+            size="large"
+          ></ion-icon>
         </ion-col>
         <ion-col size="8" class="ion-align-self-center">
           <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
           <ion-title class="ion-text-center">CARGAR PRODUCTO</ion-title>
         </ion-col>
-        <ion-col size="2" class="contFlex"> 
-          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        <ion-col size="2" class="contFlex">
+          <ion-icon
+            (click)="redirectHome()"
+            name="home-outline"
+            size="large"
+          ></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -21,13 +29,22 @@
   <div class="contFlex">
     <h4 class="txtCenter padbot4">Todos los campos son obligatorios</h4>
   </div>
-  <form [formGroup]="form" (ngSubmit)="registrarProducto()">
+  <form [formGroup]="form">
     <ion-item class="mb-10">
       <ion-label>Categoría</ion-label>
-      <ion-select formControlName="categoria" name="categoria" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
-        <ion-select-option value="hamburguesa">Hamburguesa</ion-select-option>
-        <ion-select-option value="pizzaALaParrilla">Pizza a la parrilla</ion-select-option>
-        <ion-select-option value="pizzaAlMolde">Pizza al molde</ion-select-option>
+      <ion-select
+        formControlName="categoria"
+        (ionChange)="setTamanios($event)"
+        name="categoria"
+        placeholder="Elija..."
+        okText="Listo"
+        cancelText="Cancelar"
+      >
+        <ng-container *ngFor="let cat of categorias$|async">
+          <ion-select-option [value]="cat.id"
+            >{{cat.descCategoria|titlecase}}</ion-select-option
+          >
+        </ng-container>
       </ion-select>
     </ion-item>
     <ion-item class="mb-10">
@@ -40,11 +57,21 @@
     </ion-item>
     <ion-item class="mb-10">
       <ion-label>Tamaño</ion-label>
-      <ion-select formControlName="tamanio" name="tamanio" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
-        <ion-select-option value="entera">Pizza entera</ion-select-option>
-        <ion-select-option value="media">Pizza media</ion-select-option>
-        <ion-select-option value="simple">Hamburguesa simple</ion-select-option>
-        <ion-select-option value="doble">Hamburguesa doble</ion-select-option>
+      <ion-select
+        formControlName="tamanio"
+        name="tamanio"
+        placeholder="Elija..."
+        okText="Listo"
+        cancelText="Cancelar"
+      >
+        <ng-container *ngIf="tamanios.length>0;else notTamanios">
+          <ion-select-option *ngFor="let tam of tamanios" [value]="tam"
+            >{{tam |titlecase}}</ion-select-option
+          >
+        </ng-container>
+        <ng-template #notTamanios>
+          <ion-select-option [value]="null">No hay tamanios</ion-select-option>
+        </ng-template>
       </ion-select>
     </ion-item>
     <ion-item class="mb-10">
@@ -60,10 +87,19 @@
       <ion-input formControlName="margen"></ion-input>
     </ion-item>
     <div class="contFlex mb-10">
-      <ion-button expand="block" color="primary" type="submit">Cargar imagen</ion-button>
+
+      <ion-button expand="block" color="secondary" (click)="selectImage()">Cargar imagen</ion-button>
     </div>
     <div class="contFlex mb-10">
-      <ion-button expand="block" class="btnGde" color="primary" type="submit">GUARDAR</ion-button>
+      <ion-button
+        expand="block"
+        class="btnGde"
+        color="primary"
+        type="submit"
+        (click)="registrarProducto()"
+        >GUARDAR</ion-button
+      >
     </div>
   </form>
+  Hola {{form.controls.imagen.value}}
 </ion-content>

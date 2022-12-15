@@ -1,69 +1,77 @@
-.cadaProd{
-    margin-bottom: 2vh;
-    border: 1px solid;
-    //border-radius: 2%;
-    padding: 1vh; 
-    border-color: var(--ion-color-primary);
-    width: 100%;
+.cadaProd {
+  margin-bottom: 2vh;
+  border: 1px solid;
+  //border-radius: 2%;
+  padding: 1vh;
+  border-color: var(--ion-color-primary);
+  width: 100%;
 }
-.contFlex{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.contFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.filtrosCont{
-    margin-bottom: 5vh;
-    padding: 3vh; 
-    background-color: var(--ion-color-spezia-shade);
-    padding-top: 0vh;
+.filtrosCont {
+  margin-bottom: 5vh;
+  padding: 3vh;
+  background-color: var(--ion-color-spezia-shade);
+  padding-top: 0vh;
 }
-.colorShade{
-    background-color: var(--ion-color-spezia-shade);
-}
-
-.width30{
-    width:30%;
-}
-.width100{
-    width: 100%;
+.colorShade {
+  background-color: var(--ion-color-spezia-shade);
 }
 
-.imgSize{
-    height: 22vw;
-    width: 22vw;
+.width30 {
+  width: 30%;
+}
+.width100 {
+  width: 100%;
 }
 
-.txtCateg{
-    font-size: medium;
+.imgSize {
+  height: 22vw;
+  width: 22vw;
 }
 
-.txtNombre{
-    font-size: large;
-    font-weight: 600;
-    padding-top: 1vw;
+.txtCateg {
+  font-size: medium;
 }
 
-.padLeft{
-    padding-left: 2vw;
+.txtNombre {
+  font-size: large;
+  font-weight: 600;
+  padding-top: 1vw;
+}
+
+.padLeft {
+  padding-left: 2vw;
 }
 
 ion-toolbar {
-    --min-height: 50px;
-  }
+  --min-height: 50px;
+}
 
-  .button-pedido{
-    --border-radius: 20px;
-    width: 55vw;
-    height: 10vh;
-    font-size: medium;
-  }
+.button-pedido {
+  --border-radius: 20px;
+  width: 55vw;
+  height: 10vh;
+  font-size: medium;
+}
 
-  .fab-horizontal-center{
-    left: 31vw;
-    margin-left: -28px;
-  }
+.fab-horizontal-center {
+  left: 31vw;
+  margin-left: -28px;
+}
 
-  .ml-2{
-    margin-left: 2vw;
-  }
+.ml-2 {
+  margin-left: 2vw;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.font-small {
+  font-size: small;
+}

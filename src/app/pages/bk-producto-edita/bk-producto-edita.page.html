@@ -3,14 +3,22 @@
     <ion-grid fixed>
       <ion-row class="ion-justify-content-center">
         <ion-col size="2" class="contFlex">
-          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+          <ion-icon
+            (click)="goPrevPage()"
+            name="arrow-back-circle-outline"
+            size="large"
+          ></ion-icon>
         </ion-col>
         <ion-col size="8" class="ion-align-self-center">
           <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
           <ion-title class="ion-text-center">EDITAR PRODUCTO</ion-title>
         </ion-col>
-        <ion-col size="2" class="contFlex"> 
-          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        <ion-col size="2" class="contFlex">
+          <ion-icon
+            (click)="redirectHome()"
+            name="home-outline"
+            size="large"
+          ></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -21,18 +29,37 @@
   <div class="contFlex">
     <h4 class="txtCenter padbot4">Los campos con * son obligatorios</h4>
   </div>
-  <form [formGroup]="form" (ngSubmit)="presentAlert()">
+  <form [formGroup]="form">
     <ion-item class="mb-10">
       <ion-label position="stacked">ID</ion-label>
-      <ion-input formControlName="prodId"></ion-input><!--NO EDITABLE-->
+      <ion-input formControlName="prodId"></ion-input
+      ><!--NO EDITABLE-->
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="stacked">Categoría</ion-label>
-      <ion-input formControlName="categoria"></ion-input><!--NO EDITABLE-->
+      <ion-label position="stacked">Categoría*</ion-label>
+      <ion-select
+        interface="popover"
+        formControlName="idCategoria"
+        placeholder="Categoria"
+      >
+        <ion-content *ngFor="let cat of categorias$|async">
+          <ion-select-option [value]="cat.id"
+            >{{cat.descCategoria}}</ion-select-option
+          >
+        </ion-content>
+      </ion-select>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="stacked">Tamaño</ion-label>
-      <ion-input formControlName="tamanio"></ion-input><!--NO EDITABLE-->
+      <ion-label position="stacked">Tamaño*</ion-label>
+      <ion-select
+        interface="popover"
+        formControlName="tamanio"
+        placeholder="Tamaño"
+      >
+        <ion-content *ngFor="let tam of tamanios">
+          <ion-select-option [value]="tam">{{tam}}</ion-select-option>
+        </ion-content>
+      </ion-select>
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="stacked">Nombre*</ion-label>
@@ -43,19 +70,27 @@
       <ion-input formControlName="descProd"></ion-input>
     </ion-item>
     <ion-item class="mb-10">
-      <ion-label position="stacked">Disponibilidad actual</ion-label>
-      <ion-input formControlName="disponibilidad"></ion-input>
+      <ion-checkbox
+        formControlName="disponibilidad"
+        slot="start"
+      ></ion-checkbox>
+      <ion-label>Disponible</ion-label>
     </ion-item>
-    <ion-item class="mb-10">
-      <ion-label>Cambiar disponibilidad</ion-label>
-      <ion-select formControlName="nuevaDisp" name="disponibilidad" placeholder="Elija..." okText="Listo" cancelText="Cancelar">
-        <ion-select-option value="true">Activo</ion-select-option>
-        <ion-select-option value="false">Inactivo</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item class="mb-10">
-      <ion-label position="stacked">Imagen*</ion-label>
-      <ion-input formControlName="imagen"></ion-input>
+
+    <ion-item>
+      <ion-row>
+        <ion-col size="auto">
+          <ion-img
+            class="avatar-producto imgSize"
+            [src]="producto?.imagen||'assets/img/no-image.png'"
+            onerror="assets/img/no-image.png"
+          ></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-label position="stacked">Imagen*</ion-label>
+          <ion-input formControlName="imagen"></ion-input>
+        </ion-col>
+      </ion-row>
     </ion-item>
     <!--
     <ion-item class="mb-10">
@@ -68,14 +103,26 @@
     </ion-item>
     -->
     <ion-item class="mb-10">
-      <ion-label position="stacked">PVP*</ion-label>
+      <ion-label position="stacked">Precio*</ion-label>
       <ion-input formControlName="precioProd"></ion-input>
     </ion-item>
     <div class="contFlex mb-10">
-      <ion-button expand="block" color="primary" (click)="redirectMenuProdLista()">Volver</ion-button>
+      <ion-button
+        expand="block"
+        color="danger"
+        (click)="redirectMenuProdLista()"
+        >Volver</ion-button
+      >
     </div>
     <div class="contFlex mb-10">
-      <ion-button expand="block" class="btnGde" color="primary" type="submit">GUARDAR</ion-button>
+      <ion-button
+        expand="block"
+        class="btnGde"
+        color="primary"
+        type="submit"
+        (click)="submit()"
+        >GUARDAR</ion-button
+      >
     </div>
   </form>
 </ion-content>
