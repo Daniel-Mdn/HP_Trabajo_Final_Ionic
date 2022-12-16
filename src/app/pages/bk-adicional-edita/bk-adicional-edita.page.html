@@ -3,14 +3,22 @@
     <ion-grid fixed>
       <ion-row class="ion-justify-content-center">
         <ion-col size="2" class="contFlex">
-          <ion-icon (click)="goPrevPage()" name="arrow-back-circle-outline" size="large"></ion-icon>
+          <ion-icon
+            (click)="goPrevPage()"
+            name="arrow-back-circle-outline"
+            size="large"
+          ></ion-icon>
         </ion-col>
         <ion-col size="8" class="ion-align-self-center">
           <!--<ion-img src="assets/img/logoLaSpezia.png" class="logoLS"></ion-img>-->
           <ion-title class="ion-text-center">EDITAR ADICIONAL</ion-title>
         </ion-col>
-        <ion-col size="2" class="contFlex"> 
-          <ion-icon (click)="redirectHome()" name="home-outline" size="large"></ion-icon>
+        <ion-col size="2" class="contFlex">
+          <ion-icon
+            (click)="redirectHome()"
+            name="home-outline"
+            size="large"
+          ></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -21,10 +29,11 @@
   <div class="contFlex">
     <h4 class="txtCenter padbot4">Los campos con * son obligatorios</h4>
   </div>
-  <form [formGroup]="form" (ngSubmit)="presentAlert()">
+  <form [formGroup]="form">
     <ion-item class="mb-10">
       <ion-label position="stacked">ID</ion-label>
-      <ion-input formControlName="idAdic"></ion-input><!--NO EDITABLE-->
+      <ion-input formControlName="idAdic"></ion-input
+      ><!--NO EDITABLE-->
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="stacked">Descripcion*</ion-label>
@@ -32,13 +41,21 @@
     </ion-item>
     <ion-item class="mb-10">
       <ion-label position="stacked">PVP*</ion-label>
-      <ion-input formControlName="precioAdic"></ion-input>
+      <ion-input formControlName="precioAdic" type="number"></ion-input>
     </ion-item>
-    <div class="contFlex mb-10">
-      <ion-button expand="block" class="btnGde" color="primary" type="submit">GUARDAR</ion-button>
+    <div class="contFlex mb-10 mt-20">
+      <ion-button expand="block" color="danger" (click)="redirectMenuUsu()"
+        >Cancelar</ion-button
+      >
     </div>
     <div class="contFlex mb-10">
-      <ion-button expand="block" color="primary" (click)="redirectMenuUsu()">Cancelar</ion-button>
+      <ion-button
+        expand="block"
+        class="btnGde"
+        color="primary"
+        (click)="submit()"
+        >GUARDAR</ion-button
+      >
     </div>
   </form>
 </ion-content>

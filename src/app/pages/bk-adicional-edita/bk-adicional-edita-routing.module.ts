@@ -5,7 +5,7 @@ import { BkAdicionalEditaPage } from './bk-adicional-edita.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: BkAdicionalEditaPage
   }
 ];

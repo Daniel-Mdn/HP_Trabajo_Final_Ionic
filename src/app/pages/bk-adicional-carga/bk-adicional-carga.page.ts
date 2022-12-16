@@ -30,21 +30,23 @@ export class BkAdicionalCargaPage implements OnInit {
   }
 
   async registrarAdicional(){
-    const today = new Date();
-    var adicId = this.form.controls.idAdic.value;
-    var dataAdic = {
-      descExtra: this.form.controls.descAdic.value,
+    if (this.form.valid){
+      const today = new Date();
+      var adicId = this.form.controls.idAdic.value;
+      var dataAdic = {
+        descExtra: this.form.controls.descAdic.value,
+      }
+      var precioAdic = {
+        fechaDesde: today,
+        precioExtra: parseInt(this.form.controls.precioAdic.value)
+      }
+  
+      await this.firestore.collection('extras').doc(adicId).set(dataAdic);
+  
+      await this.firestore.collection('extras').doc(adicId).collection('historial_precio').add(precioAdic);
+  
+      await this.router.navigate(['/bk-menu-productos']);
     }
-    var precioAdic = {
-      fechaDesde: today,
-      precioExtra: parseInt(this.form.controls.precioAdic.value)
-    }
-
-    await this.firestore.collection('extras').doc(adicId).set(dataAdic);
-
-    await this.firestore.collection('extras').doc(adicId).collection('historial_precio').add(precioAdic);
-
-    await this.router.navigate(['/bk-menu-productos']);
   }
   
   goPrevPage(){

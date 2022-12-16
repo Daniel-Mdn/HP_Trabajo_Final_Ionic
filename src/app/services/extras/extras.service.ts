@@ -38,7 +38,7 @@ export class ExtrasService extends FirestoreBaseService {
     return super.getAll(this.path);
   }
   public getExtrasId(params?: IParams): Observable<IExtras[]> {
-      return super
+    return super
       .getAllId(this.path, params)
       .stateChanges(['added'])
       .pipe(
@@ -53,15 +53,23 @@ export class ExtrasService extends FirestoreBaseService {
       );
   }
   public getExtra(id: string): Observable<IExtras> {
-    return super.getOne(this.path, id);
+    return super.getOne(this.path, id).pipe(
+      map((res: any) => {
+        return { id, ...res, histPath: this.path + '/' + id };
+      })
+    );
   }
   public deleteExtra(id: string): Promise<void> {
     return super.deleteOne(this.path, id);
   }
   public updateExtra(id: string, data: IExtras) {
-    return super.updateOne(this.path, id, data);
+    return super.updateOne(this.path, id, data).pipe(
+      map((res: any) => {
+        return { id, ...res, histPath: this.path + '/' + id };
+      })
+    );
   }
-  public createExtra(data: IExtras): Promise<string|undefined> {
+  public createExtra(data: IExtras): Promise<string | undefined> {
     return super.createOne(this.path, data);
   }
 

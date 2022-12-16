@@ -55,13 +55,13 @@ export interface ICategoria{
     descCategoria:string,
 }
 export interface IExtras{
-    id:string,
+    id?:string,
     cantidad?:number,
     precio?:number,
     descExtra:string,
     idLineaDePed?:number,
-    historial_extra:IHistorialExtras[],
-    histPath:string,
+    historial_extra?:IHistorialExtras[],
+    histPath?:string,
 }
 
 export interface IUsuario{

@@ -127,41 +127,41 @@ export class BkProductoEditaPage implements OnInit {
   getControl(control: string) {
     return this.form.get(control) as FormControl;
   }
-  async presentAlert() {
-    console.log('fnpresentAlert');
-    const alert = await this.alertController.create({
-      header: '¿Confirma que desea actualizar sus datos?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => {
-            //this.handlerMessage = 'Alert canceled';
-            console.log('alerta cancelada');
-          },
-        },
-        {
-          text: 'Sí',
-          role: 'confirm',
-          handler: () => {
-            //this.handlerMessage = 'Alert confirmed';
-            console.log('alerta confirmada');
-            var prodActualizado = {
-              nombre: this.form.controls.nombre.value,
-              descProd: this.form.controls.descProd.value,
-              disponibilidad: this.form.controls.disponibilidad.value,
-              imagen: this.form.controls.imagen.value,
-              //precioProd:
-            };
-            //this.productService.updateProduct(this.prodId, prodActualizado)
-            this.router.navigate(['/bk-menu-productos']);
-          },
-        },
-      ],
-    });
+  // async presentAlert() {
+  //   console.log('fnpresentAlert');
+  //   const alert = await this.alertController.create({
+  //     header: '¿Confirma que desea actualizar sus datos?',
+  //     buttons: [
+  //       {
+  //         text: 'No',
+  //         role: 'cancel',
+  //         handler: () => {
+  //           //this.handlerMessage = 'Alert canceled';
+  //           console.log('alerta cancelada');
+  //         },
+  //       },
+  //       {
+  //         text: 'Sí',
+  //         role: 'confirm',
+  //         handler: () => {
+  //           //this.handlerMessage = 'Alert confirmed';
+  //           console.log('alerta confirmada');
+  //           var prodActualizado = {
+  //             nombre: this.form.controls.nombre.value,
+  //             descProd: this.form.controls.descProd.value,
+  //             disponibilidad: this.form.controls.disponibilidad.value,
+  //             imagen: this.form.controls.imagen.value,
+  //             //precioProd:
+  //           };
+  //           //this.productService.updateProduct(this.prodId, prodActualizado)
+  //           this.router.navigate(['/bk-menu-productos']);
+  //         },
+  //       },
+  //     ],
+  //   });
 
-    await alert.present();
-  }
+  //   await alert.present();
+  // }
 
   goPrevPage() {
     this.router.navigate(['/bk-menu-productos']);
@@ -186,8 +186,7 @@ export class BkProductoEditaPage implements OnInit {
         nombre: this.form.get('nombre').value,
         tamanio: this.form.get('tamanio').value,
       };
-
-      console.log(producto);
+      const precio = this.producto.precio;
 
       this.productService
         .updateProduct(this.prodId, producto)
@@ -196,9 +195,7 @@ export class BkProductoEditaPage implements OnInit {
           const histCollection = this.firestore.collection(
             prod.histPath + '/' + 'historial_precio'
           );
-          if (
-            this.producto.precio != Number(this.getControl('precioProd').value)
-          ) {
+          if (precio != Number(this.getControl('precioProd').value)) {
             histCollection.add({
               precioProd: this.form.get('precioProd').value,
               fechaDesde: new Date(),
