@@ -20,6 +20,8 @@ import {
 import { Filesystem } from '@capacitor/filesystem';
 import { Directory } from '@capacitor/filesystem/dist/esm/definitions';
 import { Platform } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -32,6 +34,7 @@ export class BkProductoRegistraPage implements OnInit {
   form: FormGroup;
   constructor(
     private firestore: AngularFirestore,
+    private storageFire: AngularFireStorage,
     private plt: Platform,
     private productoService: ProductoService,
     private categoriasService: CategoriesService,
@@ -58,6 +61,8 @@ export class BkProductoRegistraPage implements OnInit {
   tamanios: any[] = [];
   categorias$: Observable<ICategoria[]> = of();
   categorias: ICategoria[];
+  uploadURL: Observable<string>;
+
   ngOnInit() {
     this.categorias$ = this.categoriasService.getCategories$;
     this.categoriasService.getCategoriesId().subscribe((cats) => {
@@ -80,6 +85,11 @@ export class BkProductoRegistraPage implements OnInit {
         baja: false,
         imagen: this.form.controls.imagen.value,
       };
+      if (this.form.controls.imagen.value != null) {
+        await this.uploadImage(this.form.controls.imagen.value).then(
+          (res) => (dataProducto.imagen = res)
+        );
+      }
       let precioProducto = {
         fechaDesde: today,
         costoProd: Number(this.form.controls.costoProd.value),
@@ -100,6 +110,7 @@ export class BkProductoRegistraPage implements OnInit {
   goPrevPage() {
     this.router.navigate(['/bk-menu-productos']);
   }
+  url: string = null;
 
   setTamanios(e) {
     let categoria = this.categorias.find((cat) => cat.id == e.detail.value);
@@ -124,55 +135,67 @@ export class BkProductoRegistraPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Base64,
+      resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos, // Camera, Photos or Prompt!
     });
 
     if (image) {
-      // this.saveImage(image);
-      this.firestore
-      console.log(image)
+      var blob = dataURLtoBlob(image.dataUrl);
+      this.form.controls.imagen.setValue(blob);
+      this.getImage()
     }
   }
 
-  async saveImage(photo: Photo) {
-    console.log('photo', photo)
-    
-    const base64Data = await this.readAsBase64(photo);
-
-    const fileName = new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data,
-    });
-
-    console.log(savedFile)
-  }
-
-  private async readAsBase64(photo: Photo) {
-    if (this.plt.is('hybrid')) {
-      const file = await Filesystem.readFile({
-        path: photo.path,
-      });
-
-      return file.data;
+  async uploadImage(blob: Blob): Promise<string> {
+    const nombreFoto =
+      this.form.controls.nombre.value != ''
+        ? this.form.controls.nombre.value
+        : Math.floor(Math.random() * 1000).toString();
+    let filePath = '';
+    if (this.form.controls.categoria.value == Categorias.Hamburguesas) {
+      filePath = 'Hamburguesas/' + nombreFoto;
     } else {
-      // Fetch the photo, read as a blob, then convert to base64 format
-      const response = await fetch(photo.webPath);
-      const blob = await response.blob();
-
-      return (await this.convertBlobToBase64(blob)) as string;
+      if (
+        this.form.controls.categoria.value == Categorias.PizzasParrilla ||
+        this.form.controls.categoria.value == Categorias.PizzasMolde
+      ) {
+        filePath = 'Pizzas/' + nombreFoto;
+      } else {
+        filePath = 'sinCategoria/' + nombreFoto;
+      }
     }
+    let path = '';
+    await this.storageFire.storage
+      .ref(filePath)
+      .put(blob)
+      .then(function (snapshot) {
+        path = snapshot.ref.fullPath;
+      });
+    let imagePath = '';
+    await this.storageFire.storage
+      .ref(path)
+      .getDownloadURL()
+      .then((res) => (imagePath = res));
+    return imagePath;
   }
 
-  convertBlobToBase64 = (blob: Blob) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
-    });
+  getImage() {
+    let image = this.form.controls.imagen.value as Blob;
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = (_event) => {
+      this.url = reader.result.toString();
+    };
+  }
+}
+function dataURLtoBlob(dataurl) {
+  var arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
 }

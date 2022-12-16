@@ -86,9 +86,19 @@
       <ion-label position="floating">Margen</ion-label>
       <ion-input formControlName="margen"></ion-input>
     </ion-item>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-img
+          class="avatar-producto imgSize mb-10"
+          [src]="url||'assets/img/no-image.png'"
+          onerror="assets/img/no-image.png"
+        ></ion-img>
+      </ion-col>
+    </ion-row>
     <div class="contFlex mb-10">
-
-      <ion-button expand="block" color="secondary" (click)="selectImage()">Cargar imagen</ion-button>
+      <ion-button expand="block" color="secondary" (click)="selectImage()"
+        >Cargar imagen</ion-button
+      >
     </div>
     <div class="contFlex mb-10">
       <ion-button
@@ -101,5 +111,4 @@
       >
     </div>
   </form>
-  Hola {{form.controls.imagen.value}}
 </ion-content>

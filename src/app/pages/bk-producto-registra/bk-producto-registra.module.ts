@@ -8,6 +8,7 @@ import { BkProductoRegistraPageRoutingModule } from './bk-producto-registra-rout
 
 import { BkProductoRegistraPage } from './bk-producto-registra.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     BkProductoRegistraPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // AngularFireStorageModule
   ],
   declarations: [BkProductoRegistraPage]
 })
